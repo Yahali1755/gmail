@@ -1,23 +1,13 @@
 import { FC } from 'react';
-import { CssBaseline, Grid } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 
-import { ThemeProvider } from './theme/themeProvider';
-import DarkModeToggle from './theme/toggleTheme';
-
-const styles = {
-    appContainer: {
-        height: '100vh'
-    }, 
-}
+import Providers from './providers';
 
 const App: FC = () =>
     <>
-        <ThemeProvider>
+        <Providers>
             <CssBaseline/>
-            <Grid container sx={styles.appContainer}>
-                <DarkModeToggle/>
-            </Grid>
-        </ThemeProvider>
+        </Providers>
     </>
 
 
