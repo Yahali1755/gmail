@@ -1,17 +1,16 @@
-import { ThemeProvider } from "./theme/themeProvider";
-import { RouterProvider } from "react-router-dom";
 import { ReactNode, FC } from "react"
 
-import { router } from "./routes";
+import { ThemeProvider } from "./theme/themeProvider";
 
 interface ProvidersProps {
     children: ReactNode
 }
 
-const Providers: FC<ProvidersProps> = ({ children}) => 
-    <ThemeProvider>
-        <RouterProvider router={router}/>
-        { children }
-    </ThemeProvider>
+const Providers: FC<ProvidersProps> = ({ children}) =>
+    <>
+        <ThemeProvider>
+            { children }
+        </ThemeProvider>
+    </>
 
 export default Providers;

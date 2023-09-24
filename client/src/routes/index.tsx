@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom"
 
-import { Auth } from "../auth";
 import { Inbox } from "../inbox";
+import { AuthPage } from "../auth/authPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Auth/>
+    element: <AuthPage/>
   }, 
   {
     path: "/inbox",

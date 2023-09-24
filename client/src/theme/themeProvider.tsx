@@ -1,20 +1,13 @@
 import { useState, FC, createContext, ReactNode } from 'react'
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material';
 
-const baseTheme = {
-  typography: {
-    fontSize: 24
-  }
-}
-
 const lightTheme = createTheme({
   palette: {
     mode: 'light', 
     primary: {
       main: '#2196f3',
     }
-  },
-  ...baseTheme
+  }
 });
   
 const darkTheme = createTheme({
@@ -23,8 +16,7 @@ const darkTheme = createTheme({
     primary: {
       main: '#2196f3',
     },
-  },
-  ...baseTheme
+  }
 });
   
 
