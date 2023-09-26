@@ -8,7 +8,8 @@ module.exports = {
     path: path.resolve(__dirname, './build'),
   },
   devServer: {
-    port: '5000'
+    port: '5000',
+    historyApiFallback: true
   },
   devtool: 'source-map',
   module: {
