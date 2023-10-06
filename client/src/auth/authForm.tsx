@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider, useWatch } from "react-hook-form";
 
-import TextField from "../form/textField";
+import FormTextField from "../common/form/FormTextField";
 
 const styles = {
   nextButton: {
@@ -16,7 +16,7 @@ const styles = {
 };
 
 export const AuthForm: FC = () => {
-  const methods = useForm();
+  const formMethods = useForm();
   const navigate = useNavigate();
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const [isInvalidConfirm, setIsInvalidConfirm] = useState(false);
@@ -24,25 +24,25 @@ export const AuthForm: FC = () => {
   const passwordsDoNotMatchErrorMessage = "Passwords do not match"
   const emailRegEx = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
-  const password = useWatch({control: methods.control, name: 'Password'});
-  const confirmPassword = useWatch({control: methods.control, name: 'Confirm'});
+  const password = useWatch({control: formMethods.control, name: 'Password'});
+  const confirmPassword = useWatch({control: formMethods.control, name: 'Confirm'});
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...formMethods}>
           <Grid container width='100%' flexDirection='column' alignItems='center' spacing={3}>
             <Grid item> 
               <Typography sx={styles.formTitle}> {isRegisterForm ? "Create Account" : "Sign Up"} </Typography>
             </Grid> 
             <Grid width="80%" item> 
-              <TextField regExValidationPattern={emailRegEx} fullWidth autoFocus name="Email"/>
+              <FormTextField validationRegEx={emailRegEx} fullWidth autoFocus name="Email"/>
             </Grid>
             <Grid width="80%" item> 
-              <TextField minLength={8} fullWidth name="Password"/>
+              <FormTextField minLength={8} fullWidth name="Password"/>
             </Grid>
             {
               isRegisterForm && 
                 <Grid width="80%" item>
-                  <TextField customError={isInvalidConfirm && passwordsDoNotMatchErrorMessage} minLength={8} fullWidth name="Confirm"/>
+                  <FormTextField customError={isInvalidConfirm && passwordsDoNotMatchErrorMessage} minLength={8} fullWidth name="Confirm"/>
                 </Grid>
             }
             <Grid position="relative" container item>
@@ -53,7 +53,7 @@ export const AuthForm: FC = () => {
                   </Grid>
               }
               <Grid position="absolute" left="75%" xs={3} item>
-                <Button sx={styles.nextButton} variant="contained" onClick={methods.handleSubmit(() => {
+                <Button sx={styles.nextButton} variant="contained" onClick={formMethods.handleSubmit(() => {
                   if (!password === confirmPassword) {
                     setIsInvalidConfirm(true);
 
@@ -62,7 +62,7 @@ export const AuthForm: FC = () => {
                   
                   navigate('/mail')
                 })}> 
-                  Next 
+                  Save
                 </Button>
               </Grid>
             </Grid>

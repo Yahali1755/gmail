@@ -1,21 +1,20 @@
 import { Grid } from "@mui/material";
 
 import DarkModeToggle from "../theme/toggleTheme"
-import MailBox from "./mailbox";
-import { Icon } from "@mui/material"
+import MailBox from "./mail-box";
+import Navbar from "./navbar";
+import { useOpen } from "../common/form/use-open";
 
-const styles = {
-    mailboxContainer: {
-        height: '85vh',
-        width: '80vw',
-        border: '1px solid lightgrey'
-    }
-};
+export const MailPage = () => {
+    const { isOpen, close, open } = useOpen();
 
-export const MailPage = () =>
-    <Grid container height='100vh' alignItems='center' justifyContent='center'>
-        <Grid justifyContent='center' container sx={styles.mailboxContainer}>
-            <MailBox/>
+    return (
+        <Grid container height='100vh' alignItems='center' justifyContent='center'>
+            <Navbar/>
+            <Grid sx={{overflow: "hidden"}} left="150px" position="relative" justifyContent='center' height="85vh" width='70vw' container>
+                <MailBox/>
+            </Grid>
+            <DarkModeToggle/>
         </Grid>
-        <DarkModeToggle/>
-    </Grid>
+    )
+}

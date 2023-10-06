@@ -6,8 +6,8 @@ import { ThemeContext } from './themeProvider';
 
 const styles = {
   iconsSize: {
-    height: '5vh',
-    width: '5vw'
+    height: '40px',
+    width: '40px'
   },
   iconButton: {
     position: 'absolute',
