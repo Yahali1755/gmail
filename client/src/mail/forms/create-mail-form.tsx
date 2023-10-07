@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { FC } from "react";
 
 import FormTextField from "../../common/form/FormTextField"
-import FormDialog from "../../common/form/formDialog";
+import FormDialog from "../../common/form/FormDialog";
 
 interface CreateMailFormProps {
     isOpen: boolean

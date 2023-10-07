@@ -8,7 +8,7 @@ export const useOpen = () => {
         open: () => {
             setIsOpen(true);
         }, 
-        close: () => () => {
+        close: () => {
             setIsOpen(false);
         }
     }

@@ -6,8 +6,6 @@ import Navbar from "./navbar";
 import { useOpen } from "../common/form/use-open";
 
 export const MailPage = () => {
-    const { isOpen, close, open } = useOpen();
-
     return (
         <Grid container height='100vh' alignItems='center' justifyContent='center'>
             <Navbar/>

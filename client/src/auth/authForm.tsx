@@ -54,7 +54,7 @@ export const AuthForm: FC = () => {
               }
               <Grid position="absolute" left="75%" xs={3} item>
                 <Button sx={styles.nextButton} variant="contained" onClick={formMethods.handleSubmit(() => {
-                  if (!password === confirmPassword) {
+                  if (isRegisterForm && password !== confirmPassword) {
                     setIsInvalidConfirm(true);
 
                     return;

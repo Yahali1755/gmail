@@ -8,7 +8,7 @@ interface FormTextFieldProps extends BaseTextFieldProps {
     validationRegEx?: RegExp
 }
 
-const FormTextField: FC<FormTextFieldProps> = ({ name, customError, required, minLength, validationRegEx}) => {
+const FormTextField: FC<FormTextFieldProps> = ({ name, customError, required, minLength, validationRegEx, ...props }) => {
     const { control } = useFormContext()
 
     const {field: { onChange, value }, fieldState: {invalid, error}} = useController({
@@ -28,8 +28,8 @@ const FormTextField: FC<FormTextFieldProps> = ({ name, customError, required, mi
     });
 
     return (
-        <TextField error={customError ? true : invalid} helperText={customError ? customError : error && error.message} required={required ?? true}
-            label={name} name={name}/>
+        <TextField value={value} onChange={onChange} error={customError ? true : invalid} helperText={customError ? customError : error && error.message} 
+            required={required ?? true} {...props} label={name}/>
     );
 }
 
