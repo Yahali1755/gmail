@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material"
 
 import { AuthForm } from "./authForm";
-import DarkModeToggle from "../theme/toggleTheme";
+import DarkModeToggle from "../theme/ToggleTheme";
 
 const styles = {
     formContainer: {

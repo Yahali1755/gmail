@@ -3,12 +3,12 @@ import { FC } from "react";
 import { useController, useFormContext } from "react-hook-form";
 
 interface FormTextFieldProps extends BaseTextFieldProps {
-    customError?: string,
+    customErrorMessage?: string,
     minLength?: number,
     validationRegEx?: RegExp
 }
 
-const FormTextField: FC<FormTextFieldProps> = ({ name, customError, required, minLength, validationRegEx, ...props }) => {
+const FormTextField: FC<FormTextFieldProps> = ({ name, label, customErrorMessage, required, minLength, validationRegEx, ...props }) => {
     const { control } = useFormContext()
 
     const {field: { onChange, value }, fieldState: {invalid, error}} = useController({
@@ -28,8 +28,8 @@ const FormTextField: FC<FormTextFieldProps> = ({ name, customError, required, mi
     });
 
     return (
-        <TextField value={value} onChange={onChange} error={customError ? true : invalid} helperText={customError ? customError : error && error.message} 
-            required={required ?? true} {...props} label={name}/>
+        <TextField value={value} onChange={onChange} error={customErrorMessage ? true : invalid} helperText={customErrorMessage ? customErrorMessage : error && error.message} 
+            required={required ?? true} {...props} label={label ?? name}/>
     );
 }
 

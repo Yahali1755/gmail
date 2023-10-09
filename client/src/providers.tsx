@@ -1,6 +1,6 @@
 import { ReactNode, FC } from "react"
 
-import { ThemeProvider } from "./theme/themeProvider";
+import { ThemeProvider } from "./theme/ThemeProvider";
 
 interface ProvidersProps {
     children: ReactNode

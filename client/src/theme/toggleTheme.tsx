@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { ThemeContext } from './themeProvider';
+import { ThemeContext } from './ThemeProvider';
 
 const styles = {
   iconsSize: {
@@ -11,7 +11,7 @@ const styles = {
   },
   iconButton: {
     position: 'absolute',
-    left: 0,
+    right: 0,
     top: 0
   }
 }
