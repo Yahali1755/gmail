@@ -47,21 +47,20 @@ const DraggablePaper = (props: PaperProps) =>
 
 
 const FormDialog: FC<FormDialogProps> = ({ formMethods, dialogStyles, children, isOpen, close, dialogTitle }) => 
+  <Dialog PaperComponent={DraggablePaper} fullWidth maxWidth="md" TransitionComponent={Transition}
+    sx={dialogStyles} open={isOpen} onClose={close}>
     <FormProvider {...formMethods}>
-      <Dialog PaperComponent={DraggablePaper} fullWidth maxWidth="md" TransitionComponent={Transition}
-        sx={dialogStyles} open={isOpen} onClose={close}>
-        {
-          dialogTitle && 
-            <DialogTitle id="draggable-dialog-title" sx={styles.dialogTitle}> { dialogTitle }</DialogTitle>
-        }
-        <DialogContent>
-          { children }
-        </DialogContent>
-        <DialogActions>
-          <CloseButton sx={styles.closeButton} onClick={close}/>
-        </DialogActions>
-      </Dialog>
+      {
+        dialogTitle && 
+          <DialogTitle id="draggable-dialog-title" sx={styles.dialogTitle}> { dialogTitle }</DialogTitle>
+      }
+      <DialogContent>
+        { children }
+      </DialogContent>
+      <DialogActions>
+        <CloseButton sx={styles.closeButton} onClick={close}/>
+      </DialogActions>
     </FormProvider>
-
+  </Dialog>
 
 export default FormDialog;

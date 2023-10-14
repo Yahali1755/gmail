@@ -1,7 +1,7 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import DarkModeToggle from "../theme/ToggleTheme"
-import MailBox from "./mail-box";
+import MailBox from "./MailBox";
 import Navbar from "./navbar";
 import MailIconButton from "./MailIconButton";
 
@@ -12,7 +12,7 @@ export const MailPage = () => {
                 <MailIconButton/>
             </Grid>
             <Navbar/>
-            <Grid left="150px" justifyContent='center' height="85vh" width='70vw' container>
+            <Grid item left="150px" justifyContent='center' height="85vh" width='70vw' container>
                 <MailBox/>
             </Grid>
             <DarkModeToggle/>

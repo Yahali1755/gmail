@@ -1,6 +1,4 @@
 import { Table, TableBody, TableCell, TableContainer, TableRow, Paper } from '@mui/material';
-import { useOpen } from '../common/form/use-open'
-
 
 const MailBox = () => {
   return (
