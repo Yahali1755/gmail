@@ -1,4 +1,4 @@
 {
     "watch": ["src/"],
-    "exec": "babel-node src/config/express.js"
+    "exec": "babel-node src/config"
 }

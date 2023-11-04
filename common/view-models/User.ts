@@ -1,4 +1,4 @@
-export interface userViewModel {
+export interface UserViewModel {
     email: string
     password: string
 }

@@ -1,4 +1,4 @@
-export interface mailViewModel {
+export interface MailViewModel {
     author: string
     sentTo: string,
     content: string
