@@ -9,10 +9,10 @@ const Navbar: FC = () => {
   const { isOpen, open, close } = useOpen();
 
   return (
-    <Grid left={0} height="80vh" width="150px" position="fixed" container flexDirection="column">
-      <Grid position="relative" left='20px' item>
+    <Grid height="80vh" width="150px" position="fixed" container flexDirection="column">
+      <Grid position="relative" item>
         <IconButton onClick={open} sx={{borderRadius: '10px', border: "1px solid"}}>
-          <CreateIcon sx={{marginRight: "10px"}}/>
+          <CreateIcon/>
           <Typography> Send Mail</Typography>
         </IconButton>
         <CreateMailForm isOpen={isOpen} close={close}/>

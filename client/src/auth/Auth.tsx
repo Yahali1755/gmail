@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Grid } from "@mui/material"
 
-import { AuthForm } from "./authForm";
+import { AuthForm } from "./AuthForm";
 import DarkModeToggle from "../theme/ToggleTheme";
 
 const styles = {

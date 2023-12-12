@@ -25,7 +25,7 @@ export const AuthForm: FC = () => {
   const emailRegEx = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
   const password = useWatch({control: formMethods.control, name: 'Password'});
-  const confirmPassword = useWatch({control: formMethods.control, name: 'Confirm'});
+  const confirmPassword = useWatch({control: formMethods.control, name: 'ConfirmPassword'});
 
   return (
     <FormProvider {...formMethods}>
@@ -42,7 +42,7 @@ export const AuthForm: FC = () => {
           {
             isRegisterForm && 
               <Grid width="80%" item>
-                <FormTextField customErrorMessage={isInvalidConfirm && passwordsDoNotMatchErrorMessage} minLength={8} fullWidth name="Confirm"/>
+                <FormTextField customErrorMessage={isInvalidConfirm && passwordsDoNotMatchErrorMessage} minLength={8} fullWidth name="ConfirmPassword"/>
               </Grid>
           }
           <Grid position="relative" container item>
