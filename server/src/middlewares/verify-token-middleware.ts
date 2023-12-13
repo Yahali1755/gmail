@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
+import { logger } from "../utils/logger";
 
-const verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
     if (req.path === '/user/login' || req.path === '/user/register') {
         next();
 
@@ -13,12 +14,16 @@ const verifyToken = (req, res, next) => {
       return res.status(401).json({ message: 'Unauthorized - No token provided' });
     }
   
-    jwt.verify(token, process.env.TOKEN_SECRET_KEY, (error, decoded) => {
+    const tokenWithoutBearer = token.split(" ")[1];
+
+    jwt.verify(tokenWithoutBearer, process.env.TOKEN_SECRET_KEY, (error, decoded) => {
+      console.log(error)
       if (error) {
         return res.status(401).json({ message: 'Unauthorized - Invalid token' });
       }
   
       req.user = decoded;
+
       next();
     });
 };

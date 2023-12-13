@@ -2,7 +2,8 @@
   "dependencies": {
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.0"
+    "mongoose": "^8.0.0",
+    "winston": "^3.11.0"
   },
   "resolve": {
     "extensions": [
@@ -20,6 +21,7 @@
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.23.2",
     "@types/express": "^4.17.19",
+    "@types/jsonwebtoken": "^9.0.5",
     "dotenv": "^16.3.1",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.2",

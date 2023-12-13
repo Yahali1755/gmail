@@ -1,15 +1,10 @@
 import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema({
-  username: {
+  password: String,
+  emailAddress: {
     type: String,
     required: true,
-    unique: true,
-  },
-  password: String,
-  emailAdress: {
-    type: String,
-    required: false,
     unique: true,
     validate: {
       validator: (value) => {
