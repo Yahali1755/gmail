@@ -11,7 +11,7 @@ import CreateIcon from '@mui/icons-material/Create';
 
 import HomePageIconButton from './HomePageIconButton';
 import { useOpen } from '../../common/form/use-open';
-import CreateMailForm from '../forms/CreateMailForm';
+import NewMailDialog from '../forms/NewMailDialog';
 
 const SideBar = () => {
   const {open: openCreateMail, close: closeCreateMail, isOpen: isCreateMailOpen} = useOpen();
@@ -30,7 +30,7 @@ const SideBar = () => {
               </ListItemIcon>
               <ListItemText primary='Send Mail'/>
             </ListItemButton>
-            <CreateMailForm isOpen={isCreateMailOpen} close={closeCreateMail}/>
+            <NewMailDialog isOpen={isCreateMailOpen} close={closeCreateMail}/>
           </ListItem>
           <ListItem key='Inbox' disablePadding>
             <ListItemButton>

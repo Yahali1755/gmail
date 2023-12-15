@@ -4,11 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useForm, FormProvider, useWatch } from "react-hook-form";
 
 import FormTextField from "../common/form/FormTextField";
+import SubmitButton from "../common/form/SubmitButton";
 
 const styles = {
-  nextButton: {
-    textTransform: 'none'
-  },
   formTitle: {
     fontSize: '32px',
     marginTop: 4
@@ -48,12 +46,12 @@ export const AuthForm: FC = () => {
           <Grid position="relative" container item>
             {
               !isRegisterForm && 
-                <Grid position="absolute" left="10%" xs={3} item>
-                  <Button onClick={() => setIsRegisterForm(true)} > New Account </Button>
+                <Grid position="absolute" left="12%" xs={3} item>
+                  <Button onClick={() => setIsRegisterForm(true)} > Create account </Button>
                 </Grid>
             }
-            <Grid position="absolute" left="75%" xs={3} item>
-              <Button sx={styles.nextButton} variant="contained" onClick={formMethods.handleSubmit(() => {
+            <Grid position="absolute" left="73%" xs={3} item>
+              <SubmitButton label='Save' onClick={formMethods.handleSubmit(() => {
                 if (isRegisterForm && password !== confirmPassword) {
                   setIsInvalidConfirm(true);
 
@@ -61,9 +59,7 @@ export const AuthForm: FC = () => {
                 }
                 
                 navigate('/mail')
-              })}> 
-                Save
-              </Button>
+              })}/> 
             </Grid>
           </Grid>
         </Grid>

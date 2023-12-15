@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material"
 
 import { AuthForm } from "./AuthForm";
-import DarkModeToggle from "../theme/ToggleTheme";
+import PageContainer from "../common/PageContainer";
 
 const styles = {
     formContainer: {
@@ -13,11 +13,8 @@ const styles = {
 };
 
 export const AuthPage: FC = () => 
-    <Grid container height='100vh' alignItems='center' justifyContent='center'>
-        <Grid justifyContent='center' container sx={styles.formContainer}>
+    <PageContainer>
+        <Grid item sx={styles.formContainer}>
             <AuthForm/>
         </Grid>
-        <DarkModeToggle/>
-    </Grid>
-
-
+    </PageContainer>

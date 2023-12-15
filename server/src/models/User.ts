@@ -12,7 +12,7 @@ const userSchema = new Schema({
       },
       message: 'Invalid email format',
     },
-  },
+  }
 });
 
 export const User = model('User', userSchema);
