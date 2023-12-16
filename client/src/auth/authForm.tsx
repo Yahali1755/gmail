@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom";
-import { useForm, FormProvider, useWatch } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 
 import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
@@ -13,8 +13,9 @@ const styles = {
   }
 };
 
-export const AuthForm: FC = () => {
+const AuthForm: FC = () => {
   const formMethods = useForm();
+  const { watch, handleSubmit } = formMethods;
   const navigate = useNavigate();
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const [isInvalidConfirm, setIsInvalidConfirm] = useState(false);
@@ -22,8 +23,8 @@ export const AuthForm: FC = () => {
   const passwordsDoNotMatchErrorMessage = "Passwords do not match"
   const emailRegEx = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
-  const password = useWatch({control: formMethods.control, name: 'Password'});
-  const confirmPassword = useWatch({control: formMethods.control, name: 'ConfirmPassword'});
+  const password = watch('Password');
+  const confirmPassword = watch('ConfirmPassword');
 
   return (
     <FormProvider {...formMethods}>
@@ -51,7 +52,7 @@ export const AuthForm: FC = () => {
                 </Grid>
             }
             <Grid position="absolute" left="73%" xs={3} item>
-              <SubmitButton label='Save' onClick={formMethods.handleSubmit(() => {
+              <SubmitButton label='Save' onClick={handleSubmit(() => {
                 if (isRegisterForm && password !== confirmPassword) {
                   setIsInvalidConfirm(true);
 
@@ -67,3 +68,4 @@ export const AuthForm: FC = () => {
   )
 }
 
+export default AuthForm;

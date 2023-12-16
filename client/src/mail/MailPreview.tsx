@@ -11,22 +11,22 @@ interface MailPreviewProps {
 
 const styles: Record<string, SxProps> = {
     dialogSize: {
-        height: '500px'
+        height: '500px',
+        width: '500px'
     }
 }
 
-const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, mail }) => {
-    return (
-        <Dialog dialogContentStyles={styles.dialogSize} sx={styles.dialog} dialogTitle={mail.subject} isOpen={isOpen} close={close}>
-            <Typography sx={{fontWeight: "bold"}} title="Author">
-                { `From: ${mail.author}` }
-            </Typography>
-            <br/>
-            <Typography paragraph title="Content">
-                { mail.content}
-            </Typography>                
-        </Dialog>
-    )
-}
+const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, mail }) => 
+    <Dialog dialogContentProps={{sx: styles.dialogSize}} dialogTitleProps={{sx: {fontWeight: "bold"}}} sx={styles.dialog} 
+        dialogTitle={mail.subject} open={isOpen} close={close}>
+        <Typography sx={{fontWeight: "bold"}} title="Author">
+            { `From: ${mail.author}` }
+        </Typography>
+        <br/>
+        <Typography paragraph title="Content">
+            { mail.content}
+        </Typography>                
+    </Dialog>
+
 
 export default MailPreview;

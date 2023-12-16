@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Grid } from "@mui/material"
 
-import { AuthForm } from "./AuthForm";
+import AuthForm from "./authForm";
 import PageContainer from "../common/PageContainer";
 
 const styles = {
@@ -12,7 +12,7 @@ const styles = {
     }
 };
 
-export const AuthPage: FC = () => 
+export const Auth: FC = () => 
     <PageContainer>
         <Grid item sx={styles.formContainer}>
             <AuthForm/>

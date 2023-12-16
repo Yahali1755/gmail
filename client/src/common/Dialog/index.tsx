@@ -1,20 +1,18 @@
-import { Dialog as MuiDialog, DialogContent, DialogTitle, SxProps, Slide, Paper, PaperProps, DialogActions, Breakpoint, DialogContentProps } from '@mui/material';
+import { Dialog as MuiDialog, DialogContent, DialogTitle, SxProps, Slide, Paper, PaperProps, DialogActions, Breakpoint, DialogProps as MuiDialogProps, DialogContentProps, DialogTitleProps } from '@mui/material';
 import React, { FC, ReactNode } from 'react';
 import { TransitionProps } from '@mui/material/transitions';
 import Draggable from 'react-draggable';
 
 import CloseButton from './CloseButton';
 
-export interface DialogProps {
-  isOpen: boolean
+export interface DialogProps extends MuiDialogProps {
   close: () => void
   dialogTitle?: string
-  children: ReactNode
-  sx?: SxProps
   dialogActions?: ReactNode
-  dialogContentStyles?: SxProps
+  dialogContentProps?: DialogContentProps
+  dialogTitleProps?: DialogTitleProps
   fullWidth?: boolean
-  maxWidth?: Breakpoint;
+  maxWidth?: Breakpoint
 }
 
 const styles = {
@@ -28,14 +26,8 @@ const styles = {
   }
 }
 
-const Transition = React.forwardRef((
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>,
-) => {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const Transition = React.forwardRef((props: TransitionProps & {children: React.ReactElement<any, any>;},ref: React.Ref<unknown>) => 
+  <Slide direction="up" ref={ref} {...props} />)
 
 const DraggablePaper = (props: PaperProps) =>
       <Draggable
@@ -45,16 +37,14 @@ const DraggablePaper = (props: PaperProps) =>
         <Paper {...props} />
       </Draggable>
   
-
-
-const Dialog: FC<DialogProps> = ({ sx, children, isOpen, close, dialogTitle, dialogActions, fullWidth, maxWidth, dialogContentStyles }) => 
-    <MuiDialog PaperComponent={DraggablePaper} fullWidth={fullWidth ?? true} maxWidth={maxWidth} 
-      TransitionComponent={Transition} sx={sx} open={isOpen} onClose={close}>
+const Dialog: FC<DialogProps> = ({ sx, children, open, close, dialogTitle, fullWidth, maxWidth, dialogContentProps, dialogTitleProps, dialogActions }) => 
+    <MuiDialog PaperComponent={DraggablePaper} fullWidth={fullWidth} maxWidth={maxWidth} 
+      TransitionComponent={Transition} sx={sx} open={open} onClose={close}>
         {
           dialogTitle && 
-            <DialogTitle id="draggable-dialog-title" sx={styles.dialogTitle}> { dialogTitle }</DialogTitle>
+            <DialogTitle id="draggable-dialog-title" {...dialogTitleProps} sx={{...styles.dialogTitle, ...dialogTitleProps?.sx}}> { dialogTitle }</DialogTitle>
         }
-        <DialogContent sx={dialogContentStyles}>
+        <DialogContent {...dialogContentProps}>
           { children }
         </DialogContent>
         <DialogActions>

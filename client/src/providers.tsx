@@ -1,6 +1,8 @@
 import { ReactNode, FC } from "react"
-
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from "./theme/ThemeProvider";
+
+const queryClient = new QueryClient()
 
 interface ProvidersProps {
     children: ReactNode
@@ -9,7 +11,9 @@ interface ProvidersProps {
 const Providers: FC<ProvidersProps> = ({ children}) =>
     <>
         <ThemeProvider>
-            { children }
+            <QueryClientProvider client={queryClient}>
+                { children }
+            </QueryClientProvider>
         </ThemeProvider>
     </>
 
