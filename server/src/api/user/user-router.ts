@@ -3,42 +3,36 @@ import jwt from "jsonwebtoken"
 
 import { User } from "../../models/User";
 import { logger } from "../../utils/logger";
+import { generateTokens } from "./user-handler";
 
 const router = express.Router();
 
-router.get('/', 
-    (req, res, next) => {
-        res.send('yes')
-    },
-)
-
 router.post('/login', 
     (req, res) => {
-    const user = { id: 1, username: 'example_user' };
+        const { email, password, rememberMe } = req.body;
 
-    const token = jwt.sign(user, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
-    res.json({ token });
+        const user = { id: 1, username: 'example_user' };
+
+        const token = jwt.sign(user, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
+
+        res.json({ token });
     }
 );
 
 router.post('/register', 
     async (req, res) => {
-        try {
-            const user = req.body
-            const newUser = new User({...user})
+        const user = req.body;
+        const { email, password, rememberMe } = user
 
-            await newUser.save();
+        const newUser = new User({email, password})
 
-            const token = jwt.sign(user, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
-            res.json({ token });
-        
-            logger.info('User created successfully:', user);
-        } 
-        catch (error) {
-            logger.error('Error creating user:', error.message);
+        await newUser.save();
 
-            console.log(error.message)
-        }
+        const { accessToken, refreshToken } = generateTokens({ email, password});
+
+        res.json({ accessToken, refreshToken });
+    
+        logger.info('User created successfully:', user);
     }
 );
 

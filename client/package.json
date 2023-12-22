@@ -3,7 +3,9 @@
   "dependencies": {
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.11.2",
+    "@types/lodash": "^4.14.202",
     "axios": "^1.6.2",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",

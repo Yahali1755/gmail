@@ -3,9 +3,7 @@
     "target": "es6",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "paths": {
-      "@common/*": ["./common/*"]
-    }
   },
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

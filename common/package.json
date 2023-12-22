@@ -1,0 +1,22 @@
+{
+  "name": "common",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.6",
+    "@babel/preset-env": "^7.23.6",
+    "@babel/preset-typescript": "^7.23.3",
+    "nodemon": "^3.0.2",
+    "typescript": "^5.3.3"
+  },
+  "scripts": {
+    "build": "babel --extensions .ts ./src -d ./dist",
+    "dev": "nodemon"
+  },
+  "_moduleAliases": {
+    "@common": "./common/dist"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.3"
+  }
+}

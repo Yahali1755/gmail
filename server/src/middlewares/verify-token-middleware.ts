@@ -1,29 +1,21 @@
 import jwt from "jsonwebtoken"
-import { logger } from "../utils/logger";
+import { NoTokenError } from "../errors/NoTokenError";
+import { InvalidTokenError } from "../errors/InvalidTokenError";
 
 export const verifyToken = (req, res, next) => {
-    if (req.path === '/user/login' || req.path === '/user/register') {
-        next();
-
-        return;
-    }
-
     const token = req.header('Authorization');
   
     if (!token) {
-      return res.status(401).json({ message: 'Unauthorized - No token provided' });
+      throw new NoTokenError()
     }
   
     const tokenWithoutBearer = token.split(" ")[1];
 
-    jwt.verify(tokenWithoutBearer, process.env.TOKEN_SECRET_KEY, (error, decoded) => {
-      console.log(error)
+    jwt.verify(tokenWithoutBearer, process.env.TOKEN_SECRET_KEY, (error) => {
       if (error) {
-        return res.status(401).json({ message: 'Unauthorized - Invalid token' });
+        throw new InvalidTokenError();
       }
-  
-      req.user = decoded;
-
-      next();
     });
+
+    next();
 };

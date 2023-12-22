@@ -1,4 +1,6 @@
 /server/node_modules
 /client/node_modules
+/common/node_modules
 
 /server/.env
+/common/dist
