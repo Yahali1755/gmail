@@ -1,12 +1,14 @@
-import { Dialog as MuiDialog, DialogContent, DialogTitle, SxProps, Slide, Paper, PaperProps, DialogActions, Breakpoint, DialogProps as MuiDialogProps, DialogContentProps, DialogTitleProps } from '@mui/material';
+import { Dialog as MuiDialog, DialogContent, DialogTitle, SxProps, Slide, Paper, PaperProps, DialogActions, Breakpoint, 
+  DialogProps as MuiDialogProps, DialogContentProps, DialogTitleProps } from '@mui/material';
 import React, { FC, ReactNode } from 'react';
 import { TransitionProps } from '@mui/material/transitions';
 import Draggable from 'react-draggable';
 
 import CloseButton from './CloseButton';
 
-export interface DialogProps extends MuiDialogProps {
+export interface DialogProps extends Omit< MuiDialogProps, 'open'> {
   close: () => void
+  isOpen: boolean
   dialogTitle?: string
   dialogActions?: ReactNode
   dialogContentProps?: DialogContentProps
@@ -18,8 +20,7 @@ export interface DialogProps extends MuiDialogProps {
 const styles = {
   closeButton: {
     position: "absolute", 
-    right: 0, 
-    top: 0
+    right: 0
   }, 
   dialogTitle: {
     cursor: "move"
@@ -37,18 +38,17 @@ const DraggablePaper = (props: PaperProps) =>
         <Paper {...props} />
       </Draggable>
   
-const Dialog: FC<DialogProps> = ({ sx, children, open, close, dialogTitle, fullWidth, maxWidth, dialogContentProps, dialogTitleProps, dialogActions }) => 
+const Dialog: FC<DialogProps> = ({ sx, children, isOpen, close, dialogTitle, fullWidth, maxWidth, dialogContentProps, dialogTitleProps, dialogActions }) => 
     <MuiDialog PaperComponent={DraggablePaper} fullWidth={fullWidth} maxWidth={maxWidth} 
-      TransitionComponent={Transition} sx={sx} open={open} onClose={close}>
-        {
-          dialogTitle && 
-            <DialogTitle id="draggable-dialog-title" {...dialogTitleProps} sx={{...styles.dialogTitle, ...dialogTitleProps?.sx}}> { dialogTitle }</DialogTitle>
-        }
+      TransitionComponent={Transition} sx={sx} open={isOpen} onClose={close}>
+        <DialogTitle id="draggable-dialog-title" {...dialogTitleProps} sx={{...styles.dialogTitle, ...dialogTitleProps?.sx}}> 
+          <CloseButton sx={styles.closeButton} onClick={close}/>
+          { dialogTitle }
+        </DialogTitle>
         <DialogContent {...dialogContentProps}>
           { children }
         </DialogContent>
         <DialogActions>
-          <CloseButton sx={styles.closeButton} onClick={close}/>
           {
             dialogActions
           }

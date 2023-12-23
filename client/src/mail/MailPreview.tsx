@@ -18,7 +18,7 @@ const styles: Record<string, SxProps> = {
 
 const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, mail }) => 
     <Dialog dialogContentProps={{sx: styles.dialogSize}} dialogTitleProps={{sx: {fontWeight: "bold"}}} sx={styles.dialog} 
-        dialogTitle={mail.subject} open={isOpen} close={close}>
+        dialogTitle={mail.subject} isOpen={isOpen} close={close}>
         <Typography sx={{fontWeight: "bold"}} title="Author">
             { `From: ${mail.author}` }
         </Typography>

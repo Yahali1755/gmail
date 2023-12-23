@@ -1,10 +1,11 @@
 import { FC, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
+import Form from "../common/form/Form";
 
 const styles = {
   formTitle: {
@@ -26,8 +27,16 @@ const AuthForm: FC = () => {
   const password = watch('Password');
   const confirmPassword = watch('ConfirmPassword');
 
+  const submit = () => {
+    if (isRegisterForm && password !== confirmPassword) {
+      setIsInvalidConfirm(true);
+
+      return;
+    }
+  }
+
   return (
-    <FormProvider {...formMethods}>
+    <Form onSubmit={submit} formMethods={formMethods}>
         <Grid container width='100%' flexDirection='column' alignItems='center' spacing={3}>
           <Grid item> 
             <Typography sx={styles.formTitle}> {isRegisterForm ? "Create Account" : "Sign Up"} </Typography>
@@ -52,19 +61,11 @@ const AuthForm: FC = () => {
                 </Grid>
             }
             <Grid position="absolute" left="73%" xs={3} item>
-              <SubmitButton label='Save' onClick={handleSubmit(() => {
-                if (isRegisterForm && password !== confirmPassword) {
-                  setIsInvalidConfirm(true);
-
-                  return;
-                }
-                
-                navigate('/mail')
-              })}/> 
+              <SubmitButton label='Save'/> 
             </Grid>
           </Grid>
         </Grid>
-    </FormProvider>
+    </Form>
   )
 }
 

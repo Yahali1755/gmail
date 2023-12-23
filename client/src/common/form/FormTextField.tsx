@@ -9,7 +9,7 @@ interface FormTextFieldProps extends BaseTextFieldProps {
 }
 
 const FormTextField: FC<FormTextFieldProps> = ({ name, label, customErrorMessage, required, minLength, validationRegEx, ...props }) => {
-    const { control } = useFormContext()
+    const { control, formState } = useFormContext()
 
     const {field: { onChange, value }, fieldState: {invalid, error}} = useController({
         name,
@@ -24,7 +24,8 @@ const FormTextField: FC<FormTextFieldProps> = ({ name, label, customErrorMessage
                 value: validationRegEx,
                 message: `Invalid ${name.toLowerCase()}`
             }
-        }
+        },
+        defaultValue: ""
     });
 
     return (

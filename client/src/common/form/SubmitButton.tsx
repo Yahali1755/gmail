@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Button, ButtonProps } from "@mui/material"
 
-interface SubmitButtonProps extends ButtonProps {
+interface SubmitButtonProps extends Omit<ButtonProps, "onClick"> {
     label?: string
 }
 
 const SubmitButton: FC<SubmitButtonProps> = ({label, sx, ...props}) => 
-    <Button {...props} sx={{...sx, textTransform: "none"}} variant="contained"> 
+    <Button type="submit" {...props} sx={{...sx, textTransform: "none"}} variant="contained"> 
         { label || "Submit" }
     </Button>
 
