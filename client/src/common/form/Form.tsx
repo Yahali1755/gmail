@@ -8,17 +8,9 @@ interface FormProps {
 }
 
 const Form: FC<FormProps> = ({ onSubmit, formMethods, children }) => {
-    const handleSubmit = (event) => {
-        event.preventDefault()
-
-        formMethods.handleSubmit(onSubmit, (e) => {
-            console.log('yes')
-        })
-    }
-
     return (
         <FormProvider {...formMethods}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={formMethods.handleSubmit(onSubmit)}>
             {
                 children
             }

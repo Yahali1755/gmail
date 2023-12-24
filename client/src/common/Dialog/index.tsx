@@ -1,4 +1,4 @@
-import { Dialog as MuiDialog, DialogContent, DialogTitle, SxProps, Slide, Paper, PaperProps, DialogActions, Breakpoint, 
+import { Dialog as MuiDialog, DialogContent, DialogTitle, Slide, Paper, PaperProps, DialogActions, Breakpoint, 
   DialogProps as MuiDialogProps, DialogContentProps, DialogTitleProps } from '@mui/material';
 import React, { FC, ReactNode } from 'react';
 import { TransitionProps } from '@mui/material/transitions';
@@ -6,9 +6,8 @@ import Draggable from 'react-draggable';
 
 import CloseButton from './CloseButton';
 
-export interface DialogProps extends Omit< MuiDialogProps, 'open'> {
-  close: () => void
-  isOpen: boolean
+export interface DialogProps extends MuiDialogProps {
+  onClose: () => void
   dialogTitle?: string
   dialogActions?: ReactNode
   dialogContentProps?: DialogContentProps
@@ -38,11 +37,11 @@ const DraggablePaper = (props: PaperProps) =>
         <Paper {...props} />
       </Draggable>
   
-const Dialog: FC<DialogProps> = ({ sx, children, isOpen, close, dialogTitle, fullWidth, maxWidth, dialogContentProps, dialogTitleProps, dialogActions }) => 
+const Dialog: FC<DialogProps> = ({ sx, children, open, onClose, dialogTitle, fullWidth, maxWidth, dialogContentProps, dialogTitleProps, dialogActions }) => 
     <MuiDialog PaperComponent={DraggablePaper} fullWidth={fullWidth} maxWidth={maxWidth} 
-      TransitionComponent={Transition} sx={sx} open={isOpen} onClose={close}>
+      TransitionComponent={Transition} sx={sx} open={open} onClose={onClose}>
         <DialogTitle id="draggable-dialog-title" {...dialogTitleProps} sx={{...styles.dialogTitle, ...dialogTitleProps?.sx}}> 
-          <CloseButton sx={styles.closeButton} onClick={close}/>
+          <CloseButton sx={styles.closeButton} onClick={onClose}/>
           { dialogTitle }
         </DialogTitle>
         <DialogContent {...dialogContentProps}>

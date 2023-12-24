@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { UseFormReturn, useForm } from 'react-hook-form';
+import { FC, ReactNode } from 'react';
+import { UseFormReturn } from 'react-hook-form';
 
 import Dialog from "../Dialog"
 import { DialogProps } from '../Dialog';
@@ -9,11 +9,14 @@ import Form from './Form';
 interface FormDialogProps extends DialogProps {
   formMethods: UseFormReturn,
   onSubmit: () => void
+  children: ReactNode
 }
 
-const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, ...dialogProps }) => 
+const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, ...dialogProps }) =>
+  <Dialog {...dialogProps} dialogActions={<SubmitButton/>}>
     <Form formMethods={formMethods} onSubmit={onSubmit}>
-      <Dialog {...dialogProps} dialogActions={<SubmitButton/>}/>
+      { children }
     </Form>
+  </Dialog>
 
 export default FormDialog;
