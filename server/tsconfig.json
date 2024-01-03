@@ -3,9 +3,8 @@
     "target": "es6",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "paths": {
-      "@common/*": ["./common/*"]
-    }
+    "outDir": "./dist",
+    "rootDir": "./src",
   },
   "exclude": ["node_modules"]
 }

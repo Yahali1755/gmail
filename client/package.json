@@ -16,7 +16,8 @@
   },
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "prepare": "npm link ../common"
   },
   "browserslist": {
     "production": [
