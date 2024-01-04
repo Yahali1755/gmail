@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, ButtonProps } from "@mui/material"
 
-interface SubmitButtonProps extends Omit<ButtonProps, "onClick"> {
+export interface SubmitButtonProps extends Omit<ButtonProps, "onClick"> {
     label?: string
 }
 

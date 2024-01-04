@@ -19,7 +19,11 @@ const defaultActions: ApiActions = {
     delete: {
         method: 'DELETE'
     },
-    query: {
+    get: {
+        method: 'GET',
+        url: '/:id'
+    },
+    getAll: {
         method: 'GET'
     }
 }

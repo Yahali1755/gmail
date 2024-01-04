@@ -1,5 +1,5 @@
 {
-  "name": "mail-common",
+  "name": "@mail/common",
   "version": "1.0.0",
   "main": "./dist/index.ts",
   "devDependencies": {
@@ -13,11 +13,5 @@
   "scripts": {
     "build": "babel --extensions .ts ./src -d dist && tsc",
     "dev": "nodemon"
-  },
-  "_moduleAliases": {
-    "@common": "./common/dist"
-  },
-  "dependencies": {
-    "module-alias": "^2.2.3"
   }
 }

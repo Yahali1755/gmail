@@ -37,7 +37,8 @@ const DraggablePaper = (props: PaperProps) =>
         <Paper {...props} />
       </Draggable>
   
-const Dialog: FC<DialogProps> = ({ sx, children, open, onClose, dialogTitle, fullWidth, maxWidth, dialogContentProps, dialogTitleProps, dialogActions }) => 
+const Dialog: FC<DialogProps> = ({ sx, children, open, onClose, dialogTitle, fullWidth, maxWidth, dialogContentProps, 
+  dialogTitleProps, dialogActions}) => 
     <MuiDialog PaperComponent={DraggablePaper} fullWidth={fullWidth} maxWidth={maxWidth} 
       TransitionComponent={Transition} sx={sx} open={open} onClose={onClose}>
         <DialogTitle id="draggable-dialog-title" {...dialogTitleProps} sx={{...styles.dialogTitle, ...dialogTitleProps?.sx}}> 

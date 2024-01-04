@@ -16,7 +16,7 @@ const styles = {
 
 const AuthForm: FC = () => {
   const formMethods = useForm();
-  const { watch, handleSubmit } = formMethods;
+  const { watch } = formMethods;
   const navigate = useNavigate();
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const [isInvalidConfirm, setIsInvalidConfirm] = useState(false);
@@ -33,6 +33,8 @@ const AuthForm: FC = () => {
 
       return;
     }
+
+    navigate("/mail");
   }
 
   return (

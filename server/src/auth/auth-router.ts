@@ -1,8 +1,9 @@
 import express from "express"
 import jwt from "jsonwebtoken";
 
+import { UserViewModel } from "@mail/common"
+
 import { InvalidTokenError } from "../errors/InvalidTokenError";
-import { UserViewModel } from "../../../common/src/view-models/User";
 import { generateTokens } from "../api/user/user-handler";
 
 const router = express.Router();

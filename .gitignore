@@ -3,5 +3,5 @@
 /common/node_modules
 
 /server/.env
-/common/dist
+dist
 /client/build
