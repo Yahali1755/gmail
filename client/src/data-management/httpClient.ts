@@ -10,11 +10,7 @@ export const getHttpClient = (token: string) => {
   });
 
   const sendRequest = async ({method, url}: AxiosRequestConfig): Promise<AxiosResponse<any>> => {
-    try {
       return await axiosInstance.request({method, url});
-    } catch (error) {
-      console.error(error.stack)
-    }
   };
 
   return { 

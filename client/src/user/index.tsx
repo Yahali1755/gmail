@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Grid } from "@mui/material"
 
-import AuthForm from "./AuthForm";
+import LoginForm from "./LoginForm";
 import PageContainer from "../common/PageContainer";
 
 const styles = {
@@ -12,9 +12,9 @@ const styles = {
     }
 };
 
-export const Auth: FC = () => 
+export const Login: FC = () => 
     <PageContainer>
         <Grid item sx={styles.formContainer}>
-            <AuthForm/>
+            <LoginForm/>
         </Grid>
     </PageContainer>

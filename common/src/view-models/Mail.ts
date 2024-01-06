@@ -1,8 +1,9 @@
 export interface MailViewModel {
     author: string
-    sentTo: string,
+    recipients: string[],
+    subject: string
     content: string
     uploadedAt: Date
     isRead: boolean
-    isImportant: boolean
+    isStarred: boolean
 }

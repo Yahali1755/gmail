@@ -1,12 +1,11 @@
 import express, { Router, json, Express } from "express"
-import userRouter from "../api/user/user-router"
+import authRouter from "../auth/auth-router"
 import { errorMiddleware } from "../middlewares/error-middleware";
 import { logMiddleware } from "../middlewares/log-middleware";
 import { logger } from "../utils/logger";
 import { verifyToken } from "../middlewares/verify-token-middleware";
 import apiRouter from "../api/api-router";
-
-require('dotenv').config();
+import 'dotenv/config'
 
 interface Route {
     path: string
@@ -14,8 +13,8 @@ interface Route {
 }
 
 const configureRoutes = (app: Express) => {
-    app.use("/user", userRouter)
-    app.use("/api", verifyToken, apiRouter);
+    app.use("/user", authRouter)
+    app.use("/api", apiRouter);
 } 
 
 export default () => {

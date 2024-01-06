@@ -18,13 +18,14 @@ export interface LoginData {
 }
 
 interface AuthContextProps {
-    loginData: LoginData,
+    token: string,
+    user: UserViewModel
     login: (user: UserViewModel) => void
     register: (user: UserViewModel) => void
 }
 
 const AuthContext = createContext({} as AuthContextProps)
-const useAuth = useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const [loginData, setLoginData] = useState<LoginData>({} as LoginData)
@@ -78,7 +79,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                         </Grid>
                     </Grid> 
                 :
-                <AuthContext.Provider value={{loginData, login, register}}>
+                <AuthContext.Provider value={{...loginData, login, register}}>
                     <Dialog dialogActions={<Button onClick={() => location.reload()}> refresh </Button>} 
                         open={hasTokenExpired} onClose={() => location.reload()}>
                         <Typography>

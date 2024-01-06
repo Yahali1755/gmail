@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { UserViewModel } from "@mail/common";
+
 import { LoginData } from "../contexts/auth";
 
 export const loginRequest = (user: UserViewModel) => axios.post<LoginData>("/auth/login", user)

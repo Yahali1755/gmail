@@ -14,7 +14,7 @@ const styles = {
   }
 };
 
-const AuthForm: FC = () => {
+const LoginForm: FC = () => {
   const formMethods = useForm();
   const { watch } = formMethods;
   const navigate = useNavigate();
@@ -71,4 +71,4 @@ const AuthForm: FC = () => {
   )
 }
 
-export default AuthForm;
+export default LoginForm;

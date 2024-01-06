@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
   password: String,
-  email: {
+  mail: {
     type: String,
     required: true,
     unique: true,
@@ -15,4 +15,4 @@ const userSchema = new Schema({
   }
 });
 
-export const User = model('User', userSchema);
+export const UserModel = model('User', UserSchema);

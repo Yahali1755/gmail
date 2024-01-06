@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 
 import Mail from "../mail";
-import { Auth } from "../user";
+import { Login } from "../user";
 import { Route } from "../constants/route";
 
 export const router = createBrowserRouter([ 
@@ -11,6 +11,6 @@ export const router = createBrowserRouter([
   },
   {
     path: Route.Login,
-    element: <Auth/>
+    element: <Login/>
   }, 
 ]);
