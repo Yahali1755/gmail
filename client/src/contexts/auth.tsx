@@ -4,7 +4,6 @@ import { UserViewModel } from "@mail/common"
 
 import { CircularProgress, Typography, Grid, Button } from "@mui/material"
 import { loginRequest, me, registerRequest } from "../services/auth"
-import { useNavigate } from "react-router-dom"
 import { Route } from "../constants/route"
 import Dialog from "../common/Dialog"
 
@@ -31,7 +30,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const [loginData, setLoginData] = useState<LoginData>({} as LoginData)
     const [isLoading, setIsLoading] = useState(true)
     const [hasTokenExpired, setIsTokenExpired] = useState(false)
-    const navigate = useNavigate()
 
     const isTokenExpired = (token: string) => {
         return false
@@ -56,11 +54,9 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
             me(token).then(({ data }) => {
                 setLoginData({token: data.token, user: data.user })
                 setIsLoading(false)
-                navigate(Route.Mail)
             }) 
         } else {
             setIsLoading(false)
-            navigate(Route.Login)
         }
     }, [])
 
