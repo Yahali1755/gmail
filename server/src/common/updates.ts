@@ -7,13 +7,15 @@ interface Updates {
     deleteEntity<T>(model: Model<T>): RequestHandler
 }
 
-const okStatus = 200;
-
 export const updates: Updates = {
     insertEntity: (model) => async (req, res, next) => {
-        const newEntity = new model(model.schema, res.locals.entity)
+        const newEntity = new model(model.schema, res.locals.entity ? res.locals.entity : req.body)
 
-        newEntity.save();
+        await newEntity.save();
+
+        const entity = await model.findById(newEntity._id).lean();
+
+        res.locals.entity = entity;
 
         next()
     },

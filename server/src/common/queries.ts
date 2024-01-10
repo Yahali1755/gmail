@@ -8,14 +8,14 @@ interface Queries {
 
 export const queries: Queries = {
     findEntityById: (model) => async (req, res, next) => {
-        const entity = await model.findById(req.params.id);
+        const entity = await model.findById(req.params.id).lean();
 
         res.locals.entity = entity;
 
         next()
     },
     findEntities: (model) => async (req, res, next) => {
-        const entities = await model.find({});
+        const entities = await model.find({}).lean();
 
         res.locals.entities = entities;
 

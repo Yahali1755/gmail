@@ -14,7 +14,10 @@ interface FormDialogProps extends DialogProps {
 }
 
 const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, submitButtonProps, ...dialogProps }) =>
-  <Dialog dialogActions={<SubmitButton {...submitButtonProps}/>} {...dialogProps}>
+  <Dialog {...dialogProps}
+    dialogActions={
+      <SubmitButton {...submitButtonProps}/>
+    }>
     <Form formMethods={formMethods} onSubmit={onSubmit}>
       { children }
     </Form>
