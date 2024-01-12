@@ -1,24 +1,18 @@
 import { RequestHandler } from "express";
 import { Model } from "mongoose";
 
-interface Queries {
-    findEntityById<T>(model: Model<T>): RequestHandler,
-    findEntities<T>(model: Model<T>): RequestHandler,
+export const findEntityById = <T extends Document>(model: Model<T>): RequestHandler<{id: string}, {}, {}, {entity: T}> => async (req, res, next) => {
+    const entity = await model.findById(req.params.id).lean();
+
+    res.locals.entity = entity;
+
+    next()
 }
 
-export const queries: Queries = {
-    findEntityById: (model) => async (req, res, next) => {
-        const entity = await model.findById(req.params.id).lean();
+export const findEntities = <T extends Document>(model: Model<T>): RequestHandler<{id: string}, {}, {}, {entities: T[]}> => async (req, res, next) => {
+    const entities = await model.find({}).lean();
 
-        res.locals.entity = entity;
+    res.locals.entities = entities;
 
-        next()
-    },
-    findEntities: (model) => async (req, res, next) => {
-        const entities = await model.find({}).lean();
-
-        res.locals.entities = entities;
-
-        next()
-    }
+    next()
 }
