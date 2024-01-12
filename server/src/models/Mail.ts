@@ -1,4 +1,14 @@
-import { Schema, model } from 'mongoose';
+import { Date, Schema, model, Document } from 'mongoose';
+
+export interface MailDocument extends Document {
+  recipients: string[]
+  subject: string
+  author: string
+  isRead: boolean
+  content: string
+  isStarred: boolean
+  createdAt: Date
+}
 
 const MailSchema = new Schema({
   recipients: {type: Array<String>, required: true},
@@ -14,4 +24,4 @@ const MailSchema = new Schema({
   }
 });
 
-export const MailModel = model('Mail', MailSchema);
+export const MailModel = model<MailDocument>('mail', MailSchema);

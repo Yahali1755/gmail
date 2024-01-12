@@ -1,20 +1,25 @@
 import jwt from "jsonwebtoken"
-import { NoTokenError } from "../errors/NoTokenError";
-import { InvalidTokenError } from "../errors/InvalidTokenError";
+import { RequestHandler } from "express";
 
-export const verifyToken = (req, res, next) => {
+import { UserViewModel } from "@mail/common";
+
+import UnauthorizedError from "../errors/UnauthorizedError";
+
+export const verifyToken: RequestHandler<{}, {}, {}, {}, {user: UserViewModel}> = (req, res, next) => {
     const token = req.header('Authorization');
   
     if (!token) {
-      throw new NoTokenError()
+      throw new UnauthorizedError("no token provided")
     }
   
-    const tokenWithoutBearer = token.split(" ")[1];
+    const tokenWithoutBearer = token.replace("Bearer ", "");
 
-    jwt.verify(tokenWithoutBearer, process.env.TOKEN_SECRET_KEY, (error) => {
+    jwt.verify(tokenWithoutBearer, process.env.TOKEN_SECRET_KEY, (error, decodedPayload) => {
       if (error) {
-        throw new InvalidTokenError();
+        throw new UnauthorizedError("invalid token")
       }
+
+      res.locals.user = decodedPayload as UserViewModel;
     });
 
     next();

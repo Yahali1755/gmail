@@ -1,4 +1,9 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
+
+export interface UserDocument extends Document {
+  password: string,
+  mail: string
+} 
 
 const UserSchema = new Schema({
   password: String,
@@ -15,4 +20,4 @@ const UserSchema = new Schema({
   }
 });
 
-export const UserModel = model('User', UserSchema);
+export const UserModel = model<UserDocument>('user', UserSchema);

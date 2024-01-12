@@ -1,9 +1,9 @@
 import mongoose from "mongoose"
 
-export default () => {
-    mongoose.connect(process.env.MONGO_CONNECTION_STRING);
+import { logger } from "../logger";
 
-    mongoose.connection.on('connected', () => {
-        console.log('Connected to MongoDB');
+export default async () => {
+    await mongoose.connect(process.env.MONGO_CONNECTION_STRING).then(() => {
+        logger.info('Connected to MongoDB');
     });
 }

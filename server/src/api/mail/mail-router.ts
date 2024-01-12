@@ -1,20 +1,24 @@
 import express from "express"
-import { queries } from "../../common/queries";
-import { MailModel } from "../../models/Mail";
+
+import { findAllEntities, findEntityById } from "../../common/queries";
+import { MailModel } from "../../models/mail";
 import { MailMapper } from "./mail-mapper";
-import { responses } from "../../common/responses";
+import { sendEntities, sendEntity } from "../../common/responses";
 
 const router = express.Router();
 const mailMapper = new MailMapper()
 
 router.get('/',
-    queries.findEntities(MailModel),
-    responses.sendEntities
+    findAllEntities(MailModel),
+    sendEntities
 )
 
 router.get('/:id',
-    queries.findEntityById(MailModel),
-    responses.sendEntity
+    findEntityById(MailModel),
+    sendEntity
 )
 
-export default router;
+export default {
+    router,
+    path: "/mail"
+};

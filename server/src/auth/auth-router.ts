@@ -1,8 +1,8 @@
 import express from "express"
 
-import { UserModel } from "../models/User";
+import { UserModel } from "../models/user";
 import { ensureMailUniqness, generateToken, sendLoginData, verifyUser } from "./auth-handlers";
-import { updates } from "../common/updates";
+import { insertEntity } from "../common/updates";
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.post('/login',
 
 router.post('/register',
     ensureMailUniqness,
-    updates.insertEntity(UserModel),
+    insertEntity(UserModel),
     generateToken,
     sendLoginData
 );

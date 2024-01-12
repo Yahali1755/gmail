@@ -1,32 +1,30 @@
 import { RequestHandler } from "express";
-import { Model } from "mongoose";
+import { Document, Model } from "mongoose";
 
-interface Updates {
-    insertEntity<T>(model: Model<T>): RequestHandler,
-    updateEntity<T>(model: Model<T>): RequestHandler,
-    deleteEntity<T>(model: Model<T>): RequestHandler
+export const insertEntity = <T extends Document>(model: Model<T>): RequestHandler<{}, {}, {}, {}, {entity: T}> => async ({ body }, res, next) => {
+    const newEntity = new model(body)
+
+    await newEntity.save();
+
+    const entity = await model.findById(newEntity._id);
+
+    res.locals.entity = entity;
+
+    next()
 }
 
-export const updates: Updates = {
-    insertEntity: (model) => async (req, res, next) => {
-        const newEntity = new model(model.schema, res.locals.entity ? res.locals.entity : req.body)
+export const updateEntity = <T extends Document>(model: Model<T>): RequestHandler<{id: string}, {}, {}, {}, {entity: T}> => async (req, res, next) => {
+    await model.updateOne({_id: req.params.id}, req.body);
 
-        await newEntity.save();
+    const entity = await model.findById({_id: req.params.id}, req.body);
 
-        const entity = await model.findById(newEntity._id).lean();
+    res.locals.entity = entity;
 
-        res.locals.entity = entity;
+    next()
+}
 
-        next()
-    },
-    updateEntity: (model) => async (req, res, next) => {
-        model.updateOne(res.locals.entity._id, res.locals.entity);
+export const deleteEntity = <T extends Document>(model: Model<T>): RequestHandler<{id: string}, {}, {}, {}, {entity: T}> => async (req, res, next) => {
+    await model.deleteOne({_id: req.params.id});
 
-        next()
-    },
-    deleteEntity: (model) => async (req, res, next) => {
-        model.deleteOne(res.locals.entity._id);
-
-        next()
-    }
+    next()
 }

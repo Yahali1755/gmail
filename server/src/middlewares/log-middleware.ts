@@ -1,6 +1,8 @@
-import { logger } from "../utils/logger";
+import { RequestHandler } from "express";
 
-export const logMiddleware = (req, res, next) => {
+import { logger } from "../logger";
+
+export const logMiddleware: RequestHandler = (req, res, next) => {
     res.on('finish', () => {
         logger.info(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
     })
