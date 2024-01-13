@@ -17,22 +17,32 @@ export const sendLoginData: RequestHandler<{}, {}, {}, {}, {user: UserViewModel,
     res.send({ token: res.locals.token, user: res.locals.user})
 }
 
-export const verifyUser: RequestHandler = async ({body: { mail, password }}, res, next) => {
-    const user = await UserModel.findOne({ mail });
+export const verifyUser: RequestHandler = async ({body: { email, password }}, res, next) => {
+    const user = await UserModel.findOne({ email });
 
     if(!user) {
-        res.status(400).send("Mail address isn't found")
+        console.log("Email address isn't found")
+
+        res.status(400).send("Email address isn't found")
+
+        return;
     }
 
     if (user && user.password !== password) {
+        console.log("Wrong password")
+
         res.send(400).send("Wrong password")
+
+        return;
     }
+
+    console.log(user)
 
     next()
 }
 
-export const ensureMailUniqness: RequestHandler = async ({body: { mail }}, res, next) => {
-    const existingUser = await UserModel.findOne({ mail });
+export const ensureEmailUniqness: RequestHandler = async ({body: { email }}, res, next) => {
+    const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
         res.send(400).send("email address in use")

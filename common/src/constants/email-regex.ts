@@ -1,1 +1,1 @@
-export const emailRegex = /\S+@\S+\.\S+/;
+export const EMAIL_REGEX = /\S+@\S+\.\S+/;

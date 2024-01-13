@@ -9,7 +9,7 @@ interface ProvidersProps {
     children: ReactNode
 }
 
-const Providers: FC<ProvidersProps> = ({ children}) =>
+const Providers: FC<ProvidersProps> = ({ children }) =>
     <>
         <ThemeProvider>
             <QueryClientProvider client={queryClient}>

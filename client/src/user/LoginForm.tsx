@@ -3,9 +3,12 @@ import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+import { EMAIL_REGEX } from "@mail/common";
+
 import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
 import Form from "../common/form/Form";
+import { useAuth } from "../contexts/auth";
 
 const styles = {
   formTitle: {
@@ -20,19 +23,22 @@ const LoginForm: FC = () => {
    const { watch } = formMethods;
   const navigate = useNavigate();
   const [isRegisterForm, setIsRegisterForm] = useState(false);
-  const [isInvalidConfirm, setIsInvalidConfirm] = useState(false);
-
-  const passwordsDoNotMatchErrorMessage = "Passwords do not match"
-  const emailRegEx = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
-
+  const { login, register } = useAuth();
+  
   const password = watch('Password');
   const confirmPassword = watch('Confirm');
 
-  const submit = () => {
+  const submit = (data) => {
     if (isRegisterForm && password !== confirmPassword) {
       setError("InvalidConfirm", { message: "Passwords do not match"})
 
       return;
+    }
+
+    if (isRegisterForm) {
+      register(data)
+    } else {
+      login(data)
     }
 
     navigate("/mail");
@@ -51,7 +57,7 @@ const LoginForm: FC = () => {
             <Typography sx={styles.formTitle}> {isRegisterForm ? "Create Account" : "Sign Up"} </Typography>
           </Grid> 
           <Grid width="80%" item> 
-            <FormTextField required validationRegEx={emailRegEx} fullWidth autoFocus name="Email"/>
+            <FormTextField required validationRegEx={/\S+@\S+\.\S+/} fullWidth autoFocus name="Email"/>
           </Grid>
           <Grid width="80%" item> 
             <FormTextField required minLength={8} fullWidth name="Password"/>

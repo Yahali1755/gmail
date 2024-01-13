@@ -1,3 +1,2 @@
-import 'module-alias/register'
-
 export * from "./view-models"
+export * from "./constants"

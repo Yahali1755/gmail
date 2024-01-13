@@ -1,6 +1,6 @@
 import { Date, Schema, model, Document } from 'mongoose';
 
-export interface MailDocument extends Document {
+export interface EmailDocument extends Document {
   recipients: string[]
   subject: string
   author: string
@@ -10,7 +10,7 @@ export interface MailDocument extends Document {
   createdAt: Date
 }
 
-const MailSchema = new Schema({
+const EmailSchema = new Schema({
   recipients: {type: Array<String>, required: true},
   subject: {type: String, required: true},
   author: {type: String, required: true},
@@ -24,4 +24,4 @@ const MailSchema = new Schema({
   }
 });
 
-export const MailModel = model<MailDocument>('mail', MailSchema);
+export const EmailModel = model<EmailDocument>('email', EmailSchema);

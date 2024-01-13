@@ -1,6 +1,6 @@
 import { TableCell, TableRow} from '@mui/material';
 
-import { useOpen } from '../common/form/use-open';
+import { useOpen } from '../common/hooks/use-open';
 import MailPreview from './MailPreview';
 
 const MailRow = () => {

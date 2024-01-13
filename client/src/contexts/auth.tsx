@@ -6,6 +6,8 @@ import { CircularProgress, Typography, Grid, Button } from "@mui/material"
 import { loginRequest, me, registerRequest } from "../services/auth"
 import { Route } from "../constants/route"
 import Dialog from "../common/Dialog"
+import { ThemeProvider } from "../theme/ThemeProvider"
+import PageContainer from "../common/PageContainer"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -38,50 +40,48 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const login = (user: UserViewModel) => {
         loginRequest(user).then(({ data }) => {
             setLoginData({token: data.token, user: data.user })
-            setIsLoading(false)
         })
     }
 
     const register = (user: UserViewModel) => {
         registerRequest(user).then(({ data }) => {
             setLoginData({token: data.token, user: data.user })
-            setIsLoading(false)
         })
     }
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+
         if(token && !isTokenExpired(token)) {
             me(token).then(({ data }) => {
                 setLoginData({token: data.token, user: data.user })
                 setIsLoading(false)
-            }) 
+            })
         } else {
             setIsLoading(false)
         }
     }, [])
 
-    const token = localStorage.getItem("token");
-
     return (
         <>
             {
                 isLoading ?
-                    <Grid container justifyContent='center' alignItems='center' direction='column'>
+                    <Grid container spacing={2} minHeight="100vh" justifyContent='center' alignItems='center'>
                         <Grid item>
-                            <Typography>Loading User</Typography>
+                            <Typography fontSize="2em">Loading User</Typography>
                         </Grid>
                         <Grid item>
-                            <CircularProgress/>
+                            <CircularProgress size={80}/>
                         </Grid>
-                    </Grid> 
+                    </Grid>
                 :
                 <AuthContext.Provider value={{...loginData, login, register}}>
-                    <Dialog dialogActions={<Button onClick={() => location.reload()}> refresh </Button>} 
+                    {/* <Dialog dialogActions={<Button onClick={() => location.reload()}> refresh </Button>} 
                         open={hasTokenExpired} onClose={() => location.reload()}>
                         <Typography>
                             Your login validity expired, refresh the page to continue
                         </Typography>
-                    </Dialog>
+                    </Dialog> */}
                     {
                         children
                     }

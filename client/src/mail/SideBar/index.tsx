@@ -10,7 +10,7 @@ import SendIcon from '@mui/icons-material/Send';
 import CreateIcon from '@mui/icons-material/Create';
 
 import HomePageIconButton from './HomePageIconButton';
-import { useOpen } from '../../common/form/use-open';
+import { useOpen } from '../../common/hooks/use-open';
 import NewMailDialog from '../forms/NewMailDialog';
 
 const SideBar = () => {

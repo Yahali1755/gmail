@@ -11,7 +11,7 @@ const FormTextField: FC<FormTextFieldProps> = ({ name, label, minLength, validat
     const { control } = useFormContext()
 
     const {field: { onChange, value }, fieldState: {invalid, error: rulesError}} = useController({
-        name,
+        name: name.toLowerCase(),
         control,
         rules: { 
             minLength: { 

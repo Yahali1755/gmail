@@ -1,4 +1,4 @@
 export enum TypeNames {
-    Mail = "mail",
+    Email = "email",
     User = "user"
 }

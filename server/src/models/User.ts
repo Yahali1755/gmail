@@ -2,12 +2,12 @@ import { Schema, model, Document } from 'mongoose';
 
 export interface UserDocument extends Document {
   password: string,
-  mail: string
+  email: string
 } 
 
 const UserSchema = new Schema({
   password: String,
-  mail: {
+  email: {
     type: String,
     required: true,
     unique: true,

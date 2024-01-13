@@ -5,7 +5,7 @@ import { UserViewModel } from "@mail/common";
 
 import UnauthorizedError from "../errors/UnauthorizedError";
 
-export const verifyToken: RequestHandler<{}, {}, {}, {}, {user: UserViewModel}> = (req, res, next) => {
+export const verifyToken: RequestHandler<{}, {}, {}, {}, {user: UserViewModel, token: string}> = (req, res, next) => {
     const token = req.header('Authorization');
   
     if (!token) {
@@ -20,6 +20,7 @@ export const verifyToken: RequestHandler<{}, {}, {}, {}, {user: UserViewModel}> 
       }
 
       res.locals.user = decodedPayload as UserViewModel;
+      res.locals.token = tokenWithoutBearer;
     });
 
     next();

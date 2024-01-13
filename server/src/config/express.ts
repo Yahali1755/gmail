@@ -1,4 +1,5 @@
 import express, { Router, json, Express } from "express"
+import cors from "cors";
 import 'dotenv/config'
 
 import authRouter from "../auth/auth-router"
@@ -22,6 +23,7 @@ export default () => {
     const app = express();
 
     app.use(json());
+    app.use(cors());
     app.use(logMiddleware);
 
     configureRoutes(app);
