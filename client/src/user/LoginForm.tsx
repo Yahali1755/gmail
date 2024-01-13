@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { EMAIL_REGEX } from "@mail/common";
+import { EMAIL_REGEX, UserViewModel } from "@mail/common";
 
 import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
@@ -25,10 +25,10 @@ const LoginForm: FC = () => {
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const { login, register } = useAuth();
   
-  const password = watch('Password');
-  const confirmPassword = watch('Confirm');
+  const password = watch('password');
+  const confirmPassword = watch('confirm');
 
-  const submit = (data) => {
+  const submit = (data: UserViewModel) => {
     if (isRegisterForm && password !== confirmPassword) {
       setError("InvalidConfirm", { message: "Passwords do not match"})
 

@@ -81,3 +81,59 @@ info: Connected to MongoDB
 info: [2024-01-13T13:47:01.956Z] POST /auth/login
 info: server running on port 3000
 info: Connected to MongoDB
+info: [2024-01-13T13:51:14.216Z] POST /auth/login
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T13:56:05.309Z] POST /auth/login
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T14:05:15.156Z] POST /login
+info: server running on port 3000
+info: Connected to MongoDB
+info: server running on port 3000
+info: Connected to MongoDB
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T19:47:36.655Z] POST /register
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T19:48:57.190Z] POST /register
+info: [2024-01-13T19:54:15.142Z] POST /register
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T19:56:53.670Z] POST /register
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T21:35:33.152Z] POST /register
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T21:41:22.355Z] POST /register
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T21:42:07.556Z] POST /register
+info: [2024-01-13T21:45:05.965Z] POST /login
+info: [2024-01-13T21:45:32.865Z] GET /auth/me
+info: server running on port 3000
+info: Connected to MongoDB
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T21:48:16.590Z] GET /auth/me
+info: [2024-01-13T21:48:21.208Z] GET /auth/me
+info: server running on port 3000
+info: Connected to MongoDB
+info: [2024-01-13T21:49:14.792Z] GET /me
+info: [2024-01-13T21:49:16.688Z] GET /me
+info: [2024-01-13T21:49:25.567Z] GET /me
+info: [2024-01-13T21:49:25.762Z] GET /me
+info: [2024-01-13T21:49:26.478Z] GET /me
+info: [2024-01-13T21:49:27.010Z] GET /me
+info: [2024-01-13T21:49:27.466Z] GET /me
+info: [2024-01-13T21:49:27.932Z] GET /me
+info: [2024-01-13T21:49:28.094Z] GET /me
+info: [2024-01-13T21:50:13.120Z] GET /me
+info: [2024-01-13T21:50:13.834Z] GET /me
+info: [2024-01-13T21:50:14.671Z] GET /me
+info: [2024-01-13T21:50:40.863Z] POST /login
+info: [2024-01-13T21:50:43.745Z] GET /me
+info: server running on port 3000
+info: Connected to MongoDB

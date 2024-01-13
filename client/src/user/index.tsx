@@ -1,20 +1,23 @@
 import { FC } from "react";
-import { Grid } from "@mui/material"
+import { Grid, SxProps, Theme, useTheme } from "@mui/material"
 
 import LoginForm from "./LoginForm";
 import PageContainer from "../common/PageContainer";
 
-const styles = {
-    formContainer: {
-        height: '500px',
-        width: '400px',
-        border: '1px solid lightgrey'
-    }
-};
+const getFormContainerStyles: SxProps = (theme: Theme) => ({
+    height: '500px',
+    width: '400px',
+    border: `1px solid ${theme.palette.text.primary}`
+})
 
-export const Login: FC = () => 
-    <PageContainer>
-        <Grid item sx={styles.formContainer}>
-            <LoginForm/>
-        </Grid>
-    </PageContainer>
+export const Login: FC = () => {
+    const theme = useTheme();
+
+    return (
+        <PageContainer>
+            <Grid item sx={getFormContainerStyles(theme)}>
+                <LoginForm/>
+            </Grid>
+        </PageContainer>
+    )
+}

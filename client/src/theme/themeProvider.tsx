@@ -4,6 +4,9 @@ import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material';
 const lightTheme = createTheme({
   palette: {
     mode: 'light', 
+    primary: {
+      main: "#282828"
+    }
   }
 });
   
@@ -13,7 +16,10 @@ const darkTheme = createTheme({
     background: {
       default: '#282828',
       paper: '#282828',
-    }, 
+    },
+    primary: {
+      main: "#FFFFFF"
+    }
   }
 });
   

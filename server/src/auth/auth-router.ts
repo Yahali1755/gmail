@@ -7,20 +7,22 @@ import { verifyToken } from "../middlewares/verify-token-middleware";
 
 const router = express.Router();
 
+const insertUser = insertEntity(UserModel);
+
 router.post('/login',
     verifyUser,
     generateToken,
     sendLoginData
 );
 
-router.post('/me',
+router.get('/me',
     verifyToken,
     sendLoginData
 );
 
 router.post('/register',
     ensureEmailUniqness,
-    insertEntity(UserModel),
+    insertUser,
     generateToken,
     sendLoginData
 );

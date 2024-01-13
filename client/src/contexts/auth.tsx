@@ -38,14 +38,18 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     }
 
     const login = (user: UserViewModel) => {
-        loginRequest(user).then(({ data }) => {
-            setLoginData({token: data.token, user: data.user })
+        loginRequest(user).then(({ data: {token, user} }) => {
+            setLoginData({token: token, user: user })
+
+            localStorage.setItem("token", token)
         })
     }
 
     const register = (user: UserViewModel) => {
-        registerRequest(user).then(({ data }) => {
-            setLoginData({token: data.token, user: data.user })
+        registerRequest(user).then(({ data: {token, user} }) => {
+            setLoginData({token: token, user: user })
+            
+            localStorage.setItem("token", token)
         })
     }
 
