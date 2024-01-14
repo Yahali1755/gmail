@@ -2,7 +2,7 @@ import { ReactNode, FC, useState, createContext, useContext, useEffect } from "r
 
 import { UserViewModel } from "@mail/common"
 
-import { CircularProgress, Typography, Grid, Button } from "@mui/material"
+import { CircularProgress, Typography, Grid, Button, CssBaseline } from "@mui/material"
 import { loginRequest, me, registerRequest } from "../services/auth"
 import { Route } from "../constants/route"
 import Dialog from "../common/Dialog"
@@ -59,6 +59,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         if(token && !isTokenExpired(token)) {
             me(token).then(({ data }) => {
                 setLoginData({token: data.token, user: data.user })
+            }).finally(() => {
                 setIsLoading(false)
             })
         } else {
@@ -70,14 +71,16 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         <>
             {
                 isLoading ?
-                    <Grid container spacing={2} minHeight="100vh" justifyContent='center' alignItems='center'>
-                        <Grid item>
-                            <Typography fontSize="2em">Loading User</Typography>
+                    <CssBaseline>
+                        <Grid container spacing={2} minHeight="100vh" justifyContent='center' alignItems='center'>
+                            <Grid item>
+                                <Typography fontSize="2em">Loading User</Typography>
+                            </Grid>
+                            <Grid item>
+                                <CircularProgress size={80}/>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <CircularProgress size={80}/>
-                        </Grid>
-                    </Grid>
+                    </CssBaseline>
                 :
                 <AuthContext.Provider value={{...loginData, login, register}}>
                     {/* <Dialog dialogActions={<Button onClick={() => location.reload()}> refresh </Button>} 
