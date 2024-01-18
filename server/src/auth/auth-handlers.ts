@@ -23,13 +23,13 @@ export const verifyUser: RequestHandler<{}, {}, UserViewModel, {}, {}> = async (
     const user = await UserModel.findOne({ email });
 
     if(!user) {
-        res.status(400).send("Email address isn't found")
+        res.status(400).send({field: "email", message: "Email address isn't found"})
 
         return;
     }
 
     if (user && user.password !== password) {
-        res.send(400).send("Wrong password")
+        res.status(400).send({field: "password", message: "Wrong password"})
 
         return;
     }
@@ -41,7 +41,9 @@ export const ensureEmailUniqness: RequestHandler<{}, {}, UserViewModel, {}, {}> 
     const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
-        res.send(400).send("email address in use")
+        res.status(400).send({field: "email", message: "email address in use"})
+
+        return;
     }
 
     next()

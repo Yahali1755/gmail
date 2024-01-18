@@ -27,7 +27,7 @@ const FormTextField: FC<FormTextFieldProps> = ({ name, label, minLength, validat
     });
 
     return (
-        <TextField value={value} onChange={onChange} error={invalid || error} helperText={rulesError ? rulesError.message : helperText && helperText} 
+        <TextField value={value} onChange={onChange} error={invalid || error} helperText={rulesError ? rulesError.message : (helperText && helperText)} 
             {...props} label={label ?? name}/>
     );
 }

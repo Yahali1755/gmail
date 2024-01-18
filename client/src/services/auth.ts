@@ -4,6 +4,8 @@ import { UserViewModel } from "@mail/common";
 
 import { LoginData } from "../contexts/auth";
 
+export const setToken = (token: string) => localStorage.setItem("token", token);
+
 export const loginRequest = async (user: UserViewModel) => await axios.post<LoginData>("http://localhost:3000/auth/login", user)
 
 export const registerRequest = async (user: UserViewModel) => await axios.post<LoginData>("http://localhost:3000/auth/register", user)

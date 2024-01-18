@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material"
+import { Button, Grid, Typography, FormHelperText } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -28,7 +28,27 @@ const LoginForm: FC = () => {
   const password = watch('password');
   const confirmPassword = watch('confirm');
 
+  const handleLogin = (data: UserViewModel) => {
+    login(data).then(() => navigate("/mail"))
+      .catch(error => {
+        const {response: {data: {field, message}}}= error
+
+        setError(`${field}`,{ message: `${message}`})
+    })
+  }
+
+  const handleRegister = (data: UserViewModel) => {
+    register(data).then(() => navigate("/mail"))
+      .catch(error => {
+        const {response: {data: {field, message}}}= error
+
+        setError(`${field}`,{ message: `${message}`})
+    })
+  }
+
   const submit = (data: UserViewModel) => {
+    clearErrors();
+
     if (isRegisterForm && password !== confirmPassword) {
       setError("InvalidConfirm", { message: "Passwords do not match"})
 
@@ -36,12 +56,10 @@ const LoginForm: FC = () => {
     }
 
     if (isRegisterForm) {
-      register(data)
+      handleRegister(data)
     } else {
-      login(data)
+      handleLogin(data)
     }
-
-    navigate("/mail");
   }
 
   useEffect(() => {
@@ -57,15 +75,18 @@ const LoginForm: FC = () => {
             <Typography sx={styles.formTitle}> {isRegisterForm ? "Create Account" : "Sign Up"} </Typography>
           </Grid> 
           <Grid width="80%" item> 
-            <FormTextField required validationRegEx={/\S+@\S+\.\S+/} fullWidth autoFocus name="Email"/>
+            <FormTextField required fullWidth autoFocus  error={!!errors?.email} helperText={errors?.email?.message as string}
+              label="Email" name="email" validationRegEx={/\S+@\S+\.\S+/}/>
           </Grid>
           <Grid width="80%" item> 
-            <FormTextField required minLength={8} fullWidth name="Password"/>
+            <FormTextField required minLength={8} fullWidth label="Password" name="password" error={!!errors?.password} 
+              helperText={errors?.password?.message as string}/>
           </Grid>
           {
             isRegisterForm && 
               <Grid width="80%" item>
-                <FormTextField required minLength={8} error={!!errors?.InvalidConfirm} helperText={errors?.InvalidConfirm?.message as string} fullWidth name="Confirm"/>
+                <FormTextField required minLength={8} error={!!errors?.InvalidConfirm} helperText={errors?.InvalidConfirm?.message as string} 
+                  fullWidth label="Confirm" name="confirm"/>
               </Grid>
           }
           <Grid position="relative" container item>

@@ -2,12 +2,8 @@ import { ReactNode, FC, useState, createContext, useContext, useEffect } from "r
 
 import { UserViewModel } from "@mail/common"
 
-import { CircularProgress, Typography, Grid, Button, CssBaseline } from "@mui/material"
-import { loginRequest, me, registerRequest } from "../services/auth"
-import { Route } from "../constants/route"
-import Dialog from "../common/Dialog"
-import { ThemeProvider } from "../theme/ThemeProvider"
-import PageContainer from "../common/PageContainer"
+import { loginRequest, me, registerRequest, setToken } from "../services/auth"
+import LoadingUserPage from "../exterior/LoadingUserPage"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -21,8 +17,8 @@ export interface LoginData {
 interface AuthContextProps {
     token: string,
     user: UserViewModel
-    login: (user: UserViewModel) => void
-    register: (user: UserViewModel) => void
+    login: (user: UserViewModel) => Promise<void>
+    register: (user: UserViewModel) => Promise<void>
 }
 
 const AuthContext = createContext({} as AuthContextProps)
@@ -37,21 +33,19 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         return false
     }
 
-    const login = (user: UserViewModel) => {
+    const login = (user: UserViewModel) => 
         loginRequest(user).then(({ data: {token, user} }) => {
             setLoginData({token: token, user: user })
-
-            localStorage.setItem("token", token)
+            setToken(token)
         })
-    }
+    
 
-    const register = (user: UserViewModel) => {
+    const register = (user: UserViewModel) => 
         registerRequest(user).then(({ data: {token, user} }) => {
             setLoginData({token: token, user: user })
-            
-            localStorage.setItem("token", token)
+            setToken(token)
         })
-    }
+    
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -71,16 +65,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         <>
             {
                 isLoading ?
-                    <CssBaseline>
-                        <Grid container spacing={2} minHeight="100vh" justifyContent='center' alignItems='center'>
-                            <Grid item>
-                                <Typography fontSize="2em">Loading User</Typography>
-                            </Grid>
-                            <Grid item>
-                                <CircularProgress size={80}/>
-                            </Grid>
-                        </Grid>
-                    </CssBaseline>
+                    <LoadingUserPage/>
                 :
                 <AuthContext.Provider value={{...loginData, login, register}}>
                     {/* <Dialog dialogActions={<Button onClick={() => location.reload()}> refresh </Button>} 

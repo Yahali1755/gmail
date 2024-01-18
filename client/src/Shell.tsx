@@ -12,5 +12,4 @@ const Shell = () =>
         </Routes>
     </BrowserRouter>
 
-
 export default Shell
