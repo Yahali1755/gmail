@@ -8,7 +8,7 @@ import Form from './Form';
 
 interface FormDialogProps extends DialogProps {
   formMethods: UseFormReturn,
-  onSubmit: () => void
+  onSubmit?: () => void
   children: ReactNode
   submitButtonProps?: SubmitButtonProps
 }

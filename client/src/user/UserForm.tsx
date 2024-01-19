@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Grid, Typography, FormHelperText } from "@mui/material"
+import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -9,6 +9,7 @@ import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
 import Form from "../common/form/Form";
 import { useAuth } from "../contexts/auth";
+import { Route } from "../constants/route";
 
 const styles = {
   formTitle: {
@@ -17,10 +18,10 @@ const styles = {
   }
 };
 
-const LoginForm: FC = () => {
+const UserForm: FC = () => {
   const formMethods = useForm();
   const { setError, clearErrors, formState: { errors } } = formMethods;
-   const { watch } = formMethods;
+  const { watch } = formMethods;
   const navigate = useNavigate();
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const { login, register } = useAuth();
@@ -28,19 +29,10 @@ const LoginForm: FC = () => {
   const password = watch('password');
   const confirmPassword = watch('confirm');
 
-  const handleLogin = (data: UserViewModel) => {
-    login(data).then(() => navigate("/mail"))
+  const handleAuthResponse = (promise: Promise<void>) => {
+    promise.then(() => navigate(Route.Mail))
       .catch(error => {
-        const {response: {data: {field, message}}}= error
-
-        setError(`${field}`,{ message: `${message}`})
-    })
-  }
-
-  const handleRegister = (data: UserViewModel) => {
-    register(data).then(() => navigate("/mail"))
-      .catch(error => {
-        const {response: {data: {field, message}}}= error
+        const {response: {data: {field, message}}} = error
 
         setError(`${field}`,{ message: `${message}`})
     })
@@ -56,9 +48,9 @@ const LoginForm: FC = () => {
     }
 
     if (isRegisterForm) {
-      handleRegister(data)
+      handleAuthResponse(register(data))
     } else {
-      handleLogin(data)
+      handleAuthResponse(login(data))
     }
   }
 
@@ -105,4 +97,4 @@ const LoginForm: FC = () => {
   )
 }
 
-export default LoginForm;
+export default UserForm;

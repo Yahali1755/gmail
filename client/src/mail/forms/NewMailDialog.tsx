@@ -21,7 +21,7 @@ const NewMailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
     const formMethods = useForm();
 
     return (
-        <FormDialog submitButtonProps={{label: "Send"}} fullWidth maxWidth="md" onSubmit={() => {console.log('yay')}} dialogTitle="New Mail" formMethods={formMethods} open={isOpen} onClose={close}>
+        <FormDialog submitButtonProps={{label: "Send"}} fullWidth maxWidth="md" dialogTitle="New Mail" formMethods={formMethods} open={isOpen} onClose={close}>
             <FormTextField variant="standard" fullWidth autoFocus name="Recipients"/>
             <FormTextField variant="standard" fullWidth name="Subject"/>
             <FormTextField required={false} sx={styles.content} label="" multiline rows={8} variant="standard" fullWidth name="Content"/>

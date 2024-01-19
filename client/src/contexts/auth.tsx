@@ -1,9 +1,11 @@
 import { ReactNode, FC, useState, createContext, useContext, useEffect } from "react"
+import { Button, DialogContent, Typography } from "@mui/material"
 
 import { UserViewModel } from "@mail/common"
 
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
 import LoadingUserPage from "../exterior/LoadingUserPage"
+import Dialog from "../common/Dialog"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -27,11 +29,32 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const [loginData, setLoginData] = useState<LoginData>({} as LoginData)
     const [isLoading, setIsLoading] = useState(true)
-    const [hasTokenExpired, setIsTokenExpired] = useState(false)
+    const [hasTokenExpired, setHasTokenExpired] = useState(false)
+    const TOKEN_EXPIRATION_INTERVAL = 2000
+
+    const logout = () => {
+        localStorage.removeItem("token")
+    }
 
     const isTokenExpired = (token: string) => {
-        return false
+        const payload = token.split(".")[1];
+        const decodedPayload = JSON.parse(atob(payload))
+        
+        return Date.now() > decodedPayload.exp * 1000
     }
+
+    useEffect(() => {
+        const tokenExpirationInterval = setInterval(() => {
+            const token = localStorage.getItem("token");
+
+            if (token && isTokenExpired(token)) {
+                setHasTokenExpired(true);
+                logout();
+            }
+        }, TOKEN_EXPIRATION_INTERVAL)
+
+        return () => clearInterval(tokenExpirationInterval)
+    }, [])
 
     const login = (user: UserViewModel) => 
         loginRequest(user).then(({ data: {token, user} }) => {
@@ -46,13 +69,13 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
             setToken(token)
         })
     
-
     useEffect(() => {
         const token = localStorage.getItem("token");
 
         if(token && !isTokenExpired(token)) {
             me(token).then(({ data }) => {
                 setLoginData({token: data.token, user: data.user })
+                setHasTokenExpired(false);
             }).finally(() => {
                 setIsLoading(false)
             })
@@ -68,18 +91,19 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                     <LoadingUserPage/>
                 :
                 <AuthContext.Provider value={{...loginData, login, register}}>
-                    {/* <Dialog dialogActions={<Button onClick={() => location.reload()}> refresh </Button>} 
+                    <Dialog dialogActions={<Button onClick={() => location.reload()}> refresh </Button>} 
                         open={hasTokenExpired} onClose={() => location.reload()}>
-                        <Typography>
-                            Your login validity expired, refresh the page to continue
-                        </Typography>
-                    </Dialog> */}
+                        <DialogContent>
+                            <Typography>
+                                Your authentication validity expired, refresh the page to continue
+                            </Typography>
+                        </DialogContent>
+                    </Dialog>
                     {
                         children
                     }
                 </AuthContext.Provider>
             }
-
         </>
     )
 }

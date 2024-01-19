@@ -1,15 +1,13 @@
 import React from 'react'
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Mail from './mail';
-import { Login } from './user';
+import { BrowserRouter } from "react-router-dom";
 
+import Routes from "./routes"
+ 
 const Shell = () => 
     <BrowserRouter>
-        <Routes>
-            <Route Component={Mail} path="/mail" />
-            <Route Component={Login} path="/" />
-        </Routes>
+        <Routes/>
     </BrowserRouter>
+
 
 export default Shell

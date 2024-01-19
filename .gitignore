@@ -1,7 +1,5 @@
-/server/node_modules
-/client/node_modules
-/common/node_modules
-
-/server/.env
+node_modules
+.env
 dist
-/client/build
+build
+app-log

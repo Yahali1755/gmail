@@ -10,10 +10,8 @@ export interface DialogProps extends MuiDialogProps {
   onClose: () => void
   dialogTitle?: string
   dialogActions?: ReactNode
-  dialogContentProps?: DialogContentProps
   dialogTitleProps?: DialogTitleProps
-  fullWidth?: boolean
-  maxWidth?: Breakpoint
+  dialogContentProps?: DialogContentProps
 }
 
 const styles = {
@@ -37,12 +35,12 @@ const DraggablePaper = (props: PaperProps) =>
         <Paper {...props} />
       </Draggable>
   
-const Dialog: FC<DialogProps> = ({ sx, children, open, onClose, dialogTitle, fullWidth, maxWidth, dialogContentProps, 
-  dialogTitleProps, dialogActions}) => 
-    <MuiDialog PaperComponent={DraggablePaper} fullWidth={fullWidth} maxWidth={maxWidth} 
+const Dialog: FC<DialogProps> = ({ sx, children, open, onClose, dialogTitle,
+  dialogTitleProps, dialogContentProps, dialogActions, ...props}) => 
+    <MuiDialog {...props} PaperComponent={DraggablePaper} 
       TransitionComponent={Transition} sx={sx} open={open} onClose={onClose}>
+        <CloseButton sx={styles.closeButton} onClick={onClose}/>
         <DialogTitle id="draggable-dialog-title" {...dialogTitleProps} sx={{...styles.dialogTitle, ...dialogTitleProps?.sx}}> 
-          <CloseButton sx={styles.closeButton} onClick={onClose}/>
           { dialogTitle }
         </DialogTitle>
         <DialogContent {...dialogContentProps}>

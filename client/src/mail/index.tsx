@@ -3,6 +3,8 @@ import { Grid, Theme, useTheme } from "@mui/material";
 import MailBox from "./MailBox";
 import SideBar from "./SideBar";
 import PageContainer from "../common/PageContainer";
+import { Route } from "../constants/route";
+import { RouteType } from "../routes";
 
 const getTableContainerStyles = (theme: Theme) => ({
     '&::-webkit-scrollbar': {
@@ -32,4 +34,7 @@ const Mail = () => {
     )
 }
 
-export default Mail;
+export default {
+    path: Route.Mail,
+    component: Mail
+} as RouteType
