@@ -1,4 +1,4 @@
-import { Date, Schema, model, Document } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
 export interface EmailDocument extends Document {
   recipients: string[]
@@ -17,10 +17,9 @@ const EmailSchema = new Schema({
   isRead: Boolean,
   content: String,
   isStarred: Boolean,
-}, {
-  timestamps: {
-    createdAt: true,
-    updatedAt: false
+  createdAt: {
+    type: Date,
+    default: Date.now()
   }
 });
 

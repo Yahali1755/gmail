@@ -1,9 +1,11 @@
-export interface EmailViewModel {
+import { BaseViewModel } from "./BaseViewModel"
+
+export interface EmailViewModel extends BaseViewModel {
     author: string
     recipients: string[],
     subject: string
     content: string
-    uploadedAt: Date
+    createdAt: Date
     isRead: boolean
     isStarred: boolean
 }

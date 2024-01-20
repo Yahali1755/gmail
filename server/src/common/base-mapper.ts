@@ -1,26 +1,16 @@
-import { RequestHandler } from "express";
-import { Document } from "mongoose";
+import { Document, Model } from "mongoose";
 
-export class BaseMapper<T> {
-    public mapBodyToEntity: RequestHandler = (req, res, next) => {
-        const entity = this.mapToModel(req.body);
-        
-        res.locals.entity = entity;
+import { BaseViewModel } from "@mail/common";
 
-        next()
+export abstract class BaseMapper<IDocument extends Document, IViewModel extends BaseViewModel,> {
+    public model: Model<IDocument>;
+
+    constructor(model: Model<IDocument>) {
+        this.model = model;
     }
 
-    public mapToModel = (viewModel: any) => ({
-        _id: viewModel.id,
-        ...document
-    })
+    public mapToModel = ({id, ...properties}: IViewModel, model: Model<IDocument>) => 
+        id ? {_id: id, ...properties} : new model({...properties});
 
-    public mapEntitiesViewModel : RequestHandler = (req, res, next) => {
-        
-    }
-
-    public mapToViewModel = (document: Document) => ({
-        id: document._id,
-        ...document
-    })
+    public abstract mapToViewModel: (document: IDocument) => IViewModel;
 }
