@@ -28,8 +28,24 @@ const defaultActions: ApiActions = {
     }
 }
 
+const replaceUrlParameters = ({ url }: ApiAction, data) => {
+    const params = url.split(':');
+
+    return params.reduce((result, param) => result.replace(param, data[param]), url)
+}
+
 export const createActions = (apiActions: ApiActions, sendRequest: (config: AxiosRequestConfig) => Promise<AxiosResponse>) => {
     const actions = {...defaultActions, ...apiActions};
 
-    return mapValues(actions, ({ method, url }) => sendRequest({ method, url}))
+    const doesActionHaveBody = (action: ApiAction) => ['GET', 'PUT', 'PATCH'].includes(action.method);
+
+    return mapValues(actions, action => {
+        const { method, url } = action
+
+        return (data?) => {
+            const formattedUrl = (url && data) ? replaceUrlParameters(action, data) : url
+            
+            return doesActionHaveBody ? sendRequest({ method, url: formattedUrl, data}) : sendRequest({ method, url: formattedUrl, data})
+        }
+    })
 }

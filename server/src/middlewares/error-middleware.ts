@@ -10,6 +10,6 @@ export const errorMiddleware: ErrorRequestHandler = (error, req, res, next) => {
     else {
         res.sendStatus(500).send("Internal server error")
 
-        logger.error(`500 Internal Server Error \n Stack Trace: ${error.stack}`)
+        logger.error(error)
     }    
 }

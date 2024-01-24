@@ -1,7 +1,10 @@
 import { RequestHandler } from "express";
 import { Model, Document } from "mongoose";
 
-export const findEntityById = <T extends Document>(model: Model<T>): RequestHandler<{id: string}, {}, {}, {}, {entity: T}> => async (req, res, next) => {
+type FindEntityByIdRequestHandler<TDocument extends Document> = RequestHandler<{id: string}, {}, {}, {}, {entity: TDocument}>
+type FindAllEntitiesRequestHandler<TDocument extends Document> = RequestHandler<{id: string}, {}, {}, {}, {entities: TDocument[]}>
+
+export const findEntityById = <TDocument extends Document>(model: Model<TDocument>): FindEntityByIdRequestHandler<TDocument> => async (req, res, next) => {
     const entity = await model.findById(req.params.id);
 
     res.locals.entity = entity;
@@ -9,7 +12,7 @@ export const findEntityById = <T extends Document>(model: Model<T>): RequestHand
     next()
 }
 
-export const findAllEntities = <T extends Document>(model: Model<T>): RequestHandler<{id: string}, {}, {}, {}, {entities: T[]}> => async (req, res, next) => {
+export const findAllEntities = <TDocument extends Document>(model: Model<TDocument>): FindAllEntitiesRequestHandler<TDocument> => async (req, res, next) => {
     const entities = await model.find()
 
     res.locals.entities = entities;

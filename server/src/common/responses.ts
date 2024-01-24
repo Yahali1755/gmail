@@ -1,9 +1,17 @@
 import { RequestHandler } from "express";
+import { Document } from "mongoose";
 
-const okStatus = 200;
+import { BaseViewModel } from "@mail/common";
 
-export const sendSuccess = <T extends Document>(): RequestHandler => (req, res) => res.sendStatus(okStatus);
+import { BaseMapper } from "./base-mapper";
 
-export const sendEntity = <T extends Document>(): RequestHandler<{}, {}, {}, {}, {entity: T}> => (req, res) => res.status(okStatus).send(res.locals.entity);
+type SendEntitiesRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entity: TDocument}>
+type SendEntityRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entities: TDocument[]}>
 
-export const sendEntities = <T extends Document>(): RequestHandler<{}, {}, {}, {}, {entities: T}> => (req, res) => res.status(okStatus).send(res.locals.entities);
+export const sendSuccess = (): RequestHandler => (req, res) => res.sendStatus(200);
+
+export const sendEntity = <TDocument extends Document, TViewModel extends BaseViewModel>(mapper: BaseMapper<TDocument, TViewModel>) => 
+    (req, res): SendEntityRequestHandler<TDocument> => res.status(200).send(mapper.mapToViewModel(res.locals.entity));
+
+export const sendEntities = <TDocument extends Document, TViewModel extends BaseViewModel>(mapper: BaseMapper<TDocument, TViewModel>) => 
+    (req, res): SendEntitiesRequestHandler<TDocument> => res.status(200).send(res.locals.entities.map(mapper.mapToViewModel));
