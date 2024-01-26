@@ -8,15 +8,16 @@ import Form from './Form';
 
 interface FormDialogProps extends DialogProps {
   formMethods: UseFormReturn,
-  onSubmit?: () => void
+  onSubmit?: (data?: Record<string, any>) => void
   children: ReactNode
+  isEditEnabled?: boolean,
   submitButtonProps?: SubmitButtonProps
 }
 
-const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, submitButtonProps, ...dialogProps }) =>
+const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, submitButtonProps, isEditEnabled, ...dialogProps }) =>
   <Dialog {...dialogProps}
     dialogActions={
-      <SubmitButton {...submitButtonProps}/>
+      isEditEnabled && <SubmitButton {...submitButtonProps}/>
     }>
     <Form formMethods={formMethods} onSubmit={onSubmit}>
       { children }

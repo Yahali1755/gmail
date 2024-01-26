@@ -1,4 +1,4 @@
-export enum TypeNames {
+export enum TypeName {
     Email = "email",
     User = "user"
 }

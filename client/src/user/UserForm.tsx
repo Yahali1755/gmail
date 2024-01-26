@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { EMAIL_REGEX, UserViewModel } from "@mail/common";
+import { UserViewModel } from "@mail/common";
 
 import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";

@@ -1,15 +1,19 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { BaseViewModel, TypeName } from '@mail/common';
 
-export const getHttpClient = (token: string) => {
+import axios, { AxiosRequestConfig } from 'axios';
+
+export type HttpMethod = 'GET' | 'PUT' | 'PATCH' | 'POST' | 'DELETE'
+
+export const getHttpClient = <TViewModel extends BaseViewModel>(token: string, typeName: TypeName) => {
   const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: `http://localhost:3000/api/${typeName}`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
   });
 
-  const sendRequest = async (config: AxiosRequestConfig) => await axiosInstance.request(config);
+  const sendRequest = async (config: AxiosRequestConfig) => await axiosInstance.request<TViewModel>(config);
 
   return { 
     sendRequest 
