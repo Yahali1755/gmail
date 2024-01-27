@@ -5,6 +5,7 @@ import Dialog from "../Dialog"
 import { DialogProps } from '../Dialog';
 import SubmitButton, { SubmitButtonProps } from './SubmitButton';
 import Form from './Form';
+import { DialogActions } from '@mui/material';
 
 interface FormDialogProps extends DialogProps {
   formMethods: UseFormReturn,
@@ -14,14 +15,23 @@ interface FormDialogProps extends DialogProps {
   submitButtonProps?: SubmitButtonProps
 }
 
-const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, submitButtonProps, isEditEnabled, ...dialogProps }) =>
-  <Dialog {...dialogProps}
-    dialogActions={
-      isEditEnabled && <SubmitButton {...submitButtonProps}/>
-    }>
-    <Form formMethods={formMethods} onSubmit={onSubmit}>
-      { children }
-    </Form>
-  </Dialog>
+const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, submitButtonProps, isEditEnabled, dialogActions, onClose, ...dialogProps }) => {
+  const wrappedOnSubmit = (data: Record<string, any>) => {
+    onClose()
+    onSubmit(data)
+  }
+
+  return (
+    <Dialog onClose={onClose} {...dialogProps}>
+      <Form formMethods={formMethods} onSubmit={wrappedOnSubmit}>
+        { children }
+        <DialogActions>
+          {isEditEnabled && <SubmitButton {...submitButtonProps}/>}
+          { dialogActions }
+        </DialogActions>
+      </Form>
+    </Dialog>
+  )
+}
 
 export default FormDialog;

@@ -1,6 +1,6 @@
 import express, { Router } from "express"
 
-import mailRouter from "./email/email-router";
+import emailRouter from "./email/email-router";
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ export interface Route {
     router: Router
 }
 
-const routes: Route[] = [mailRouter]
+const routes: Route[] = [emailRouter]
 
 routes.forEach(route => {
     router.use(route.path, route.router);

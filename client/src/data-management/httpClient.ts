@@ -1,8 +1,6 @@
 import { BaseViewModel, TypeName } from '@mail/common';
 
-import axios, { AxiosRequestConfig } from 'axios';
-
-export type HttpMethod = 'GET' | 'PUT' | 'PATCH' | 'POST' | 'DELETE'
+import axios, { AxiosRequestConfig, Method } from 'axios';
 
 export const getHttpClient = <TViewModel extends BaseViewModel>(token: string, typeName: TypeName) => {
   const axiosInstance = axios.create({

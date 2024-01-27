@@ -15,7 +15,7 @@ const Routes = () =>
     <RoutesComponent>
     {
         routes.map(route => 
-            <RouteComponent Component={route.component} path={route.path} />
+            <RouteComponent Component={route.component} key={route.path} path={route.path} />
         )
     }
     </RoutesComponent>

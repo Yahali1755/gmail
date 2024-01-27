@@ -20,7 +20,7 @@ const styles = {
 
 const UserForm: FC = () => {
   const formMethods = useForm();
-  const { setError, clearErrors, formState: { errors } } = formMethods;
+  const { setError, clearErrors, formState: { errors }, getValues } = formMethods;
   const { watch } = formMethods;
   const navigate = useNavigate();
   const [isRegisterForm, setIsRegisterForm] = useState(false);

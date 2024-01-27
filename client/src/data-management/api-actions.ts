@@ -31,11 +31,13 @@ const defaultActions: ApiActions = {
 
 const variableRegex = /^\/[a-zA-Z]+$/g;
 
+const isGetMethod = (method: Method) => ['get', 'GET'].includes(method);
+
 const injectParameters = (rawUrl: string, params: Record<string, any>) => 
-    rawUrl.replace(variableRegex, match => params ? params[match].toString() : '')
+    rawUrl?.replace(variableRegex, match => params ? params[match].toString() : '')
 
 export const createAction = <TViewModel extends BaseViewModel>({ method, url}: ApiAction, sendRequest: (config: AxiosRequestConfig) => Promise<AxiosResponse<TViewModel>>) => (data: Record<string, any> = {}) => 
-    sendRequest({ method, url: injectParameters(url, data), data})
+    isGetMethod(method) ? sendRequest({ method, url, params: data}) : sendRequest({ method, url: injectParameters(url, data), data})
 
 export const createActions = <TViewModel extends BaseViewModel>(apiActions: ApiActions, sendRequest: (config: AxiosRequestConfig) => Promise<AxiosResponse<TViewModel>>) => 
     mapValues({...defaultActions, ...apiActions} as ApiActions, action => createAction<TViewModel>(action, sendRequest))

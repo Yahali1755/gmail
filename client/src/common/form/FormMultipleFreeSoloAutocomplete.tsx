@@ -8,7 +8,7 @@ interface FormMultipleFreeSoloAutocompleteProps extends Omit<AutocompleteProps<s
 }
 
 const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps> = ({ name, textFieldProps, ...props }) => {
-    const { control } = useFormContext()
+    const { control  } = useFormContext()
 
     const {field: { onChange, value }, fieldState: {invalid, error: rulesError}} = useController({
         name: name.toLowerCase(),
@@ -20,13 +20,15 @@ const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps
         multiple
         options={[]}
         freeSolo
+        value={value}
+        {...props}
         renderTags={(values, getTagProps) =>
-            values.map((value, index) => (
-            <Chip
-                variant="outlined"
-                label={value}
-                {...getTagProps({ index })}
-            />
+            values?.map((value, index) => (
+                <Chip
+                    variant="outlined"
+                    label={value}
+                    {...getTagProps({ index })}
+                />
             ))
         }
         onChange={(event, values) => {
@@ -34,8 +36,8 @@ const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps
         }}
         renderInput={(params) => (
             <TextField
-            {...params}
             {...textFieldProps}
+            {...params}
             />
         )}
         />

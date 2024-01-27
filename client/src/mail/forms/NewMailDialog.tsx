@@ -5,7 +5,7 @@ import { EmailViewModel, TypeName } from "@mail/common";
 
 import FormTextField from "../../common/form/FormTextField"
 import FormDialog from "../../common/form/FormDialog";
-import { useApi } from "../../data-management/hooks/api";
+import { useApi } from "../../data-management/hooks/base-api";
 import FormMultipleFreeSoloAutocomplete from "../../common/form/FormMultipleFreeSoloAutocomplete";
 
 interface NewMailDialogProps {
@@ -23,23 +23,17 @@ const styles = {
 
 const NewMailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
     const formMethods = useForm();
-    const { getValues, formState } = formMethods
     const emailApi = useApi(TypeName.Email)
 
-    console.log(formState)
-    console.log(getValues())
-
-    const submit = (data) => {
-        console.log('hey')
-
-        emailApi.post(data)
-     }
+    const submit = (data: EmailViewModel) => {
+        emailApi.insert(data)
+    }
 
     return (
         <FormDialog isEditEnabled={true} submitButtonProps={{label: "Send"}} onSubmit={submit} fullWidth maxWidth="md" dialogTitle="New Mail" formMethods={formMethods} open={isOpen} onClose={close}>
-            <FormMultipleFreeSoloAutocomplete textFieldProps={{variant: "standard", label:"To", required: true}} options={[]} freeSolo multiple autoFocus fullWidth name="recipients"/>
-            <FormTextField required={true} variant="standard" fullWidth name="Subject"/>
-            <FormTextField sx={styles.content} label="" multiline rows={8} variant="standard" fullWidth name="Content"/>
+            <FormMultipleFreeSoloAutocomplete autoSelect key="recipients" textFieldProps={{variant: "standard", label:"To", required: true}} options={[]} freeSolo multiple autoFocus fullWidth name="recipients"/>
+            <FormTextField required={true} key="subject" label="Subject" variant="standard" fullWidth name="subject"/>
+            <FormTextField sx={styles.content} key="content" label="" multiline rows={8} variant="standard" fullWidth name="content"/>
         </FormDialog>
     )
 }
