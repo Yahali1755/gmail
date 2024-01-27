@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { FC } from "react";
 
-import { EmailViewModel, TypeName } from "@mail/common";
+import { EmailViewModel } from "@mail/common";
 
 import FormTextField from "../../common/form/FormTextField"
 import FormDialog from "../../common/form/FormDialog";
-import { useApi } from "../../data-management/hooks/base-api";
 import FormMultipleFreeSoloAutocomplete from "../../common/form/FormMultipleFreeSoloAutocomplete";
+import { useEmailApi } from "../../data-management/hooks/email-api";
 
 interface NewMailDialogProps {
     isOpen: boolean
@@ -23,7 +23,7 @@ const styles = {
 
 const NewMailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
     const formMethods = useForm();
-    const emailApi = useApi(TypeName.Email)
+    const emailApi = useEmailApi();
 
     const submit = (data: EmailViewModel) => {
         emailApi.insert(data)

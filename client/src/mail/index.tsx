@@ -3,8 +3,10 @@ import { Grid, Theme, useTheme } from "@mui/material";
 import MailBox from "./MailBox";
 import SideBar from "./SideBar";
 import PageContainer from "../common/PageContainer";
-import { Route } from "../constants/route";
+import { Route } from "../constants/Route";
 import { RouteType } from "../routes";
+import { useState } from "react";
+import { MailboxCategory } from "../constants/MailboxCategory";
 
 const getTableContainerStyles = (theme: Theme) => ({
     '&::-webkit-scrollbar': {
@@ -23,12 +25,13 @@ const getTableContainerStyles = (theme: Theme) => ({
 
 const Mail = () => {
     const theme = useTheme()
+    const [mailboxCategory, setMailboxCategory] = useState(MailboxCategory.Inbox)
 
     return (
         <PageContainer>
-            <SideBar/>
+            <SideBar setMailBoxCategory={setMailboxCategory}/>
             <Grid sx={getTableContainerStyles(theme)} item height="800px" width='1200px' overflow='auto' container>
-                <MailBox/>
+                <MailBox mailBoxCategory={mailboxCategory}/>
             </Grid>
         </PageContainer>
     )

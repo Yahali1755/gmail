@@ -9,7 +9,7 @@ import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
 import Form from "../common/form/Form";
 import { useAuth } from "../contexts/auth";
-import { Route } from "../constants/route";
+import { Route } from "../constants/Route";
 
 const styles = {
   formTitle: {

@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Route } from '../constants/route';
+import { Route } from '../constants/Route';
 import { useAuth } from '../contexts/auth';
 import LoadingUserPage from '../exterior/LoadingUserPage';
 

@@ -1,4 +1,4 @@
-import { TypeName } from "@mail/common";
+import { EmailViewModel, TypeName } from "@mail/common";
 
 import { useApi } from "./base-api";
 import { ApiActions } from "../api-actions";
@@ -12,4 +12,4 @@ const EmailActions: ApiActions = {
     }
 }
 
-export const emailApi = useApi(TypeName.Email, EmailActions);
+export const useEmailApi = () => useApi<EmailViewModel>(TypeName.Email, EmailActions);
