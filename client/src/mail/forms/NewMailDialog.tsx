@@ -6,7 +6,7 @@ import { EmailViewModel } from "@mail/common";
 import FormTextField from "../../common/form/FormTextField"
 import FormDialog from "../../common/form/FormDialog";
 import FormMultipleFreeSoloAutocomplete from "../../common/form/FormMultipleFreeSoloAutocomplete";
-import { useEmailApi } from "../../data-management/hooks/email-api";
+import { useEmailApi } from "../../api/hooks/email-api";
 
 interface NewMailDialogProps {
     isOpen: boolean

@@ -1,7 +1,6 @@
 import { EmailViewModel, TypeName } from "@mail/common";
 
-import { useApi } from "./base-api";
-import { ApiActions } from "../api-actions";
+import { ApiActions, useApi } from "./base-api";
 
 const EmailActions: ApiActions = {
     getInbox: {

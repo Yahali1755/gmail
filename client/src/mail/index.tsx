@@ -7,6 +7,7 @@ import { Route } from "../constants/Route";
 import { RouteType } from "../routes";
 import { useState } from "react";
 import { MailboxCategory } from "../constants/MailboxCategory";
+import useEmailQuery from "../query/use-email-query";
 
 const getTableContainerStyles = (theme: Theme) => ({
     '&::-webkit-scrollbar': {
@@ -25,13 +26,14 @@ const getTableContainerStyles = (theme: Theme) => ({
 
 const Mail = () => {
     const theme = useTheme()
-    const [mailboxCategory, setMailboxCategory] = useState(MailboxCategory.Inbox)
+    const [mailboxCategory, setMailboxCategory] = useState(MailboxCategory.Outbox)
+    const emailQuery = useEmailQuery(mailboxCategory);
 
     return (
         <PageContainer>
             <SideBar setMailBoxCategory={setMailboxCategory}/>
             <Grid sx={getTableContainerStyles(theme)} item height="800px" width='1200px' overflow='auto' container>
-                <MailBox mailBoxCategory={mailboxCategory}/>
+                <MailBox emails={emailQuery.data.data} isLoading={emailQuery.isLoading} mailBoxCategory={mailboxCategory}/>
             </Grid>
         </PageContainer>
     )
