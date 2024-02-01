@@ -6,7 +6,7 @@ import { BaseViewModel } from "@mail/common";
 import { HttpClient } from "../data-management/httpClient";
 import { ApiAction, ApiActions } from "./hooks/base-api";
 
-const variableRegex = /^\/[a-zA-Z]+$/g;
+const variableRegex = /^:[a-zA-Z]+$/g;
 
 const isGetMethod = (method: Method) => ['get', 'GET'].includes(method);
 
