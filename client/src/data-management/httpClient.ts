@@ -1,9 +1,9 @@
-import { BaseViewModel, TypeName } from '@mail/common';
+import { TypeName } from '@mail/common';
 
-import axios, { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export interface HttpClient {
-  sendRequest: <TViewModel extends BaseViewModel>(config: AxiosRequestConfig) => Promise<AxiosResponse<TViewModel, any>>
+  sendRequest: <TRequestData, TResponse>(config: AxiosRequestConfig) => Promise<AxiosResponse<TResponse>>
 }
 
 export const getHttpClient = (token: string, typeName: TypeName): HttpClient => {
@@ -15,7 +15,7 @@ export const getHttpClient = (token: string, typeName: TypeName): HttpClient => 
     },
   });
 
-  const sendRequest = async <TViewModel extends BaseViewModel>(config: AxiosRequestConfig) => await axiosInstance.request<TViewModel>(config);
+  const sendRequest = async <TRequestData, TResponse>(config: AxiosRequestConfig) => await axiosInstance.request<TRequestData, TResponse>(config);
 
   return { 
     sendRequest 

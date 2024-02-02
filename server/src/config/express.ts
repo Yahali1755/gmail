@@ -1,6 +1,5 @@
 import express, { Router, json, Express } from "express"
 import cors from "cors";
-import 'dotenv/config'
 
 import authRouter from "../auth/auth-router"
 import { errorMiddleware } from "../middlewares/error-middleware";

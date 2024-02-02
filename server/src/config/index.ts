@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import configExpress from "./express";
 import configMongoose from "./mongoose";
 

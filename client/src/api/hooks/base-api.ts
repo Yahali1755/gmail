@@ -12,18 +12,22 @@ export interface ApiAction<TRequestData, TResponse> {
 
 export type ApiQuery<TQueryParameters extends Record<string, any>, TResponse> = ApiAction<TQueryParameters, TResponse>
 
-export type ApiActions<TRequestData, TResponse> = Record<string, ApiAction<TRequestData, TResponse>>
+export type ActionsDefinitionMap = Record<string, ApiAction<any, any>>;
 
 export type DefaultActionsDefinition<TViewModel extends BaseViewModel, TQueryParameters extends Record<string, any>> = {
     insert: ApiAction<TViewModel, TViewModel>
-    update: ApiAction<TViewModel, TViewModel>,
-    getById: ApiQuery<{id: string}, TViewModel>,
-    delete: ApiAction<{id: string}, void>,
+    update: ApiAction<TViewModel, TViewModel>
+    getById: ApiQuery<{id: string}, TViewModel>
+    delete: ApiAction<{id: string}, void>
     getAll: ApiQuery<TQueryParameters, TViewModel[]>
 }
 
+export type ToActions<ActionsDefinitionMap> = {
+    [TAction in keyof ActionsDefinitionMap]: ActionsDefinitionMap[TAction] extends ApiAction<infer TRequestData, infer TResponse> ? ApiAction<TRequestData, TResponse> : never
+}
+
 const getDefaultActions = <TViewModel extends BaseViewModel, TQueryParameters extends Record<string, any> = {}>():
-    DefaultActionsDefinition<TViewModel, TQueryParameters> => ({
+    ToActions<DefaultActionsDefinition<TViewModel, TQueryParameters>> => ({
     insert: {
         method: 'POST'
     },
@@ -43,10 +47,12 @@ const getDefaultActions = <TViewModel extends BaseViewModel, TQueryParameters ex
     }
 })
 
-export const useApi = <TViewModel extends BaseViewModel, TQueryParameters extends Record<string, any>>(typeName: TypeName, apiActions?: ApiActions<TViewModel, TQueryParameters>) => {
+export const useApi = <TViewModel extends BaseViewModel, TQueryParameters extends Record<string, any> = {}, TActionsDefinitionMap extends ActionsDefinitionMap = {}>(typeName: TypeName, 
+    apiActions?: ToActions<TActionsDefinitionMap>) => {
     const { token } = useAuth();
     const httpClient = getHttpClient(token, typeName);
-    const api = createActions<TViewModel>({...apiActions, ...getDefaultActions()}, httpClient);
+    
+    const api = createActions({...getDefaultActions<TViewModel, TQueryParameters>()}, httpClient);
 
     return api;
 }
