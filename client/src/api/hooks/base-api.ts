@@ -1,4 +1,4 @@
-import { BaseViewModel, TypeName } from "@mail/common";
+import { BaseViewModel, EmailViewModel, TypeName } from "@mail/common";
 
 import { useAuth } from "../../contexts/auth";
 import { createActions } from "../api-actions-utils";
@@ -22,12 +22,12 @@ export type DefaultActionsDefinition<TViewModel extends BaseViewModel, TQueryPar
     getAll: ApiQuery<TQueryParameters, TViewModel[]>
 }
 
-export type ToActions<ActionsDefinitionMap> = {
-    [TAction in keyof ActionsDefinitionMap]: ActionsDefinitionMap[TAction] extends ApiAction<infer TRequestData, infer TResponse> ? ApiAction<TRequestData, TResponse> : never
+export type ToActions<TActionsDefinitionMap> = {
+    [TAction in keyof TActionsDefinitionMap]: TActionsDefinitionMap[TAction] extends ApiAction<infer TRequestData, infer TResponse> ? ApiAction<TRequestData, TResponse> : never
 }
 
 const getDefaultActions = <TViewModel extends BaseViewModel, TQueryParameters extends Record<string, any> = {}>():
-    ToActions<DefaultActionsDefinition<TViewModel, TQueryParameters>> => ({
+    DefaultActionsDefinition<TViewModel, TQueryParameters> => ({
     insert: {
         method: 'POST'
     },
