@@ -3,7 +3,7 @@ import { Document } from "mongoose";
 
 import { BaseViewModel } from "@mail/common";
 
-import { BaseMapper } from "./base-mapper";
+import { BaseMapper } from "./BaseMapper";
 
 type SendEntitiesRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entity: TDocument}>
 type SendEntityRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entities: TDocument[]}>

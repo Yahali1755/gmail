@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+// import 'dotenv/config'
 
 import App from './app';
 

@@ -1,6 +1,6 @@
 import express, { Router } from "express"
 
-import emailRouter from "./email/email-router";
+import emailRouter from "./email/EmailRouter";
 
 const router = express.Router();
 

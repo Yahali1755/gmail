@@ -18,9 +18,7 @@ export const insertEntity = <TDocument extends Document>(model: Model<TDocument>
 export const updateEntity = <TDocument extends Document>(model: Model<TDocument>): UpdatesRequestHandler<TDocument> => async (req, res, next) => {
     const {locals: { entity }} = res
 
-    await model.updateOne({_id: entity._id}, entity.toObject());
-
-    const updatedEntity = await model.findById({_id: entity._id});
+    const updatedEntity = await model.findByIdAndUpdate({_id: entity._id}, entity.toObject(), {new: true});
 
     res.locals.entity = updatedEntity;
 

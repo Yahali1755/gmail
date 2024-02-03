@@ -1,18 +1,20 @@
 import { Table, TableBody, TableContainer, Paper, CircularProgress } from '@mui/material';
+import { FC, useEffect } from 'react';
+
+import { MailboxType } from '../constants/MailboxType';
 import MailRow from './MailRow';
-import { FC } from 'react';
-import { MailboxCategory } from '../constants/MailboxCategory';
-import { useQuery } from 'react-query';
-import { EmailViewModel } from '@mail/common';
+import useEmailQuery from '../query/use-email-query';
 
 interface MailBoxProps {
-  mailBoxCategory: MailboxCategory,
-  emails: EmailViewModel[]
-  isLoading: boolean
+  mailBoxType: MailboxType
 }
 
-const MailBox: FC<MailBoxProps> = ({ mailBoxCategory, emails, isLoading }) => {
-  // useQuery
+const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
+  const { isLoading, data: emails} = useEmailQuery(mailBoxType);
+
+  useEffect(() => {
+    console.log(emails)
+  }, [isLoading, emails])
 
   return (
     <TableContainer component={Paper}>
@@ -20,8 +22,9 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxCategory, emails, isLoading }) => {
         <TableBody>
           {
             isLoading ?
-            <CircularProgress/> :
-            emails.map(email => <MailRow email={email} />)
+            <CircularProgress size="4em"/> :
+            <CircularProgress size="4em"/>
+            // emails.map(email => <MailRow email={email} />)
           }
         </TableBody>
       </Table>

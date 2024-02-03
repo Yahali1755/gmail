@@ -1,12 +1,12 @@
 import express, { Router, json, Express } from "express"
 import cors from "cors";
 
-import authRouter from "../auth/auth-router"
+import authRouter from "../auth/AuthRouter"
 import { errorMiddleware } from "../middlewares/error-middleware";
 import { logMiddleware } from "../middlewares/log-middleware";
 import { logger } from "../logger";
 import { verifyToken } from "../middlewares/verify-token-middleware";
-import apiRouter from "../api/api-router";
+import apiRouter from "../api/ApiRouter";
 
 interface Route {
     path: string

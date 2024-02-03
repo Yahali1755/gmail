@@ -1,8 +1,8 @@
 import express from "express"
 
 import { findEntities, findEntityById } from "../../common/queries";
-import { EmailDocument, EmailModel } from "../../models/email";
-import { EmailMapper } from "./email-mapper";
+import { EmailDocument, EmailModel } from "../../models/Email";
+import { EmailMapper } from "./EmailMapper";
 import { sendEntities, sendEntity, sendSuccess } from "../../common/responses";
 import { mapBodyToEntity } from "../../common/mapping";
 import { deleteEntity, insertEntity, updateEntity } from "../../common/updates";

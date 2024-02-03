@@ -12,13 +12,13 @@ import HomePageIconButton from './HomePageIconButton';
 import { useOpen } from '../../common/hooks/use-open';
 import NewMailDialog from '../forms/NewMailDialog';
 import { FC } from 'react';
-import { MailboxCategory } from '../../constants/MailboxCategory';
+import { MailboxType } from '../../constants/MailboxType';
 
 interface SideBarProps {
-  setMailBoxCategory: (mailboxCategory: MailboxCategory) => void
+  setMailBoxType: (mailboxType: MailboxType) => void
 }
 
-const SideBar: FC<SideBarProps> = ({ setMailBoxCategory }) => {
+const SideBar: FC<SideBarProps> = ({ setMailBoxType }) => {
   const {open: openCreateMail, close: closeCreateMail, isOpen: isCreateMailOpen} = useOpen();
 
   return (
@@ -38,7 +38,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxCategory }) => {
             <NewMailDialog isOpen={isCreateMailOpen} close={closeCreateMail}/>
           </ListItem>
           <ListItem key='Inbox' disablePadding>
-            <ListItemButton onClick={() => setMailBoxCategory(MailboxCategory.Inbox)}>
+            <ListItemButton onClick={() => setMailBoxType(MailboxType.Inbox)}>
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
@@ -46,7 +46,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxCategory }) => {
             </ListItemButton>
           </ListItem>
           <ListItem key='Sent' disablePadding>
-            <ListItemButton onClick={() => setMailBoxCategory(MailboxCategory.Outbox)}>
+            <ListItemButton onClick={() => setMailBoxType(MailboxType.Outbox)}>
               <ListItemIcon>
                 <SendIcon />
               </ListItemIcon>

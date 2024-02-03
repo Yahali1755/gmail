@@ -1,9 +1,10 @@
 import { TableCell, TableRow} from '@mui/material';
+import { FC } from 'react';
+
+import { EmailViewModel } from '@mail/common';
 
 import { useOpen } from '../common/hooks/use-open';
 import MailPreview from './MailPreview';
-import { FC } from 'react';
-import { EmailViewModel } from '@mail/common';
 
 interface MailRowProps {
   email: EmailViewModel

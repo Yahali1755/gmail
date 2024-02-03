@@ -6,7 +6,7 @@ import PageContainer from "../common/PageContainer";
 import { Route } from "../constants/Route";
 import { RouteType } from "../routes";
 import { useState } from "react";
-import { MailboxCategory } from "../constants/MailboxCategory";
+import { MailboxType } from "../constants/MailboxType";
 import useEmailQuery from "../query/use-email-query";
 
 const getTableContainerStyles = (theme: Theme) => ({
@@ -26,14 +26,13 @@ const getTableContainerStyles = (theme: Theme) => ({
 
 const Mail = () => {
     const theme = useTheme()
-    const [mailboxCategory, setMailboxCategory] = useState(MailboxCategory.Outbox)
-    const emailQuery = useEmailQuery(mailboxCategory);
+    const [mailboxType, setMailboxType] = useState(MailboxType.Outbox)
 
     return (
         <PageContainer>
-            <SideBar setMailBoxCategory={setMailboxCategory}/>
+            <SideBar setMailBoxType={setMailboxType}/>
             <Grid sx={getTableContainerStyles(theme)} item height="800px" width='1200px' overflow='auto' container>
-                <MailBox emails={emailQuery.data.data} isLoading={emailQuery.isLoading} mailBoxCategory={mailboxCategory}/>
+                <MailBox mailBoxType={mailboxType}/>
             </Grid>
         </PageContainer>
     )

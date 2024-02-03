@@ -1,6 +1,6 @@
 import express from "express"
 
-import { UserModel } from "../models/user";
+import { UserModel } from "../models/User";
 import { ensureEmailUniqness, generateToken, sendLoginData, verifyUser } from "./auth-handlers";
 import { insertEntity } from "../common/updates";
 import { verifyToken } from "../middlewares/verify-token-middleware";

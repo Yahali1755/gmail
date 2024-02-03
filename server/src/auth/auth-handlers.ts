@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 import { UserViewModel } from "@mail/common";
 
 import { RequestHandler } from "express";
-import { UserModel } from "../models/user";
+import { UserModel } from "../models/User";
 
 export const generateToken: RequestHandler<{}, {}, UserViewModel, {}, {token: string, user: UserViewModel}> = ({ body }, res, next) => {
     const token = jwt.sign(body, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
