@@ -1,20 +1,17 @@
-import { QueryKey, UseQueryOptions, UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { TypeName } from "@mail/common";
+import { ActionFunction } from "../api/hooks/base-api";
 
-type BaseQueryOptions<TQueryFnData, TError, TData> 
-    = Omit<UseQueryOptions<TQueryFnData, TError, TData, QueryKey> & {
+type BaseQueryOptions<TReturnType, TQueryParameters extends Record<string,any> = {}> = {
     typeName: TypeName,
-    filters: Record<string, any>
-}, "queryKey">
+    filters: TQueryParameters,
+    query: ActionFunction<TQueryParameters, TReturnType>
+}
 
-export const useBaseQuery = < 
-    TQueryFnData = unknown,
-    TData = TQueryFnData,
-    TError = unknown,
-    >({typeName, filters, ...props}: BaseQueryOptions<TQueryFnData, TError, TData>): UseQueryResult<TData, TError>  => 
-    useQuery({
+export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, query}: BaseQueryOptions<TReturnType, TQueryParameters>) => 
+    useQuery<TReturnType>({
     queryKey: [typeName, filters],
-    staleTime: 30000,
-    ...props
+    queryFn: () => query(filters),
+    staleTime: 30000
 })

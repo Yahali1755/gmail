@@ -4,7 +4,7 @@ import { Document, Model } from "mongoose";
 type UpdatesRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entity: TDocument}>
 
 export const insertEntity = <TDocument extends Document>(model: Model<TDocument>):  UpdatesRequestHandler<TDocument> => async (req, res, next) => {
-    const newEntity = new model(res.locals.entity)
+    const newEntity = res.locals.entity
 
     await newEntity.save();
 

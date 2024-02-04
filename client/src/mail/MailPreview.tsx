@@ -1,4 +1,4 @@
-import { Grid, SxProps, Typography } from "@mui/material";
+import { SxProps, Typography } from "@mui/material";
 import { FC } from "react";
 
 import Dialog from "../common/Dialog";

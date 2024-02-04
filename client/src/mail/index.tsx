@@ -7,7 +7,7 @@ import { Route } from "../constants/Route";
 import { RouteType } from "../routes";
 import { useState } from "react";
 import { MailboxType } from "../constants/MailboxType";
-import useEmailQuery from "../query/use-email-query";
+import useEmailBoxQuery from "../query/use-email-query";
 
 const getTableContainerStyles = (theme: Theme) => ({
     '&::-webkit-scrollbar': {

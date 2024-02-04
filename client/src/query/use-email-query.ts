@@ -1,30 +1,30 @@
-import { EmailViewModel, TypeName, UserViewModel } from "@mail/common";
+import { TypeName } from "@mail/common";
 
 import { MailboxType } from "../constants/MailboxType";
 import { useEmailApi } from "../api/hooks/email-api";
 import { useAuth } from "../contexts/auth";
 import { useBaseQuery } from "./use-base-query";
-import { AxiosResponse } from "axios";
 
-const getEmailQueryFunction = (mailboxType: MailboxType, user: UserViewModel) => {
-    const api = useEmailApi();
-
-    const emailQueryFunctionDictionary = {
-        [MailboxType.Inbox]: api.getAll({recipients: user.email}) as Promise<AxiosResponse<EmailViewModel[], any>>,
-        [MailboxType.Outbox]: api.getAll({author: user.email}) as Promise<AxiosResponse<EmailViewModel[], any>>,
-    }
-    
-    return emailQueryFunctionDictionary[mailboxType]
-}
-
-const useEmailQuery = (mailboxType: MailboxType) => { 
+const useEmailBoxQueryFilters = (mailboxType: MailboxType) => {
     const { user } = useAuth();
 
+    const emailQueryFiltersDictionary: Record<MailboxType, Record<string, any>> = {
+        [MailboxType.Inbox]: {recipients: user.email},
+        [MailboxType.Outbox]: {author: user.email}
+    }
+    
+    return emailQueryFiltersDictionary[mailboxType]
+}
+
+const useEmailBoxQuery = (mailboxType: MailboxType) => { 
+    const api = useEmailApi();
+    const emailBoxQueryFilters = useEmailBoxQueryFilters(mailboxType);
+
     return useBaseQuery({
-        filters: {mailboxType},
+        filters: emailBoxQueryFilters,
         typeName: TypeName.Email,
-        queryFn: () => getEmailQueryFunction(mailboxType, user)
+        query: api.getAll
     })
 }
 
-export default useEmailQuery;
+export default useEmailBoxQuery;
