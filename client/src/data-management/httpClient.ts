@@ -1,9 +1,11 @@
-import { TypeName } from '@mail/common';
-
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
+import { TypeName } from '@mail/common';
+
+import { transformResponse } from './transform';
+
 export interface HttpClient {
-  sendRequest: <TRequestData, TResponse>(config: AxiosRequestConfig) => Promise<AxiosResponse<TResponse>>
+  sendRequest: <TResponse>(config: AxiosRequestConfig) => Promise<AxiosResponse<TResponse>>
 }
 
 export const getHttpClient = (token: string, typeName: TypeName): HttpClient => {
@@ -13,9 +15,10 @@ export const getHttpClient = (token: string, typeName: TypeName): HttpClient => 
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
+    transformResponse
   });
 
-  const sendRequest = async <TRequestData, TResponse>(config: AxiosRequestConfig) => await axiosInstance.request<TRequestData, TResponse>(config);
+  const sendRequest = async <TResponse>(config: AxiosRequestConfig) => await axiosInstance.request<TResponse>(config);
 
   return { 
     sendRequest 

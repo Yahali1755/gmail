@@ -13,7 +13,7 @@ export interface ApiAction<TRequestData, TResponse> {
 
 export type ApiQuery<TQueryParameters extends Record<string, any>, TResponse> = ApiAction<TQueryParameters, TResponse>
 
-export type ActionFunction<TData, TResponse> = (data: TData) => Promise<TResponse>
+export type ActionFunction<TData, TResponse> = (data?: TData) => Promise<TResponse>
 
 export type ActionsDefinitionMap = Record<string, ApiAction<any, any>>;
 

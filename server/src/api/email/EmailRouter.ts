@@ -17,20 +17,20 @@ const deleteEmail = deleteEntity<EmailDocument>()
 
 router.get('/',
     findEntities(EmailModel),
-    sendEntities
+    sendEntities(mapper)
 )
 
 router.post('/',
     mapBodyToEntity(mapper),
     prepareEmailForInsert,
     insertEmail,
-    sendEntity
+    sendEntity(mapper)
 )
 
 router.put('/:id',
     mapBodyToEntity(mapper),
     updateEmail,
-    sendEntity
+    sendEntity(mapper)
 )
 
 router.delete('/:id',

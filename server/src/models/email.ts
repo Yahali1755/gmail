@@ -14,9 +14,8 @@ const EmailSchema = new Schema({
   recipients: {type: Array<String>, required: true},
   subject: {type: String, required: true},
   author: {type: String, required: true},
-  isRead: Boolean,
+  isRead: {type: Boolean, default: false},
   content: String,
-  isStarred: Boolean,
   createdAt: {
     type: Date,
     default: Date.now()

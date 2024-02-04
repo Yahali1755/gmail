@@ -14,7 +14,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
 
   useEffect(() => {
     console.log(emails)
-  }, [emails])
+  })
 
   return (
     <TableContainer component={Paper}>

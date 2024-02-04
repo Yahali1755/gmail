@@ -2,7 +2,7 @@ import { Method} from "axios";
 import { mapValues } from 'lodash'
 
 import { HttpClient } from "../data-management/httpClient";
-import { ActionsDefinitionMap, ApiAction, ApiActions, ToActions } from "./hooks/base-api";
+import { ActionsDefinitionMap, ApiAction, ToActions } from "./hooks/base-api";
 
 const variableRegex = /^:[a-zA-Z]+$/g;
 
