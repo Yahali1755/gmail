@@ -12,6 +12,6 @@ type BaseQueryOptions<TReturnType, TQueryParameters extends Record<string,any> =
 export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, query}: BaseQueryOptions<TReturnType, TQueryParameters>) => 
     useQuery<TReturnType>({
     queryKey: [typeName, filters],
-    queryFn: () => query(filters).then(response => response.data),
+    queryFn: () => query(filters),
     staleTime: 30000
 })

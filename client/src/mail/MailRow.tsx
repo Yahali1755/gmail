@@ -18,9 +18,9 @@ const MailRow: FC<MailRowProps> = ({ email }) => {
       <TableRow onClick={openMailPreview} hover>
         <TableCell width="15%"> { email.author }</TableCell>
         <TableCell width="75%"> { email.content } </TableCell>
-        <TableCell width="10%" > { email.createdAt.toDateString() } </TableCell>
+        <TableCell width="10%" > { email.createdAt.toString() } </TableCell>
       </TableRow>
-      <MailPreview mail={{author: "yahali100@gmail.com", subject: "almogi", content: "almog systems"}} 
+      <MailPreview email={email} 
         isOpen={isMailPreviewOpen} close={closeMailPreview}/>
     </>
   )

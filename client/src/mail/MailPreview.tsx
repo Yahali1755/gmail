@@ -6,7 +6,7 @@ import Dialog from "../common/Dialog";
 interface MailPreviewProps {
     isOpen: boolean, 
     close: () => void,
-    mail: any
+    email: any
 }
 
 const styles: Record<string, SxProps> = {
@@ -16,15 +16,15 @@ const styles: Record<string, SxProps> = {
     }
 }
 
-const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, mail }) => 
+const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, email }) => 
     <Dialog dialogContentProps={{sx: styles.dialogSize}} dialogTitleProps={{sx: {fontWeight: "bold"}}} sx={styles.dialog} 
-        dialogTitle={mail.subject} open={isOpen} onClose={close}>
+        dialogTitle={email.subject} open={isOpen} onClose={close}>
         <Typography sx={{fontWeight: "bold"}} title="Author">
-            { `From: ${mail.author}` }
+            { `From: ${email.author}` }
         </Typography>
         <br/>
         <Typography paragraph title="Content">
-            { mail.content}
+            { email.content}
         </Typography>                
     </Dialog>
 

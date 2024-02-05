@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
 import { FC } from "react";
 
-import { EmailViewModel } from "@mail/common";
+import { EmailViewModel, TypeName } from "@mail/common";
 
 import FormTextField from "../../common/form/FormTextField"
 import FormDialog from "../../common/form/FormDialog";
 import FormMultipleFreeSoloAutocomplete from "../../common/form/FormMultipleFreeSoloAutocomplete";
 import { useEmailApi } from "../../api/hooks/email-api";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface NewMailDialogProps {
     isOpen: boolean
@@ -24,14 +25,17 @@ const styles = {
 const NewMailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
     const formMethods = useForm();
     const emailApi = useEmailApi();
+    const queryClient = useQueryClient();
 
     const submit = (data: EmailViewModel) => {
-        emailApi.insert(data)
+        emailApi.insert(data).then(() =>
+            queryClient.invalidateQueries({ predicate: query => query.queryKey.includes(TypeName.Email)})
+        )
     }
 
     return (
         <FormDialog isEditEnabled={true} submitButtonProps={{label: "Send"}} onSubmit={submit} fullWidth maxWidth="md" dialogTitle="New Mail" formMethods={formMethods} open={isOpen} onClose={close}>
-            <FormMultipleFreeSoloAutocomplete autoSelect key="recipients" textFieldProps={{variant: "standard", label:"To", required: true}} options={[]} freeSolo multiple autoFocus fullWidth name="recipients"/>
+            <FormMultipleFreeSoloAutocomplete autoSelect key="recipients" textFieldProps={{variant: "standard", label:"To"}} options={[]} freeSolo multiple autoFocus fullWidth name="recipients"/>
             <FormTextField required={true} key="subject" label="Subject" variant="standard" fullWidth name="subject"/>
             <FormTextField sx={styles.content} key="content" label="" multiline rows={8} variant="standard" fullWidth name="content"/>
         </FormDialog>

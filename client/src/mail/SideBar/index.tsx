@@ -15,15 +15,16 @@ import { FC } from 'react';
 import { MailboxType } from '../../constants/MailboxType';
 
 interface SideBarProps {
-  setMailBoxType: (mailboxType: MailboxType) => void
+  setMailBoxType: (mailboxType: MailboxType) => void,
+  mailboxType: MailboxType
 }
 
-const SideBar: FC<SideBarProps> = ({ setMailBoxType }) => {
+const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
   const {open: openCreateMail, close: closeCreateMail, isOpen: isCreateMailOpen} = useOpen();
 
   return (
     <>
-      <Drawer anchor="left" open={true} variant='permanent'>
+      <Drawer anchor='left' open={true} variant='permanent'>
         <List>
           <ListItem key='HomePageIconButton' disablePadding>
             <HomePageIconButton/>
@@ -38,7 +39,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxType }) => {
             <NewMailDialog isOpen={isCreateMailOpen} close={closeCreateMail}/>
           </ListItem>
           <ListItem key='Inbox' disablePadding>
-            <ListItemButton onClick={() => setMailBoxType(MailboxType.Inbox)}>
+            <ListItemButton selected={mailboxType === MailboxType.Inbox} onClick={() => setMailBoxType(MailboxType.Inbox)}>
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
@@ -46,7 +47,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxType }) => {
             </ListItemButton>
           </ListItem>
           <ListItem key='Sent' disablePadding>
-            <ListItemButton onClick={() => setMailBoxType(MailboxType.Outbox)}>
+            <ListItemButton selected={mailboxType === MailboxType.Outbox} onClick={() => setMailBoxType(MailboxType.Outbox)}>
               <ListItemIcon>
                 <SendIcon />
               </ListItemIcon>

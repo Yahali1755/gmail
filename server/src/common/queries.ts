@@ -6,7 +6,7 @@ type FindAllEntitiesRequestHandler<TDocument extends Document> = RequestHandler<
 
 const parseQueryFilters =  <TDocument extends Document>(model: Model<TDocument>, query: Record<string, any>) => 
     query ? Object.entries(query).reduce((result, [paramKey, paramValue]) => 
-     ({...result, [paramKey]: decodeURIComponent(paramValue)})
+     ({...result, [paramKey]: paramValue})
     , {}) : {}
 
 export const findEntityById = <TDocument extends Document>(model: Model<TDocument>): FindEntityByIdRequestHandler<TDocument> => async (req, res, next) => {

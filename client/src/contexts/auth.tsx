@@ -6,6 +6,7 @@ import { UserViewModel } from "@mail/common"
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
 import LoadingUserPage from "../exterior/LoadingUserPage"
 import Dialog from "../common/Dialog"
+import { Route } from "../constants/Route"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -91,8 +92,8 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                     <LoadingUserPage/>
                 :
                 <AuthContext.Provider value={{...loginData, login, register}}>
-                    <Dialog dialogActions={<Button onClick={() => location.reload()}> refresh </Button>} 
-                        open={hasTokenExpired} onClose={() => location.reload()}>
+                    <Dialog dialogActions={<Button onClick={() => location.href = Route.User}> refresh </Button>} 
+                        open={hasTokenExpired} onClose={() => location.href = Route.User}>
                         <DialogContent>
                             <Typography>
                                 Your authentication validity expired, refresh the page to continue

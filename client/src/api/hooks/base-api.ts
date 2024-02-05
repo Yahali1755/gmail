@@ -3,7 +3,7 @@ import { Method } from "axios";
 import { BaseViewModel, TypeName } from "@mail/common";
 
 import { useAuth } from "../../contexts/auth";
-import { createActions } from "../api-actions-utils";
+import { createActions } from "../api-actions";
 import { getHttpClient } from "../../data-management/httpClient"
 
 export interface ApiAction<TRequestData, TResponse> {
