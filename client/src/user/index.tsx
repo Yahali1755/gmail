@@ -8,7 +8,9 @@ import { RouteType } from "../routes";
 const getUserFormContainerStyles: SxProps = (theme: Theme) => ({
     height: '500px',
     width: '400px',
-    border: `1px solid ${theme.palette.text.primary}`
+    border: `1px solid ${theme.palette.text.primary}`,
+    marginTop: 'auto',
+    marginBottom: 'auto'
 })
 
 const User: FC = () => {

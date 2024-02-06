@@ -5,8 +5,8 @@ import AuthWrapper from "../routes/AuthWrapper";
 
 const PageContainer = ({ children }) =>
     <AuthWrapper>
-        <Grid container direction='column' overflow='auto' width="100%" minHeight='100vh' alignItems='baseline' 
-            justifyContent='center'>
+        <Grid container direction='column' overflow='auto' width="100%" minHeight='100vh' alignItems='center' 
+            justifyContent='baseline'>
             { children }
             <DarkModeToggle/>
         </Grid>

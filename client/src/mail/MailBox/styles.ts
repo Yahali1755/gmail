@@ -9,23 +9,25 @@ export const useTableStyles = () => {
             display: "flex",
             width: "100%",
             height: "100%",
-            margin: theme.spacing(4, 8, 4, 20)
+            padding: theme.spacing(6, 8, 2, 20),
+            borderRadius: theme.spacing(1)
         },
         tableContainer: {
-            flex: 1,
+            borderRadius: theme.spacing(1.5),
             overflow: 'auto',
             '&::-webkit-scrollbar': {
-                width: '8px',
+                width: theme.spacing(1),
+                height: theme.spacing(1)
             },
             '&::-webkit-scrollbar-thumb': {
                 backgroundColor: theme.palette.text.primary,
-                borderRadius: '4px',
+                borderRadius: theme.spacing(0.5),
             },
             '&::-webkit-scrollbar-track': {
                 backgroundColor: theme.palette.background.default,
-                borderRadius: '4px',
+                borderRadius: theme.spacing(0.5),
             },
-            boxShadow: theme.shadows[3],
+            boxShadow: theme.shadows[10],
         },
     }
 }

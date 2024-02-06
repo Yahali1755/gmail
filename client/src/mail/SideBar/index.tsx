@@ -13,6 +13,7 @@ import { useOpen } from '../../common/hooks/use-open';
 import NewMailDialog from '../forms/NewMailDialog';
 import { FC } from 'react';
 import { MailboxType } from '../../constants/MailboxType';
+import { useSideBarStyles } from './styles';
 
 interface SideBarProps {
   setMailBoxType: (mailboxType: MailboxType) => void,
@@ -21,42 +22,41 @@ interface SideBarProps {
 
 const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
   const {open: openCreateMail, close: closeCreateMail, isOpen: isCreateMailOpen} = useOpen();
+  const styles = useSideBarStyles();
 
   return (
-    <>
-      <Drawer anchor='left' open={true} variant='permanent'>
-        <List>
-          <ListItem key='HomePageIconButton' disablePadding>
-            <HomePageIconButton/>
-          </ListItem>
-          <ListItem key='SendMail' disablePadding>
-            <ListItemButton onClick={openCreateMail}>
-              <ListItemIcon>
-                <CreateIcon/>
-              </ListItemIcon>
-              <ListItemText primary='Send Mail'/>
-            </ListItemButton>
-            <NewMailDialog isOpen={isCreateMailOpen} close={closeCreateMail}/>
-          </ListItem>
-          <ListItem key='Inbox' disablePadding>
-            <ListItemButton selected={mailboxType === MailboxType.Inbox} onClick={() => setMailBoxType(MailboxType.Inbox)}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary='Inbox'/>
-            </ListItemButton>
-          </ListItem>
-          <ListItem key='Sent' disablePadding>
-            <ListItemButton selected={mailboxType === MailboxType.Outbox} onClick={() => setMailBoxType(MailboxType.Outbox)}>
-              <ListItemIcon>
-                <SendIcon />
-              </ListItemIcon>
-              <ListItemText primary='Sent'/>
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Drawer>
-    </>
+    <Drawer PaperProps={styles.drawer} elevation={0} anchor='left' open={true} variant='permanent'>
+      <List>
+        <ListItem key='HomePageIconButton' disablePadding>
+          <HomePageIconButton/>
+        </ListItem>
+        <ListItem key='SendMail' disablePadding>
+          <ListItemButton onClick={openCreateMail}>
+            <ListItemIcon>
+              <CreateIcon/>
+            </ListItemIcon>
+            <ListItemText primary='Send Mail'/>
+          </ListItemButton>
+          <NewMailDialog isOpen={isCreateMailOpen} close={closeCreateMail}/>
+        </ListItem>
+        <ListItem key='Inbox' disablePadding>
+          <ListItemButton selected={mailboxType === MailboxType.Inbox} onClick={() => setMailBoxType(MailboxType.Inbox)}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary='Inbox'/>
+          </ListItemButton>
+        </ListItem>
+        <ListItem key='Sent' disablePadding>
+          <ListItemButton selected={mailboxType === MailboxType.Outbox} onClick={() => setMailBoxType(MailboxType.Outbox)}>
+            <ListItemIcon>
+              <SendIcon />
+            </ListItemIcon>
+            <ListItemText primary='Sent'/>
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Drawer>
   );
 };
 
