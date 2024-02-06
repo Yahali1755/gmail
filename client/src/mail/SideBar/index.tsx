@@ -1,4 +1,4 @@
-import Drawer from '@mui/material/Drawer';
+import { Grid } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -7,13 +7,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import SendIcon from '@mui/icons-material/Send';
 import CreateIcon from '@mui/icons-material/Create';
+import { FC } from 'react';
 
 import HomePageIconButton from './HomePageIconButton';
 import { useOpen } from '../../common/hooks/use-open';
 import NewMailDialog from '../forms/NewMailDialog';
-import { FC } from 'react';
 import { MailboxType } from '../../constants/MailboxType';
-import { useSideBarStyles } from './styles';
 
 interface SideBarProps {
   setMailBoxType: (mailboxType: MailboxType) => void,
@@ -22,41 +21,48 @@ interface SideBarProps {
 
 const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
   const {open: openCreateMail, close: closeCreateMail, isOpen: isCreateMailOpen} = useOpen();
-  const styles = useSideBarStyles();
 
   return (
-    <Drawer PaperProps={styles.drawer} elevation={0} anchor='left' open={true} variant='permanent'>
+    <Grid width="160px" alignSelf="flex-start" position="fixed" container direction='column'>
       <List>
-        <ListItem key='HomePageIconButton' disablePadding>
-          <HomePageIconButton/>
-        </ListItem>
-        <ListItem key='SendMail' disablePadding>
-          <ListItemButton onClick={openCreateMail}>
-            <ListItemIcon>
-              <CreateIcon/>
-            </ListItemIcon>
-            <ListItemText primary='Send Mail'/>
-          </ListItemButton>
-          <NewMailDialog isOpen={isCreateMailOpen} close={closeCreateMail}/>
-        </ListItem>
-        <ListItem key='Inbox' disablePadding>
-          <ListItemButton selected={mailboxType === MailboxType.Inbox} onClick={() => setMailBoxType(MailboxType.Inbox)}>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary='Inbox'/>
-          </ListItemButton>
-        </ListItem>
-        <ListItem key='Sent' disablePadding>
-          <ListItemButton selected={mailboxType === MailboxType.Outbox} onClick={() => setMailBoxType(MailboxType.Outbox)}>
-            <ListItemIcon>
-              <SendIcon />
-            </ListItemIcon>
-            <ListItemText primary='Sent'/>
-          </ListItemButton>
-        </ListItem>
+        <Grid item>
+          <ListItem key='HomePageIconButton' disablePadding>
+            <HomePageIconButton/>
+          </ListItem>
+        </Grid>
+        <Grid item>
+          <ListItem key='SendMail' disablePadding>
+            <ListItemButton onClick={openCreateMail}>
+              <ListItemIcon>
+                <CreateIcon/>
+              </ListItemIcon>
+              <ListItemText primary='Send Mail'/>
+            </ListItemButton>
+            <NewMailDialog isOpen={isCreateMailOpen} close={closeCreateMail}/>
+          </ListItem>
+        </Grid>
+        <Grid item>
+          <ListItem key='Inbox' disablePadding>
+            <ListItemButton selected={mailboxType === MailboxType.Inbox} onClick={() => setMailBoxType(MailboxType.Inbox)}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary='Inbox'/>
+            </ListItemButton>
+          </ListItem>
+        </Grid>
+        <Grid item>
+          <ListItem key='Sent' disablePadding>
+            <ListItemButton selected={mailboxType === MailboxType.Outbox} onClick={() => setMailBoxType(MailboxType.Outbox)}>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <ListItemText primary='Sent'/>
+            </ListItemButton>
+          </ListItem>
+        </Grid>
       </List>
-    </Drawer>
+    </Grid>
   );
 };
 

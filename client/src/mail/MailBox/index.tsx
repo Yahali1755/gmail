@@ -15,7 +15,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
   const styles = useTableStyles();
 
   return (
-    <Paper sx={styles.container}>
+    <Box sx={styles.container}>
         <TableContainer sx={styles.tableContainer} component={Paper}>
         { 
           isLoading ?
@@ -30,7 +30,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
             </Table>
         }
         </TableContainer>
-    </Paper>
+    </Box>
   )
 }
 

@@ -27,7 +27,7 @@ export const useTableStyles = () => {
                 backgroundColor: theme.palette.background.default,
                 borderRadius: theme.spacing(0.5),
             },
-            boxShadow: theme.shadows[10],
+            boxShadow: theme.shadows[8],
         },
     }
 }
