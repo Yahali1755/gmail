@@ -62,7 +62,7 @@ const UserForm: FC = () => {
 
   return (
     <Form onSubmit={submit} formMethods={formMethods}>
-        <Grid container width='100%' flexDirection='column' alignItems='center' spacing={3}>
+        <Grid container width='100%' direction='column' alignItems='center' spacing={3}>
           <Grid item> 
             <Typography sx={styles.formTitle}> {isRegisterForm ? "Create Account" : "Sign Up"} </Typography>
           </Grid> 

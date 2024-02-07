@@ -8,8 +8,8 @@ export const useTableStyles = () => {
             flex: 1,
             display: "flex",
             width: "100%",
-            height: "100%",
-            padding: theme.spacing(6, 8, 2, 20),
+            height: '100%',
+            padding: theme.spacing(6, 6, 2, 0),
             borderRadius: theme.spacing(1)
         },
         tableContainer: {
@@ -27,7 +27,7 @@ export const useTableStyles = () => {
                 backgroundColor: theme.palette.background.default,
                 borderRadius: theme.spacing(0.5),
             },
-            boxShadow: theme.shadows[8],
+            boxShadow: theme.shadows[4],
         },
     }
 }

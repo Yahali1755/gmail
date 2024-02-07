@@ -28,9 +28,11 @@ const NewMailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
     const queryClient = useQueryClient();
 
     const submit = (data: EmailViewModel) => {
-        emailApi.insert(data).then(() =>
-            queryClient.invalidateQueries({ predicate: query => query.queryKey.includes(TypeName.Email)})
-        )
+        emailApi.insert(data)
+            .then(() => formMethods.reset())
+            .then(() =>
+                queryClient.invalidateQueries({ predicate: query => query.queryKey.includes(TypeName.Email)})
+            )
     }
 
     return (

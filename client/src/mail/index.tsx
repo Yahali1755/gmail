@@ -11,8 +11,8 @@ const Mail = () => {
 
     return (
         <PageContainer>
-            <MailBox mailBoxType={mailboxType}/>
             <SideBar mailboxType={mailboxType} setMailBoxType={setMailboxType}/>
+            <MailBox mailBoxType={mailboxType}/>
         </PageContainer>
     )
 }

@@ -1,15 +1,20 @@
 import { Grid } from "@mui/material";
+import { FC, ReactNode } from "react";
 
 import DarkModeToggle from "../theme/ToggleTheme";
 import AuthWrapper from "../routes/AuthWrapper";
+import BasePage from "../exterior/BasePage";
 
-const PageContainer = ({ children }) =>
+interface PageContainerProps {
+    children: ReactNode
+}
+
+const PageContainer: FC<PageContainerProps> = ({ children }) =>
     <AuthWrapper>
-        <Grid container direction='column' overflow='auto' width="100%" minHeight='100vh' alignItems='center' 
-            justifyContent='baseline'>
+        <BasePage>
             { children }
             <DarkModeToggle/>
-        </Grid>
+        </BasePage>
     </AuthWrapper>
 
 export default PageContainer;

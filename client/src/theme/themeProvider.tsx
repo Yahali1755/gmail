@@ -6,8 +6,11 @@ const lightTheme = createTheme({
     mode: 'light',
     background: {
       default: '#f6f8fc',
+    },
+    primary: {
+      main: "#000000"
     }
-  }
+  },
 });
   
 const darkTheme = createTheme({
@@ -15,7 +18,10 @@ const darkTheme = createTheme({
     mode: 'dark',
     background: {
       default: '#282828',
-      paper: '#363636'
+      paper: '#282828'
+    },
+    primary: {
+      main: "#FFFFFF"
     }
   }
 });
