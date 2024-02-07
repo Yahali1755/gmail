@@ -5,6 +5,7 @@ import { MailboxType } from '../../constants/MailboxType';
 import MailRow from '../MailRow';
 import useEmailBoxQuery from '../../query/use-email-query';
 import { useTableStyles } from './styles';
+import LoadingPage from '../../exterior/LoadingPage';
 
 interface MailBoxProps {
   mailBoxType: MailboxType
@@ -19,7 +20,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
         <TableContainer sx={styles.tableContainer} component={Paper}>
         { 
           isLoading ?
-          <CircularProgress size="4em"/> 
+            <LoadingPage circularProgressProps={{size: 50}}/>
           :
             <Table>
                 <TableBody>

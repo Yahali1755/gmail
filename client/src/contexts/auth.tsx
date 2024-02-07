@@ -1,10 +1,10 @@
 import { ReactNode, FC, useState, createContext, useContext, useEffect } from "react"
-import { Button, DialogContent, Typography } from "@mui/material"
+import { Box, Button, DialogContent, Typography } from "@mui/material"
 
 import { UserViewModel } from "@mail/common"
 
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
-import LoadingUserPage from "../exterior/LoadingUserPage"
+import LoadingPage from "../exterior/LoadingPage"
 import Dialog from "../common/Dialog"
 import { Route } from "../constants/Route"
 
@@ -89,7 +89,9 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         <>
             {
                 isLoading ?
-                    <LoadingUserPage/>
+                    <Box height="100vh">
+                        <LoadingPage title="Loading User"/>
+                    </Box>
                 :
                 <AuthContext.Provider value={{...loginData, login, register}}>
                     <Dialog dialogActions={<Button onClick={() => location.href = Route.User}> refresh </Button>} 

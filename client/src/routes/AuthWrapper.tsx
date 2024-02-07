@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import { Route } from '../constants/Route';
 import { useAuth } from '../contexts/auth';
-import LoadingUserPage from '../exterior/LoadingUserPage';
+import LoadingPage from '../exterior/LoadingPage';
 
 interface AuthWrapperProps {
     children: ReactNode
@@ -22,7 +22,7 @@ const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
         }
     }, [])
 
-    return location.pathname === Route.User ? (token ? <LoadingUserPage/> : <> { children }</>) : <> { children }</>
+    return location.pathname === Route.User ? (token ? <LoadingPage title="Loading User"/> : <> { children }</>) : <> { children }</>
 }
 
 export default AuthWrapper
