@@ -11,9 +11,7 @@ const HomePageIconButton = () => {
 
     return (
         <ListItemButton onClick={reload}>
-            <ListItemIcon>
-                <MailIcon sx={{fontSize: '3em'}}/>
-            </ListItemIcon>
+            <img src='mail.png'/>
             <ListItemText primary={
                 <Typography sx={{fontSize: '2em'}}> 
                     Mail 

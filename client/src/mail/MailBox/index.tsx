@@ -1,4 +1,4 @@
-import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableHead, TableFooter } from '@mui/material';
+import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableHead, TableFooter, TableCell, TableRow } from '@mui/material';
 import { ChangeEvent, FC, MouseEvent} from 'react';
 
 import { MailboxType } from '../../constants/MailboxType';
@@ -33,24 +33,21 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
           isLoading ?
             <LoadingPage circularProgressProps={{size: 50}}/>
           :
-            <>
+            <Table>
               <TablePagination
-              component="div"
-              count={emails?.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              labelRowsPerPage={"Emails per page:"}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-              <Table>
-                  <TableBody>
-                  { 
-                    emails.map(email => <MailRow email={email} />) 
-                  }
-                </TableBody>
-              </Table>
-            </>
+                  count={emails?.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  labelRowsPerPage={"Emails per page:"}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+                <TableBody>
+                { 
+                  emails.map(email => <MailRow email={email} />) 
+                }
+              </TableBody>
+            </Table>
         }
         </TableContainer>
     </Box>
