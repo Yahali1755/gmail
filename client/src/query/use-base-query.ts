@@ -9,9 +9,13 @@ type BaseQueryOptions<TReturnType, TQueryParameters extends Record<string,any> =
     query: ActionFunction<TQueryParameters, TReturnType>
 }
 
-export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, query}: BaseQueryOptions<TReturnType, TQueryParameters>) => 
-    useQuery<TReturnType>({
-    queryKey: [typeName, filters],
-    queryFn: () => query(filters),
-    staleTime: 30000
-})
+export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, query}: BaseQueryOptions<TReturnType, TQueryParameters>) => {
+    const response = useQuery<TReturnType>({
+        queryKey: [typeName, filters],
+        queryFn: () => query(filters),
+        staleTime: 30000,
+        refetchInterval: 30000
+    })
+
+    return { ...response }
+}

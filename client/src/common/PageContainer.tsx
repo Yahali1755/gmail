@@ -1,4 +1,3 @@
-import { Grid } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 import DarkModeToggle from "../theme/ToggleTheme";

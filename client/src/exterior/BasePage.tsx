@@ -7,8 +7,8 @@ interface BasePageProps {
 
 const BasePage: FC<BasePageProps> = ({ children }) =>
     <CssBaseline>
-        <Grid container overflow='auto' width="100%" height='100vh' alignItems='center' 
-        justifyContent='baseline'>
+        <Grid container overflow='auto' width="100%" height='100vh' alignItems='baseline' 
+        justifyContent='center'>
         { children }
         </Grid>
     </CssBaseline>
