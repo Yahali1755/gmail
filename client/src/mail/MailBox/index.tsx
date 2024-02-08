@@ -13,7 +13,6 @@ interface MailBoxProps {
 }
 
 const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
-  const { isLoading, data: emails} = useEmailBoxQuery(mailBoxType);
   const styles = useTableStyles();
   const { page, changePage, rowsPerPage, changeRowsPerPage } = usePaging();
 
@@ -26,6 +25,8 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
     changeRowsPerPage(parseInt(event.target.value))
   }
 
+  const { isLoading, data: emails} = useEmailBoxQuery(mailBoxType, { page, limit: rowsPerPage});
+
   return (
     <Box sx={styles.container}>
         <TableContainer sx={styles.tableContainer} component={Paper}>
@@ -35,17 +36,17 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
           :
             <Table>
               <TablePagination
-                  count={emails?.length}
+                  count={50}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   labelRowsPerPage={"Emails per page:"}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-                <TableBody>
-                { 
-                  emails.map(email => <MailRow email={email} />) 
-                }
+              <TableBody>
+              { 
+                emails.map(email => <MailRow email={email} />) 
+              }
               </TableBody>
             </Table>
         }

@@ -6,7 +6,7 @@ import { BaseViewModel } from "@mail/common";
 import { BaseMapper } from "./BaseMapper";
 
 type SendEntityRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entity: TDocument}>
-type SendEntitiesRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entities: TDocument[]}>
+type SendEntitiesRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entities: TDocument[], filters?: Record<string, any>}>
 
 export const sendSuccess = (): RequestHandler => (req, res) => res.sendStatus(200);
 

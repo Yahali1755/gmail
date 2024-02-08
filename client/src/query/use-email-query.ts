@@ -1,9 +1,9 @@
-import { TypeName, UserViewModel } from "@mail/common";
+import { PaginationQueryParameters, TypeName, UserViewModel } from "@mail/common";
 
 import { MailboxType } from "../constants/MailboxType";
 import { useEmailApi } from "../api/hooks/email-api";
 import { useAuth } from "../contexts/auth";
-import { useBaseQuery } from "./use-base-query";
+import { usePaginatedQuery } from "./use-paginated-query";
 
 const getEmailBoxQueryFilters = (mailboxType: MailboxType, user: UserViewModel) => {
     const emailQueryFiltersDictionary: Record<MailboxType, Record<string, any>> = {
@@ -14,13 +14,14 @@ const getEmailBoxQueryFilters = (mailboxType: MailboxType, user: UserViewModel) 
     return emailQueryFiltersDictionary[mailboxType]
 }
 
-const useEmailBoxQuery = (mailboxType: MailboxType) => { 
+const useEmailBoxQuery = (mailboxType: MailboxType, paginationOptions: PaginationQueryParameters) => { 
     const api = useEmailApi();
     const { user } = useAuth();
     const emailBoxQueryFilters = getEmailBoxQueryFilters(mailboxType, user);
 
-    return useBaseQuery({
+    return usePaginatedQuery({
         filters: emailBoxQueryFilters,
+        paginationFilters: paginationOptions,
         typeName: TypeName.Email,
         query: api.getAll
     })

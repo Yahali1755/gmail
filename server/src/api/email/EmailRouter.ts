@@ -6,7 +6,8 @@ import { EmailMapper } from "./EmailMapper";
 import { sendEntities, sendEntity, sendSuccess } from "../../common/responses";
 import { mapBodyToEntity } from "../../common/mapping";
 import { deleteEntity, insertEntity, updateEntity } from "../../common/updates";
-import { prepareEmailForInsert } from "./email-handlers";
+import { parseEmailQueryFilters, prepareEmailForInsert } from "./email-handlers";
+import { EmailQueryParameters } from "@mail/common";
 
 const router = express.Router();
 const mapper = new EmailMapper()
@@ -14,9 +15,11 @@ const mapper = new EmailMapper()
 const insertEmail = insertEntity<EmailDocument>(EmailModel)
 const updateEmail = updateEntity<EmailDocument>(EmailModel)
 const deleteEmail = deleteEntity<EmailDocument>()
+const findEmails = findEntities<EmailDocument, EmailQueryParameters>(EmailModel)
 
 router.get('/',
-    findEntities(EmailModel),
+    parseEmailQueryFilters,
+    findEmails,
     sendEntities(mapper)
 )
 
@@ -36,7 +39,7 @@ router.put('/:id',
 router.delete('/:id',
     findEntityById(EmailModel),
     deleteEmail,
-    sendSuccess()
+    sendSuccess
 )
 
 export default {

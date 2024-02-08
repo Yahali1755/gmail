@@ -23,7 +23,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
   const {open: openCreateMail, close: closeCreateMail, isOpen: isCreateMailOpen} = useOpen();
 
   return (
-    <Grid width="160px" height="100%" container direction='column'>
+    <Grid width="160px"  container direction='column'>
       <List>
         <Grid item>
           <ListItem key='HomePageIconButton' disablePadding>
