@@ -17,14 +17,18 @@ const styles: Record<string, SxProps> = {
     }
 }
 
-const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, email:  {author, content, createdAt, subject}}) => {
+const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, email:  {author, content, createdAt, subject, recipients}}) => {
     const formattedCreatedAt = moment(createdAt).format("lll");
+    const displayedRecipients = recipients.join(', ')
 
     return (
         <Dialog dialogContentProps={{sx: styles.dialogSize}} dialogTitleProps={{sx: {fontWeight: "bold"}}} sx={styles.dialog} 
             dialogTitle={subject} open={isOpen} onClose={close}>
             <Typography>
                 { `From: ${author}` }
+            </Typography>
+            <Typography>
+                { `To: ${displayedRecipients}` }
             </Typography>
             <Typography>
                 { `Date: ${formattedCreatedAt}` }

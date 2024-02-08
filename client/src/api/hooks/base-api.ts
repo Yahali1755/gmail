@@ -1,6 +1,6 @@
 import { Method } from "axios";
 
-import { BaseViewModel, TypeName } from "@mail/common";
+import { BaseViewModel, PaginatedQueryResponse, PaginationQueryParameters, TypeName } from "@mail/common";
 
 import { useAuth } from "../../contexts/auth";
 import { createActions } from "../api-actions";
@@ -26,6 +26,7 @@ export type DefaultActions<TViewModel extends BaseViewModel, TQueryParameters ex
     getById: ApiQuery<{id: string}, TViewModel>
     delete: ApiAction<{id: string}, void>
     getAll: ApiQuery<TQueryParameters, TViewModel[]>
+    getPaginated: ApiQuery<TQueryParameters & PaginationQueryParameters, PaginatedQueryResponse<TViewModel>>, 
 }
 
 export type ToActions<TActionsDefinitionMap> = {
@@ -49,6 +50,9 @@ const getDefaultActions = <TViewModel extends BaseViewModel, TQueryParameters ex
         url: '/:id'
     },
     getAll: {
+        method: 'GET'
+    },
+    getPaginated: {
         method: 'GET'
     }
 })

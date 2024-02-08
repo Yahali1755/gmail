@@ -18,6 +18,10 @@ const configureRoutes = (app: Express) => {
     app.use("/api", verifyToken, apiRouter);
 } 
 
+const configureStaticFiles = (app: Express) => {
+    app.use(express.static(process.env.CLIENT_PATH))
+}
+
 export default () => {
     const app = express();
 
@@ -25,6 +29,7 @@ export default () => {
     app.use(cors());
     app.use(logMiddleware);
 
+    configureStaticFiles(app)
     configureRoutes(app);
 
     app.use(errorMiddleware)

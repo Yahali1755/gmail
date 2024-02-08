@@ -1,5 +1,5 @@
-import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableHead, TableFooter, TableCell, TableRow } from '@mui/material';
-import { ChangeEvent, FC, MouseEvent} from 'react';
+import { Table, TableBody, TableContainer, Paper, Box, TablePagination } from '@mui/material';
+import { ChangeEvent, FC, useEffect} from 'react';
 
 import { MailboxType } from '../../constants/MailboxType';
 import MailRow from '../MailRow';
@@ -16,7 +16,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
   const styles = useTableStyles();
   const { page, changePage, rowsPerPage, changeRowsPerPage } = usePaging();
 
-  const handleChangePage = (event: MouseEvent<HTMLButtonElement>, page: number) => {
+  const handleChangePage = (_, page: number) => {
     changePage(page)
   }
 
@@ -26,6 +26,10 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
   }
 
   const { isLoading, data: emails} = useEmailBoxQuery(mailBoxType, { page, limit: rowsPerPage});
+
+  useEffect(() => {
+    changePage(0);
+  }, [mailBoxType])
 
   return (
     <Box sx={styles.container}>
@@ -45,7 +49,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
                 />
               <TableBody>
               { 
-                emails.map(email => <MailRow email={email} />) 
+                emails.map(email => <MailRow mailboxType={mailBoxType} email={email} />) 
               }
               </TableBody>
             </Table>

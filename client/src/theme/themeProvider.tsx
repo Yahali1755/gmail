@@ -1,31 +1,7 @@
-import { useState, FC, createContext, ReactNode } from 'react'
-import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material';
+import { useState, createContext, ReactNode, FC} from 'react'
+import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 
-const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-    background: {
-      default: '#f6f8fc',
-    },
-    primary: {
-      main: "#000000"
-    }
-  },
-});
-  
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    background: {
-      default: '#282828',
-      paper: '#282828'
-    },
-    primary: {
-      main: "#FFFFFF"
-    }
-  }
-});
-  
+import { darkTheme, lightTheme } from './themes';
 
 export const ThemeContext = createContext(null);
 

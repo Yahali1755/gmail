@@ -5,7 +5,7 @@ interface BasePageProps {
     children: ReactNode
 }
 
-const BasePage: FC<BasePageProps> = ({ children }) =>
+const BasePage: FC<BasePageProps> = ({ children }) => 
     <CssBaseline>
         <Grid container overflow='auto' width="100%" height='100vh' alignItems='baseline' 
         justifyContent='center'>
