@@ -1,4 +1,4 @@
-import { Table, TableBody, TableContainer, Paper, Box, TablePagination } from '@mui/material';
+import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow } from '@mui/material';
 import { ChangeEvent, FC, useEffect} from 'react';
 
 import { MailboxType } from '../../constants/MailboxType';
@@ -39,7 +39,9 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
             <LoadingPage circularProgressProps={{size: 50}}/>
           :
             <Table>
-              <TablePagination
+              <TableBody>
+              <TableRow>
+                <TablePagination
                   count={50}
                   rowsPerPage={rowsPerPage}
                   page={page}
@@ -47,7 +49,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-              <TableBody>
+              </TableRow>
               { 
                 emails.map(email => <MailRow mailboxType={mailBoxType} email={email} />) 
               }

@@ -16,7 +16,7 @@ const styles = {
   }
 }
 
-const DarkModeToggle = () => {
+const ThemeToggler = () => {
   const { changeTheme, isDarkMode} = useContext(ThemeContext)
 
   return (
@@ -26,4 +26,4 @@ const DarkModeToggle = () => {
   );
 };
 
-export default DarkModeToggle;
+export default ThemeToggler;

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 
-import DarkModeToggle from "../theme/ToggleTheme";
+import ThemeToggler from "../theme/ToggleTheme";
 import AuthWrapper from "../routes/AuthWrapper";
 import BasePage from "../exterior/BasePage";
 
@@ -12,7 +12,7 @@ const PageContainer: FC<PageContainerProps> = ({ children }) =>
     <AuthWrapper>
         <BasePage>
             { children }
-            <DarkModeToggle/>
+            <ThemeToggler/>
         </BasePage>
     </AuthWrapper>
 
