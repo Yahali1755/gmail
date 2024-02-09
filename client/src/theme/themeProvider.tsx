@@ -6,7 +6,7 @@ import { darkTheme, lightTheme } from './themes';
 export const ThemeContext = createContext(null);
 
 export const ThemeProvider: FC<{children: ReactNode}> = ({ children }) => {
-    const [isDarkMode, setIsDarkMode] = useState(true);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     const changeTheme = () => {
         setIsDarkMode((isDarkMode) => !isDarkMode);

@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -21,6 +21,7 @@ interface SideBarProps {
 
 const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
   const {open: openCreateMail, close: closeCreateMail, isOpen: isCreateMailOpen} = useOpen();
+  const theme = useTheme();
 
   return (
     <Grid width="160px" container direction='column'>
@@ -33,7 +34,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
         <Grid item>
           <ListItem key='SendMail' disablePadding>
             <ListItemButton onClick={openCreateMail}>
-              <ListItemIcon>
+              <ListItemIcon sx={{color: theme.palette.text.primary}}>
                 <CreateIcon/>
               </ListItemIcon>
               <ListItemText primary='Send Mail'/>
@@ -44,7 +45,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
         <Grid item>
           <ListItem key='Inbox' disablePadding>
             <ListItemButton selected={mailboxType === MailboxType.Inbox} onClick={() => setMailBoxType(MailboxType.Inbox)}>
-              <ListItemIcon>
+              <ListItemIcon sx={{color: theme.palette.text.primary}}>
                 <InboxIcon />
               </ListItemIcon>
               <ListItemText primary='Inbox'/>
@@ -54,7 +55,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
         <Grid item>
           <ListItem key='Sent' disablePadding>
             <ListItemButton selected={mailboxType === MailboxType.Outbox} onClick={() => setMailBoxType(MailboxType.Outbox)}>
-              <ListItemIcon>
+              <ListItemIcon sx={{color: theme.palette.text.primary}}>
                 <SendIcon />
               </ListItemIcon>
               <ListItemText primary='Sent'/>

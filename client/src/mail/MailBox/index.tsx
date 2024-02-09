@@ -25,7 +25,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
     changeRowsPerPage(parseInt(event.target.value))
   }
 
-  const { isLoading, data: emails} = useEmailBoxQuery(mailBoxType, { page, limit: rowsPerPage});
+  const { isLoading, data: { entities: emails = [], meta: { totalCount = 0} = {}} = {}} = useEmailBoxQuery(mailBoxType, { page, limit: rowsPerPage});
 
   useEffect(() => {
     changePage(0);
@@ -42,7 +42,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
               <TableBody>
               <TableRow>
                 <TablePagination
-                  count={50}
+                  count={totalCount}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   labelRowsPerPage={"Emails per page:"}

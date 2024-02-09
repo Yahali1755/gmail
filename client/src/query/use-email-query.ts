@@ -23,7 +23,7 @@ const useEmailBoxQuery = (mailboxType: MailboxType, paginationOptions: Paginatio
         filters: emailBoxQueryFilters,
         paginationFilters: paginationOptions,
         typeName: TypeName.Email,
-        query: api.getAll
+        query: api.getPaginated
     })
 }
 

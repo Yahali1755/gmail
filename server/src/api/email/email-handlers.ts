@@ -1,10 +1,7 @@
 import { RequestHandler} from "express";
 
-import { EmailQueryParameters } from "@mail/common";
-
 import { EmailDocument } from "../../models/Email";
 import { UserDocument } from "../../models/User";
-import { ParseEmailQueryFiltersRequestHandler } from "../../common/queries";
 
 type PrepareEmailForInsertRequestHandler = RequestHandler<{}, {}, {}, {}, {entity: EmailDocument, user: UserDocument}>
 
@@ -14,8 +11,8 @@ export const prepareEmailForInsert: PrepareEmailForInsertRequestHandler = (req, 
     next()
 }
 
-export const parseEmailQueryFilters = async (req, res, next) => {
-    const { recipient = undefined, author = undefined} = req.query;
+export const convertEmailQueryParams =  <TQueryParameters extends Record<string, any>>(parameters: TQueryParameters) => {
+    const { recipient = undefined, author = undefined} = parameters;
     let condition = {};
 
     if (recipient) {
@@ -26,7 +23,5 @@ export const parseEmailQueryFilters = async (req, res, next) => {
         condition = {...condition, ...{ author }}
     }
 
-    res.locals.filters = condition;
-
-    next();
+    return condition
 }
