@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { UserViewModel } from "@mail/common";
+import { EMAIL_REGEX, UserViewModel } from "@mail/common";
 
 import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
@@ -68,7 +68,7 @@ const UserForm: FC = () => {
           </Grid> 
           <Grid width="80%" item> 
             <FormTextField required fullWidth autoFocus  error={!!errors?.email} helperText={errors?.email?.message as string}
-              label="Email" name="email" validationRegEx={/\S+@\S+\.\S+/}/>
+              label="Email" name="email" validationRegEx={EMAIL_REGEX}/>
           </Grid>
           <Grid width="80%" item> 
             <FormTextField required minLength={8} fullWidth label="Password" name="password" error={!!errors?.password} 

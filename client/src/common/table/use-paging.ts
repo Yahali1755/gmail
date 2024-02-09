@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 const defaultPage = 0;
-const defaultPageSize = 10;
+const defaultPageSize = 25;
 
 export const usePaging = () => {
     const [page, setPage] = useState(defaultPage)

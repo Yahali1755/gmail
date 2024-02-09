@@ -1,5 +1,6 @@
-import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow } from '@mui/material';
-import { ChangeEvent, FC, useEffect} from 'react';
+import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow, IconButton, Typography, TableCell, Select, MenuItem } from '@mui/material';
+import { ChangeEvent, FC, useEffect, useState} from 'react';
+import FilterListIcon from '@mui/icons-material/FilterListRounded';
 
 import { MailboxType } from '../../constants/MailboxType';
 import MailRow from '../MailRow';
@@ -7,6 +8,7 @@ import useEmailBoxQuery from '../../query/use-email-query';
 import { useTableStyles } from './styles';
 import LoadingPage from '../../exterior/LoadingPage';
 import { usePaging } from '../../common/table/use-paging';
+import MailFilters from './MailFilters';
 
 interface MailBoxProps {
   mailBoxType: MailboxType
@@ -41,6 +43,7 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
             <Table>
               <TableBody>
               <TableRow>
+                <MailFilters/>
                 <TablePagination
                   count={totalCount}
                   rowsPerPage={rowsPerPage}

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { FC } from "react";
 
-import { EmailViewModel, TypeName } from "@mail/common";
+import { EMAIL_REGEX, EmailViewModel, TypeName } from "@mail/common";
 
 import FormTextField from "../../common/form/FormTextField"
 import FormDialog from "../../common/form/FormDialog";
@@ -37,7 +37,7 @@ const NewMailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
 
     return (
         <FormDialog isEditEnabled={true} submitButtonProps={{label: "Send"}} onSubmit={submit} fullWidth maxWidth="md" dialogTitle="New Mail" formMethods={formMethods} open={isOpen} onClose={close}>
-            <FormMultipleFreeSoloAutocomplete autoSelect key="recipients" textFieldProps={{variant: "standard", label:"To"}} options={[]} freeSolo multiple autoFocus fullWidth name="recipients"/>
+            <FormMultipleFreeSoloAutocomplete validationRegEx={EMAIL_REGEX} required autoSelect key="recipients" textFieldProps={{variant: "standard", label:"To"}} options={[]} freeSolo multiple autoFocus fullWidth name="recipients"/>
             <FormTextField required={true} key="subject" label="Subject" variant="standard" fullWidth name="subject"/>
             <FormTextField sx={styles.content} key="content" label="" multiline rows={8} variant="standard" fullWidth name="content"/>
         </FormDialog>
