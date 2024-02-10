@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material"
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AxiosError } from "axios";
 
 import { EMAIL_REGEX, UserViewModel } from "@mail/common";
 
@@ -9,7 +9,6 @@ import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
 import Form from "../common/form/Form";
 import { useAuth } from "../contexts/auth";
-import { Route } from "../constants/Route";
 
 const styles = {
   formTitle: {
@@ -20,27 +19,21 @@ const styles = {
 
 const UserForm: FC = () => {
   const formMethods = useForm();
-  const { setError, clearErrors, formState: { errors }, getValues } = formMethods;
+  const { setError, clearErrors, formState: { errors } } = formMethods;
   const { watch } = formMethods;
-  const navigate = useNavigate();
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const { login, register } = useAuth();
   
   const password = watch('password');
   const confirmPassword = watch('confirm');
 
-  const handleAuthResponse = (promise: Promise<void>) => {
-    promise.then(() => navigate(Route.Mail))
-      .catch(error => {
-        const {response: {data: {field, message}}} = error
+  const handleErrors = (error: AxiosError<{field: string, message: string}>) => {
+      const {response: {data: {field = '', message = ''} = {}}} = error
 
-        setError(`${field}`,{ message: `${message}`})
-    })
+      field && setError(`${field}`,{ message: `${message}`})
   }
 
   const submit = (data: UserViewModel) => {
-    clearErrors();
-
     if (isRegisterForm && password !== confirmPassword) {
       setError("InvalidConfirm", { message: "Passwords do not match"})
 
@@ -48,9 +41,9 @@ const UserForm: FC = () => {
     }
 
     if (isRegisterForm) {
-      handleAuthResponse(register(data))
+      register(data).catch(handleErrors)
     } else {
-      handleAuthResponse(login(data))
+      login(data).catch(handleErrors)
     }
   }
 
@@ -64,7 +57,7 @@ const UserForm: FC = () => {
     <Form onSubmit={submit} formMethods={formMethods}>
         <Grid container width='100%' direction='column' alignItems='center' spacing={3}>
           <Grid item> 
-            <Typography sx={styles.formTitle}> {isRegisterForm ? "Create Account" : "Sign Up"} </Typography>
+            <Typography sx={styles.formTitle}> {isRegisterForm ? "Register" : "Login"} </Typography>
           </Grid> 
           <Grid width="80%" item> 
             <FormTextField required fullWidth autoFocus  error={!!errors?.email} helperText={errors?.email?.message as string}

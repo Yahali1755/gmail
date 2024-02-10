@@ -1,6 +1,5 @@
 import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow, IconButton, Typography, TableCell, Select, MenuItem } from '@mui/material';
 import { ChangeEvent, FC, useEffect, useState} from 'react';
-import FilterListIcon from '@mui/icons-material/FilterListRounded';
 
 import { MailboxType } from '../../constants/MailboxType';
 import MailRow from '../MailRow';
@@ -43,7 +42,9 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
             <Table>
               <TableBody>
               <TableRow>
-                <MailFilters/>
+                <TableCell>
+                  <MailFilters/>
+                </TableCell>
                 <TablePagination
                   count={totalCount}
                   rowsPerPage={rowsPerPage}

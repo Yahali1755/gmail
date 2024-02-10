@@ -1,7 +1,9 @@
 import { RequestHandler} from "express";
 
 import { EmailDocument } from "../../models/Email";
-import { UserDocument } from "../../models/User";
+import { UserDocument, UserModel } from "../../models/User";
+import InvalidFieldError from "../../errors/InvalidFieldError";
+import { EmailViewModel } from "@mail/common";
 
 type PrepareEmailForInsertRequestHandler = RequestHandler<{}, {}, {}, {}, {entity: EmailDocument, user: UserDocument}>
 
@@ -16,7 +18,7 @@ export const convertEmailQueryParams =  <TQueryParameters extends Record<string,
     let condition = {};
 
     if (recipient) {
-        condition = {condition, 'recipients': recipient}
+        condition = {...condition, 'recipients': recipient}
     }
 
     if (author) {
@@ -24,4 +26,22 @@ export const convertEmailQueryParams =  <TQueryParameters extends Record<string,
     }
 
     return condition
+}
+
+export const ensureValidRecipients: RequestHandler<{}, {}, EmailViewModel, {}, {}> = async ({body: { recipients }}, res, next) => {
+    const invalidRecipients = []
+
+    recipients.forEach(async (value) => {
+        const user = await UserModel.findOne({ email: value });
+
+        if (!user) {
+            invalidRecipients.push(value)
+        }
+    })
+
+    // if (true) {
+    //     next(new InvalidFieldError("Invalid recipient", {...invalidRecipients}))
+    // }
+
+    next()
 }

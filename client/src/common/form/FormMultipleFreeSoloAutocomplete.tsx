@@ -14,9 +14,17 @@ interface FormMultipleFreeSoloAutocompleteProps extends Omit<AutocompleteProps<s
 const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps> = ({ name, textFieldProps, validationRegEx, minLength, required, ...props }) => {
     const { control  } = useFormContext()
 
-    const autocompleteRegexValidation = (values) => {
-        if (validationRegEx && values?.some(value => !validationRegEx.test(value))) {
-            return `At least one of the ${name} is invalid`
+    const autocompleteRegexValidation = (values: string[]) => {
+        if (!validationRegEx) {
+            return true
+        }
+
+        const invalidValues = values?.filter(value => !validationRegEx.test(value))
+
+        if (invalidValues.length) {
+            console.log(invalidValues.map(value => value + ' is invalid').join(', '))
+
+            return invalidValues.map(value => value + ' is invalid').join(', ')
         }
 
         return true;
@@ -34,8 +42,9 @@ const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps
             required: {
                 value: required,
                 message: `${capitalize(name)} are required`
-            }
-        }
+            },
+        },
+        defaultValue: []
     });
 
     return (

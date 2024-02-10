@@ -26,6 +26,7 @@ interface AuthContextProps {
 }
 
 const AuthContext = createContext({} as AuthContextProps)
+
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {

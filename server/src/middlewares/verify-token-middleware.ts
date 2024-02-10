@@ -9,14 +9,14 @@ export const verifyToken: RequestHandler<{}, {}, {}, {}, {user: UserViewModel, t
     const token = req.header('Authorization');
   
     if (!token) {
-      throw new UnauthorizedError("no token provided")
+      next(new UnauthorizedError("no token provided"))
     }
   
     const tokenWithoutBearer = token.replace("Bearer ", "");
 
     jwt.verify(tokenWithoutBearer, process.env.TOKEN_SECRET_KEY, (error, decodedPayload) => {
       if (error) {
-        throw new UnauthorizedError("invalid token")
+        next(new UnauthorizedError("invalid token"))
       }
 
       res.locals.user = decodedPayload as UserViewModel;

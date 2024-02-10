@@ -4,6 +4,7 @@ import { UserViewModel } from "@mail/common";
 
 import { RequestHandler } from "express";
 import { UserModel } from "../models/User";
+import InvalidFieldError from "../errors/InvalidFieldError";
 
 export const generateToken: RequestHandler<{}, {}, UserViewModel, {}, {token: string, user: UserViewModel}> = ({ body }, res, next) => {
     const token = jwt.sign(body, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
@@ -23,15 +24,11 @@ export const verifyUser: RequestHandler<{}, {}, UserViewModel, {}, {}> = async (
     const user = await UserModel.findOne({ email });
 
     if(!user) {
-        res.status(400).send({field: "email", message: "Email address isn't found"})
-
-        return;
+        next(new InvalidFieldError("Email address isn't found", {field: "email"}))
     }
 
     if (user && user.password !== password) {
-        res.status(400).send({field: "password", message: "Wrong password"})
-
-        return;
+        next(new InvalidFieldError("Wrong password", {field: "password"}))
     }
 
     next()
@@ -41,9 +38,7 @@ export const ensureEmailUniqness: RequestHandler<{}, {}, UserViewModel, {}, {}> 
     const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
-        res.status(400).send({field: "email", message: "email address in use"})
-
-        return;
+        next(new InvalidFieldError("email address in use", {field: "email"}))
     }
 
     next()

@@ -1,23 +1,23 @@
 import { ReactNode, FC } from "react"
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ThemeProvider } from "./theme/ThemeProvider";
-import AuthProvider from "./contexts/auth";
 
-const queryClient = new QueryClient()
+import { ThemeProvider } from "./contexts/theme";
+import AuthProvider from "./contexts/auth";
+import QueryProvider from "./contexts/query";
+import { AlertsProvider } from "./contexts/alerts";
 
 interface ProvidersProps {
     children: ReactNode
 }
 
 const Providers: FC<ProvidersProps> = ({ children }) =>
-    <>
-        <ThemeProvider>
-            <QueryClientProvider client={queryClient}>
+    <ThemeProvider>
+        <QueryProvider>
+            <AlertsProvider>
                 <AuthProvider>
                     { children }
                 </AuthProvider>
-            </QueryClientProvider>
-        </ThemeProvider>
-    </>
+            </AlertsProvider>
+        </QueryProvider>
+    </ThemeProvider>
 
 export default Providers;

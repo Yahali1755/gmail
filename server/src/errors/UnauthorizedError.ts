@@ -1,7 +1,7 @@
 import { BaseError } from "./BaseError";
 
 export default class UnauthorizedError extends BaseError {
-    constructor(message = "Unauthorized") {
+    constructor(message) {
         super(message, 401);
     }
 }

@@ -21,7 +21,7 @@ const MailRow: FC<MailRowProps> = ({ email, mailboxType }) => {
 
   return (
     <>
-      <TableRow onClick={openMailPreview} hover>
+      <TableRow key={email.id} onClick={openMailPreview} hover>
         <TableCell width="15%"> 
           <Typography fontWeight="bold">
             { mailboxType === MailboxType.Outbox ? `To: ${displayedRecipients}` : author}
@@ -36,7 +36,9 @@ const MailRow: FC<MailRowProps> = ({ email, mailboxType }) => {
             </Typography>
           </Typography>
         </TableCell>
-        <TableCell width="10%" > { formattedCreatedAt } </TableCell>
+        <TableCell width="10%" > 
+          { formattedCreatedAt } 
+        </TableCell>
       </TableRow>
       <MailPreview email={email} 
         isOpen={isMailPreviewOpen} close={closeMailPreview}/>

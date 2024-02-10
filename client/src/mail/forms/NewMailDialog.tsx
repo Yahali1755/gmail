@@ -8,6 +8,7 @@ import FormDialog from "../../common/form/FormDialog";
 import FormMultipleFreeSoloAutocomplete from "../../common/form/FormMultipleFreeSoloAutocomplete";
 import { useEmailApi } from "../../api/hooks/email-api";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAlerts } from "../../contexts/alerts";
 
 interface NewMailDialogProps {
     isOpen: boolean
@@ -26,6 +27,7 @@ const NewMailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
     const formMethods = useForm();
     const emailApi = useEmailApi();
     const queryClient = useQueryClient();
+    const alerts = useAlerts();
 
     const submit = (data: EmailViewModel) => {
         emailApi.insert(data)
@@ -33,6 +35,7 @@ const NewMailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
             .then(() =>
                 queryClient.invalidateQueries({ predicate: query => query.queryKey.includes(TypeName.Email)})
             )
+            .then(() => alerts.success())
     }
 
     return (

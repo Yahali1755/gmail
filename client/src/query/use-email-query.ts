@@ -7,7 +7,7 @@ import { usePaginatedQuery } from "./use-paginated-query";
 
 const getEmailBoxQueryFilters = (mailboxType: MailboxType, user: UserViewModel) => {
     const emailQueryFiltersDictionary: Record<MailboxType, Record<string, any>> = {
-        [MailboxType.Inbox]: {recipients: user.email},
+        [MailboxType.Inbox]: {recipient: user.email},
         [MailboxType.Outbox]: {author: user.email}
     }
     

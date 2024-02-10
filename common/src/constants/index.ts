@@ -1,2 +1,2 @@
-export * from "./email-regex"
+export * from "./EmailRegex"
 export * from "./TypeNames"

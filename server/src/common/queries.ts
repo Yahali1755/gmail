@@ -32,15 +32,15 @@ export type PaginationLocalsObject<TDocument extends Document> = {
 
 type FindPaginatedEntitiesRequestHandler<TDocument extends Document, TQueryParameters extends Record<string, any>> = RequestHandler<{}, {}, {}, TQueryParameters, PaginationLocalsObject<TDocument>>
 
-export const extractPaginationQueryParameters = <TQueryParameters extends Record<string, any> = {}>({page = 0, limit = 0, ...queryParameters}: TQueryParameters) => ({page: +page, limit: +limit, queryParameters})
+export const convertPaginationQueryParameters = <TQueryParameters extends Record<string, any> = {}>({page = 0, limit = 0}: TQueryParameters) => ({page: +page, limit: +limit})
 
 export const findPaginatedEntities = <TDocument extends Document, TQueryParameters extends Record<string, any>, >(
     model: Model<TDocument>,
-    convertEntityQueryParams: (parameters: Omit<TQueryParameters, keyof PaginationQueryParameters>) => Record<string, any>
+    convertEntityQueryParameters: (parameters: TQueryParameters) => Record<string, any>
     ): 
     FindPaginatedEntitiesRequestHandler<TDocument, TQueryParameters> => async (req, res, next) => {
-    const { limit, page, queryParameters } = extractPaginationQueryParameters(req.query);
-    const filters = convertEntityQueryParams(queryParameters)
+    const { limit, page } = convertPaginationQueryParameters(req.query);
+    const filters = convertEntityQueryParameters(req.query)
 
     const totalCount = await model.countDocuments(filters);
     const entities = await model.find(filters).skip(page * limit).limit(limit);
