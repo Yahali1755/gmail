@@ -1,7 +1,5 @@
-import MailIcon from '@mui/icons-material/Mail';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import { Typography } from '@mui/material';
 
 const HomePageIconButton = () => {
@@ -11,7 +9,7 @@ const HomePageIconButton = () => {
 
     return (
         <ListItemButton onClick={reload}>
-            <img src='mail.png'/>
+            <img src="../../assets/mail.png"/>
             <ListItemText primary={
                 <Typography sx={{fontSize: '2em'}}> 
                     Mail 

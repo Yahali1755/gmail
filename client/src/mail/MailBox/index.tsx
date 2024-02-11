@@ -1,4 +1,4 @@
-import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow,TableCell, TableHead } from '@mui/material';
+import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow, TableHead } from '@mui/material';
 import { ChangeEvent, FC, useEffect } from 'react';
 
 import { MailboxType } from '../../constants/MailboxType';
@@ -7,7 +7,6 @@ import useEmailBoxQuery from '../../query/use-email-query';
 import { useTableStyles } from './styles';
 import LoadingPage from '../../exterior/LoadingPage';
 import { usePaging } from '../../common/hooks/page';
-import MailFilters from './MailFilters';
 
 interface MailBoxProps {
   mailBoxType: MailboxType
