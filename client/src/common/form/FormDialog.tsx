@@ -6,19 +6,24 @@ import { DialogProps } from '../Dialog';
 import SubmitButton, { SubmitButtonProps } from './SubmitButton';
 import Form from './Form';
 import { DialogActions } from '@mui/material';
+import { useAlerts } from '../../contexts/alerts';
 
 interface FormDialogProps extends DialogProps {
   formMethods: UseFormReturn,
-  onSubmit?: (data?: Record<string, any>) => void
+  onSubmit?: (data?: Record<string, any>) => Promise<void>
   children: ReactNode
   isEditEnabled?: boolean,
   submitButtonProps?: SubmitButtonProps
 }
 
 const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, submitButtonProps, isEditEnabled, dialogActions, onClose, ...dialogProps }) => {
+  const alerts = useAlerts()
+
   const wrappedOnSubmit = (data: Record<string, any>) => {
-    onClose()
     onSubmit(data)
+      .then(() => onClose())
+      .then(() => alerts.success())
+      .catch(({ message }) => alerts.error(message))
   }
 
   return (

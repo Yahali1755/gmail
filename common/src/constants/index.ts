@@ -1,2 +1,2 @@
-export * from "./EmailRegex"
-export * from "./TypeNames"
+export { EMAIL_REGEX } from "./EmailRegex"
+export { TypeName } from "./TypeName"

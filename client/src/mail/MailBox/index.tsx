@@ -1,12 +1,12 @@
-import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow, IconButton, Typography, TableCell, Select, MenuItem } from '@mui/material';
-import { ChangeEvent, FC, useEffect, useState} from 'react';
+import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow,TableCell, TableHead } from '@mui/material';
+import { ChangeEvent, FC, useEffect } from 'react';
 
 import { MailboxType } from '../../constants/MailboxType';
 import MailRow from '../MailRow';
 import useEmailBoxQuery from '../../query/use-email-query';
 import { useTableStyles } from './styles';
 import LoadingPage from '../../exterior/LoadingPage';
-import { usePaging } from '../../common/table/use-paging';
+import { usePaging } from '../../common/hooks/page';
 import MailFilters from './MailFilters';
 
 interface MailBoxProps {
@@ -34,17 +34,14 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
 
   return (
     <Box sx={styles.container}>
-        <TableContainer sx={styles.tableContainer} component={Paper}>
-        { 
-          isLoading ?
-            <LoadingPage circularProgressProps={{size: 50}}/>
-          :
-            <Table>
-              <TableBody>
+      <TableContainer sx={styles.tableContainer} component={Paper}>
+      { 
+        isLoading ?
+          <LoadingPage circularProgressProps={{size: 50}}/>
+        :
+          <Table stickyHeader>
+            <TableHead>
               <TableRow>
-                <TableCell>
-                  <MailFilters/>
-                </TableCell>
                 <TablePagination
                   count={totalCount}
                   rowsPerPage={rowsPerPage}
@@ -54,11 +51,13 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
               </TableRow>
-              { 
-                emails.map(email => <MailRow mailboxType={mailBoxType} email={email} />) 
-              }
-              </TableBody>
-            </Table>
+            </TableHead>
+            <TableBody>
+            { 
+              emails.map(email => <MailRow key={email.id} mailboxType={mailBoxType} email={email} />) 
+            }
+            </TableBody>
+          </Table>
         }
         </TableContainer>
     </Box>

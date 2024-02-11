@@ -24,12 +24,13 @@ const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
     }, [token])
 
     return location.pathname === Route.User ? 
-        (   token ?
+        (   
+            token ?
             <BasePage>
                 <LoadingPage title="Loading User"/>
             </BasePage>
-        : 
-        <> { children } </>
+            : 
+            <> { children } </>
         ) 
         : 
         <> { children } </>

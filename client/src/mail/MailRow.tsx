@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import { EmailViewModel } from '@mail/common';
 
-import { useOpen } from '../common/hooks/use-open';
+import { useOpen } from '../common/hooks/open';
 import MailPreview from './MailPreview';
 import { MailboxType } from '../constants/MailboxType';
 

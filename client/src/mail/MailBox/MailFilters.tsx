@@ -3,7 +3,7 @@ import { FC, useRef, useState} from 'react';
 import FilterListIcon from '@mui/icons-material/FilterListRounded';
 
 import { MailboxType } from '../../constants/MailboxType';
-import { useOpen } from '../../common/hooks/use-open';
+import { useOpen } from '../../common/hooks/open';
 
 interface MailBoxProps {
   mailBoxType: MailboxType

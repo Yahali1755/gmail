@@ -1,5 +1,6 @@
 import express, { Router, json, Express } from "express"
 import cors from "cors";
+import path from "path";
 
 import authRouter from "../auth/AuthRouter"
 import { errorMiddleware } from "../middlewares/error-middleware";
@@ -8,7 +9,7 @@ import { logger } from "../logger";
 import { verifyToken } from "../middlewares/verify-token-middleware";
 import apiRouter from "../api/ApiRouter";
 
-interface Route {
+export interface Route {
     path: string
     router: Router
 }
@@ -19,6 +20,8 @@ const configureRoutes = (app: Express) => {
 } 
 
 const configureStaticFiles = (app: Express) => {
+    const clientPath = process.env.CLIENT_PATH || path.resolve(__dirname, "../../../client/build")
+
     app.use(express.static(process.env.CLIENT_PATH))
 }
 

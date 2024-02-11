@@ -1,13 +1,9 @@
-import express, { Router } from "express"
+import express from "express"
 
 import emailRouter from "./email/EmailRouter";
+import { Route } from "../config/express";
 
 const router = express.Router();
-
-export interface Route {
-    path: string
-    router: Router
-}
 
 const routes: Route[] = [emailRouter]
 

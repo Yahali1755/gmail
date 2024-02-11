@@ -4,6 +4,7 @@ import { MailboxType } from "../constants/MailboxType";
 import { useEmailApi } from "../api/hooks/email-api";
 import { useAuth } from "../contexts/auth";
 import { usePaginatedQuery } from "./use-paginated-query";
+import { SortOrder } from "./use-base-query";
 
 const getEmailBoxQueryFilters = (mailboxType: MailboxType, user: UserViewModel) => {
     const emailQueryFiltersDictionary: Record<MailboxType, Record<string, any>> = {
@@ -21,6 +22,10 @@ const useEmailBoxQuery = (mailboxType: MailboxType, paginationOptions: Paginatio
 
     return usePaginatedQuery({
         filters: emailBoxQueryFilters,
+        sort: {
+            sortBy: "createdAt",
+            sortOrder: SortOrder.Decending
+        },
         paginationFilters: paginationOptions,
         typeName: TypeName.Email,
         query: api.getPaginated

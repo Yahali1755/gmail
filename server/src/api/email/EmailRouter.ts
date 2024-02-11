@@ -8,7 +8,9 @@ import { EmailMapper } from "./EmailMapper";
 import { sendEntity, sendPaginatedEntities, sendSuccess } from "../../common/responses";
 import { mapBodyToEntity } from "../../common/mapping";
 import { deleteEntity, insertEntity, updateEntity } from "../../common/updates";
-import { convertEmailQueryParams, prepareEmailForInsert } from "./email-handlers";
+import { prepareEmailForInsert } from "./handlers/insert-email-handlers";
+import { convertEmailQueryParams } from "./handlers/find-email-handlers";
+import { Route } from "../../config/express";
 
 const router = express.Router();
 const mapper = new EmailMapper()
@@ -44,5 +46,5 @@ router.delete('/:id',
 
 export default {
     router,
-    path: `/email`
-};
+    path: `/${TypeName.Email}`
+} as Route
