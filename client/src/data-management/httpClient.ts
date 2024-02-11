@@ -8,7 +8,7 @@ export interface HttpClient {
 
 export const getHttpClient = (token: string, typeName: TypeName): HttpClient => {
   const axiosInstance = axios.create({
-    baseURL: `http://localhost:3000/api/${typeName}`,
+    baseURL: `/api/${typeName}`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,

@@ -10,7 +10,11 @@ module.exports = {
   },
   devServer: {
     port: '5000',
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/api': {target: 'http://localhost:3000'},
+      '/auth': {target: 'http://localhost:3000'}
+    }
   },
   devtool: 'source-map',
   module: {
@@ -22,7 +26,17 @@ module.exports = {
       {
         test: /\.html$/,
         use: 'html-loader'
-      }
+      },
+      {
+        test: /\.(png|jpe?g)$/i,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'assets/',
+          }
+        }]
+      },
     ]
   },
   resolve: {
