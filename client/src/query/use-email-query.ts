@@ -1,10 +1,9 @@
-import { PaginationQueryParameters, TypeName, UserViewModel } from "@mail/common";
+import { PaginationQueryParameters, SortOrder, TypeName, UserViewModel } from "@mail/common";
 
 import { MailboxType } from "../constants/MailboxType";
 import { useEmailApi } from "../api/hooks/email-api";
 import { useAuth } from "../contexts/auth";
 import { usePaginatedQuery } from "./use-paginated-query";
-import { SortOrder } from "./use-base-query";
 
 const getEmailBoxQueryFilters = (mailboxType: MailboxType, user: UserViewModel) => {
     const emailQueryFiltersDictionary: Record<MailboxType, Record<string, any>> = {
@@ -15,7 +14,7 @@ const getEmailBoxQueryFilters = (mailboxType: MailboxType, user: UserViewModel) 
     return emailQueryFiltersDictionary[mailboxType]
 }
 
-const useEmailBoxQuery = (mailboxType: MailboxType, paginationOptions: PaginationQueryParameters) => { 
+const useEmailBoxQuery = (mailboxType: MailboxType, paginationFilters: PaginationQueryParameters) => { 
     const api = useEmailApi();
     const { user } = useAuth();
     const emailBoxQueryFilters = getEmailBoxQueryFilters(mailboxType, user);
@@ -26,7 +25,7 @@ const useEmailBoxQuery = (mailboxType: MailboxType, paginationOptions: Paginatio
             sortBy: "createdAt",
             sortOrder: SortOrder.Decending
         },
-        paginationFilters: paginationOptions,
+        paginationFilters,
         typeName: TypeName.Email,
         query: api.getPaginated
     })

@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
 
 import ThemeToggler from "../theme/ToggleTheme";
-import AuthWrapper from "../routes/AuthWrapper";
 import BasePage from "../exterior/BasePage";
+import AuthWrapper from "./AuthWrapper";
 
 interface PageContainerProps {
     children: ReactNode

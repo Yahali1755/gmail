@@ -9,7 +9,7 @@ export const ThemeProvider: FC<{children: ReactNode}> = ({ children }) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const changeTheme = () => {
-        setIsDarkMode((isDarkMode) => !isDarkMode);
+        setIsDarkMode(isDarkMode => !isDarkMode);
     }
 
     return (

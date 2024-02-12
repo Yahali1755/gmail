@@ -3,7 +3,7 @@ import { Grid, SxProps, Theme, useTheme } from "@mui/material"
 
 import UserForm from "./UserForm";
 import PageContainer from "../common/PageContainer";
-import { RouteType } from "../routes";
+import { RouteType } from "../shell/Routes";
 
 const getUserFormContainerStyles: SxProps = (theme: Theme) => ({
     height: '500px',

@@ -1,4 +1,5 @@
 import { PaginationQueryParameters } from "@mail/common";
+
 import { BaseQueryOptions, useBaseQuery } from "./use-base-query";
 
 type PaginationQueryOptions<TReturnType, TQueryParameters extends Record<string,any> = {}> = BaseQueryOptions<TReturnType, TQueryParameters> & {

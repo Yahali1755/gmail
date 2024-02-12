@@ -53,7 +53,8 @@ const getDefaultActions = <TViewModel extends BaseViewModel, TQueryParameters ex
         method: 'GET'
     },
     getPaginated: {
-        method: 'GET'
+        method: 'GET',
+        url: '/paginated'
     }
 })
 

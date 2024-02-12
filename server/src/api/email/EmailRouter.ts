@@ -18,10 +18,10 @@ const mapper = new EmailMapper()
 const insertEmail = insertEntity<EmailDocument>(EmailModel)
 const updateEmail = updateEntity<EmailDocument>(EmailModel)
 const deleteEmail = deleteEntity<EmailDocument>()
-const findEmails = findPaginatedEntities<EmailDocument, EmailQueryParameters>(EmailModel, convertEmailQueryParams)
+const findPaginatedEmails = findPaginatedEntities<EmailDocument, EmailQueryParameters>(EmailModel, convertEmailQueryParams)
 
-router.get('/',
-    findEmails,
+router.get('/paginated',
+    findPaginatedEmails,
     sendPaginatedEntities(mapper)
 )
 

@@ -9,9 +9,7 @@ import CloseButton from './CloseButton';
 export interface DialogProps extends MuiDialogProps {
   onClose: () => void
   dialogTitle?: string
-  dialogActions?: ReactNode
   dialogTitleProps?: DialogTitleProps
-  dialogContentProps?: DialogContentProps
 }
 
 const styles = {
@@ -36,21 +34,14 @@ const DraggablePaper = (props: PaperProps) =>
       </Draggable>
   
 const Dialog: FC<DialogProps> = ({ sx, children, open, onClose, dialogTitle,
-  dialogTitleProps, dialogContentProps, dialogActions, ...props}) => 
+  dialogTitleProps, ...props}) => 
     <MuiDialog {...props} PaperComponent={DraggablePaper} 
       TransitionComponent={Transition} sx={sx} open={open} onClose={onClose}>
         <CloseButton sx={styles.closeButton} onClick={onClose}/>
         <DialogTitle id="draggable-dialog-title" {...dialogTitleProps} sx={{...styles.dialogTitle, ...dialogTitleProps?.sx}}> 
           { dialogTitle }
         </DialogTitle>
-        <DialogContent {...dialogContentProps}>
-          { children }
-        </DialogContent>
-        <DialogActions>
-          {
-            dialogActions
-          }
-        </DialogActions>
+        { children }
     </MuiDialog>
 
 

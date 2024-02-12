@@ -1,5 +1,5 @@
 import { ReactNode, FC, useState, createContext, useContext, useEffect } from "react"
-import { Button, DialogContent, Typography } from "@mui/material"
+import { Button, DialogActions, DialogContent, Typography } from "@mui/material"
 
 import { UserViewModel } from "@mail/common"
 
@@ -96,13 +96,15 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                     </BasePage>
                 :
                 <AuthContext.Provider value={{...loginData, login, register}}>
-                    <Dialog dialogActions={<Button onClick={() => location.href = Route.User}> refresh </Button>} 
-                        open={hasTokenExpired} onClose={() => location.href = Route.User}>
+                    <Dialog open={hasTokenExpired} onClose={() => location.href = Route.User}>
                         <DialogContent>
                             <Typography>
                                 Your authentication validity expired, refresh the page to continue
                             </Typography>
                         </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => location.href = Route.User}> refresh </Button>
+                        </DialogActions>
                     </Dialog>
                     {
                         children

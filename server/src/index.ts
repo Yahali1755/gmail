@@ -1,3 +1,5 @@
 import startServer from "./config"
+import { logger } from "./logger";
 
-startServer();
+startServer()
+    .catch(error => logger.error(error));

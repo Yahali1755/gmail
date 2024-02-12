@@ -1,5 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 
+import { EMAIL_REGEX } from '@mail/common';
+
 export interface UserDocument extends Document {
   password: string,
   email: string
@@ -11,9 +13,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     validate: {
-      validator: (value) => {
-        return /\S+@\S+\.\S+/.test(value);
-      },
+      validator: (value) => EMAIL_REGEX.test(value),
       message: 'Invalid email format',
     },
   }

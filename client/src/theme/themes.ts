@@ -3,20 +3,19 @@ import { ThemeOptions, createTheme } from "@mui/material";
 const baseTheme = {
     components: {
         MuiCssBaseline: {
-        styleOverrides: (theme) => ({
-            '&::-webkit-scrollbar': {
-            width: theme.spacing(1),
-            height: theme.spacing(1)
-            },
-            '&::-webkit-scrollbar-thumb': {
-            backgroundColor: theme.palette.text.primary,
-            borderRadius: theme.spacing(0.5),
-            },
-            '&::-webkit-scrollbar-track': {
-            backgroundColor: theme.palette.background.default,
-            borderRadius: theme.spacing(0.5),
-        }
-        }),
+            styleOverrides: (theme) => ({
+                '&::-webkit-scrollbar': {
+                width: theme.spacing(1),
+                height: theme.spacing(1)
+                },
+                '&::-webkit-scrollbar-thumb': {
+                backgroundColor: theme.palette.text.primary,
+                borderRadius: theme.spacing(0.5),
+                },
+                '&::-webkit-scrollbar-track': {
+                backgroundColor: theme.palette.background.default,
+                borderRadius: theme.spacing(0.5),
+            }})
         }
     } 
 } as ThemeOptions

@@ -1,4 +1,4 @@
-import { SxProps, Typography } from "@mui/material";
+import { DialogContent, SxProps, Typography } from "@mui/material";
 import { FC } from "react";
 import moment from "moment";
 
@@ -22,21 +22,23 @@ const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, email:  {author, con
     const displayedRecipients = recipients.join(', ')
 
     return (
-        <Dialog dialogContentProps={{sx: styles.dialogSize}} dialogTitleProps={{sx: {fontWeight: "bold"}}} sx={styles.dialog} 
+        <Dialog dialogTitleProps={{sx: {fontWeight: "bold"}}} sx={styles.dialog} 
             dialogTitle={subject} open={isOpen} onClose={close}>
-            <Typography>
-                { `From: ${author}` }
-            </Typography>
-            <Typography>
-                { `To: ${displayedRecipients}` }
-            </Typography>
-            <Typography>
-                { `Date: ${formattedCreatedAt}` }
-            </Typography>
-            <br/>
-            <Typography sx={{wordWrap: "break-word"}} title="Content">
-                { content }
-            </Typography>                
+            <DialogContent sx={styles.dialogSize}>
+                <Typography>
+                    { `From: ${author}` }
+                </Typography>
+                <Typography>
+                    { `To: ${displayedRecipients}` }
+                </Typography>
+                <Typography>
+                    { `Date: ${formattedCreatedAt}` }
+                </Typography>
+                <br/>
+                <Typography sx={{wordWrap: "break-word"}} title="Content">
+                    { content }
+                </Typography>  
+            </DialogContent>              
         </Dialog>
     )
 }

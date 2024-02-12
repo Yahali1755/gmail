@@ -1,5 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const { EnvironmentPlugin } = require('webpack');
+
+require('dotenv').config();
 
 module.exports = {
   entry: './src/index.tsx',
@@ -12,8 +15,8 @@ module.exports = {
     port: '5000',
     historyApiFallback: true,
     proxy: {
-      '/api': {target: 'http://localhost:3000'},
-      '/auth': {target: 'http://localhost:3000'}
+      '/api': process.env.SERVER_URL,
+      '/auth': process.env.SERVER_URL
     }
   },
   devtool: 'source-map',
@@ -29,13 +32,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g)$/i,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'assets/',
-          }
-        }]
+        use: 'file-loader'
       },
     ]
   },
@@ -43,6 +40,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js']
   },
   plugins: [
-    new HtmlWebpackPlugin({template: path.join(__dirname, 'src', 'index.html')})
+    new HtmlWebpackPlugin({template: path.join(__dirname, 'src', 'index.html')}),
+    new EnvironmentPlugin(['SERVER_URL', 'STALE_TIME', 'REFETCH_INTERVAL'])
   ]
 };

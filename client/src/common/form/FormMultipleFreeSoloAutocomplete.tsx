@@ -3,7 +3,7 @@ import { capitalize } from "lodash";
 import { FC } from "react";
 import { useController, useFormContext } from "react-hook-form";
 
-interface FormMultipleFreeSoloAutocompleteProps extends Omit<AutocompleteProps<string, true, false, true>, 'renderInput'> {
+interface FormMultipleFreeSoloAutocompleteProps extends Omit<AutocompleteProps<string, true, false, true>, 'renderInput' |'freeSolo' | 'multiline' | 'options'> {
     name: string
     textFieldProps?: TextFieldProps
     minLength?: number,
@@ -14,7 +14,7 @@ interface FormMultipleFreeSoloAutocompleteProps extends Omit<AutocompleteProps<s
 const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps> = ({ name, textFieldProps, validationRegEx, minLength, required, ...props }) => {
     const { control  } = useFormContext()
 
-    const autocompleteRegexValidation = (values: string[]) => {
+    const autocompleteValidation = (values: string[]) => {
         if (!validationRegEx) {
             return true
         }
@@ -38,11 +38,11 @@ const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps
                 value: minLength, 
                 message: `${name} has to be at least ${minLength} characters`
             },  
-            validate: autocompleteRegexValidation,
+            validate: autocompleteValidation,
             required: {
                 value: required,
                 message: `${capitalize(name)} are required`
-            },
+            }
         },
         defaultValue: []
     });
@@ -52,26 +52,25 @@ const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps
         multiple
         options={[]}  
         freeSolo
-        value={value}
         {...props}
-        renderTags={(values, getTagProps) =>
+        renderTags={(values, getTagProps) => 
             values?.map((value, index) => (
                 <Chip
                     variant="outlined"
                     label={value}
                     {...getTagProps({ index })}
                 />
-            ))
-        }
-        onChange={(event, values) => {
+            ))}
+        onChange={(_, values) => {
             onChange(values);
         }}
         renderInput={(params) => (
             <TextField
+            {...params}
+            value={value}
             error={invalid}
             helperText={error?.message}
             {...textFieldProps}
-            {...params}
             />
         )}
         />
