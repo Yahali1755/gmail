@@ -6,6 +6,4 @@ export interface EmailViewModel extends BaseViewModel {
     subject: string
     content: string
     createdAt: Date
-    isRead: boolean
-    isStarred: boolean
 }

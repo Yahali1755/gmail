@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken"
+import jwt, { JwtPayload} from "jsonwebtoken"
 import { RequestHandler } from "express";
 
 import { UserViewModel } from "@mail/common";
@@ -19,7 +19,9 @@ export const verifyToken: RequestHandler<{}, {}, {}, {}, {user: UserViewModel, t
         next(new UnauthorizedError("invalid token"))
       }
 
-      res.locals.user = decodedPayload as UserViewModel;
+      const { exp, iat, ...userPayload } = decodedPayload as JwtPayload;
+
+      res.locals.user = userPayload as UserViewModel;
       res.locals.token = tokenWithoutBearer;
     });
 

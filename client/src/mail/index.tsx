@@ -1,6 +1,6 @@
 import MailBox from "./MailBox";
 import SideBar from "./SideBar";
-import PageContainer from "../common/PageContainer";
+import PageContainer from "../common/page/PageContainer";
 import { Route } from "../constants/Route";
 import { RouteType } from "../shell/Routes";
 import { useState } from "react";

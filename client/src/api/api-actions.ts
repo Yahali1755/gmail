@@ -1,18 +1,27 @@
-import { Method} from "axios";
+import { Method } from "axios";
 import { mapValues } from 'lodash'
 
 import { HttpClient } from "../data-management/httpClient";
 import { ActionsDefinitionMap, ApiAction, ToActions } from "./hooks/base-api";
 
-const variableRegex = /^:[a-zA-Z]+$/g;
+const variableRegex = /:[a-zA-Z0-9_]+/g;
 
 const isGetMethod = (method: Method) => ['get', 'GET'].includes(method);
 
-const injectParameters = (rawUrl: string, params: Record<string, any>) => 
-    rawUrl?.replace(variableRegex, match => params ? params[match].toString() : '')
+const injectParameters = (rawUrl: string, params: Record<string, any>) => {
+    console.log(params)
+    console.log(variableRegex.test(rawUrl))
+    console.log(rawUrl?.replace(variableRegex, match => params?.match ? params.match.toString() : ''))
+
+    return rawUrl?.replace(variableRegex, match => { 
+        const paramKey = match.substring(1)
+
+        return params?.[paramKey] ? params.paramKey.toString() : ''
+    });
+}
 
 export const createAction = ({ method, url}: ApiAction<any, any>, httpClient: HttpClient) => (data: Record<string, any> = {}) => 
-    isGetMethod(method) ? httpClient.sendRequest({ method, url, params: data}) : httpClient.sendRequest({ method, url: injectParameters(url, data), data})
+    isGetMethod(method) ? httpClient.sendRequest({ method, url: injectParameters(url, data), params: data}) : httpClient.sendRequest({ method, url: injectParameters(url, data), data})
 
 export const createActions = <TActionsDefinitionMap extends ActionsDefinitionMap>(actions: TActionsDefinitionMap, httpClient: HttpClient): ToActions<TActionsDefinitionMap> => 
     mapValues(actions, action => createAction(action, httpClient)) as ToActions<TActionsDefinitionMap>

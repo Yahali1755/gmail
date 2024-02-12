@@ -4,9 +4,7 @@ export interface EmailDocument extends Document {
   recipients: string[]
   subject: string
   author: string
-  isRead: boolean
   content: string
-  isStarred: boolean
   createdAt: Date
 }
 
@@ -14,7 +12,6 @@ const EmailSchema = new Schema({
   recipients: {type: Array<String>, required: true},
   subject: {type: String, required: true},
   author: {type: String, required: true},
-  isRead: {type: Boolean, default: false},
   content: String,
   createdAt: {
     type: Date,

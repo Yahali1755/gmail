@@ -8,14 +8,12 @@ export class EmailMapper extends BaseMapper<EmailDocument, EmailViewModel> {
         super(EmailModel)
     }
 
-    public mapToViewModel = ({ _id, createdAt, author, recipients, isStarred, content, subject, isRead}: EmailDocument) => ({
+    public mapToViewModel = ({ _id, createdAt, author, recipients, content, subject}: EmailDocument) => ({
         id: _id,
         createdAt,
         author,
         recipients,
-        isStarred,
         content, 
-        subject, 
-        isRead
+        subject
     })
 }

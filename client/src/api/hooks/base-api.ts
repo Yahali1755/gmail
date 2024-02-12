@@ -20,12 +20,11 @@ export type ActionsDefinitionMap = Record<string, ApiAction<any, any>>;
 export type ApiActions<TViewModel extends BaseViewModel, TQueryParameters extends Record<string, any> = {}, TActionsDefinitionMap
  extends ActionsDefinitionMap = {}> = DefaultActions<TViewModel, TQueryParameters> & TActionsDefinitionMap
 
-export type DefaultActions<TViewModel extends BaseViewModel, TQueryParameters extends Record<string, any>> = {
+export type DefaultActions<TViewModel extends BaseViewModel, TQueryParameters extends Record<string, any> = {}> = {
     insert: ApiAction<TViewModel, TViewModel>
     update: ApiAction<TViewModel, TViewModel>
-    getById: ApiQuery<{id: string}, TViewModel>
     delete: ApiAction<{id: string}, void>
-    getAll: ApiQuery<TQueryParameters, TViewModel[]>
+    get: ApiQuery<TQueryParameters, TViewModel[]>
     getPaginated: ApiQuery<TQueryParameters & PaginationQueryParameters, PaginatedQueryResponse<TViewModel>>, 
 }
 
@@ -45,11 +44,7 @@ const getDefaultActions = <TViewModel extends BaseViewModel, TQueryParameters ex
     delete: {
         method: 'DELETE'
     },
-    getById: {
-        method: 'GET',
-        url: '/:id'
-    },
-    getAll: {
+    get: {
         method: 'GET'
     },
     getPaginated: {
@@ -62,7 +57,7 @@ export const useApi = <TViewModel extends BaseViewModel, TQueryParameters extend
     apiActions?: TActionsDefinitionMap) => {
     const { token } = useAuth();
     const httpClient = getHttpClient(token, typeName);
-    const actions = {...getDefaultActions<TViewModel, TQueryParameters>(), ...apiActions ?? {}};
+    const actions = {...getDefaultActions<TViewModel, TQueryParameters>(), ...apiActions ?? {}} as DefaultActions<TViewModel, TQueryParameters> & TActionsDefinitionMap;
     const api = createActions(actions, httpClient);
 
     return api;

@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import { Route } from '../constants/Route';
 import { useAuth } from '../contexts/auth';
-import LoadingPage from '../exterior/LoadingPage';
-import BasePage from '../exterior/BasePage';
+import LoadingPage from '../common/page/LoadingPage';
+import BasePage from '../common/page/BasePage';
 
 interface AuthWrapperProps {
     children: ReactNode

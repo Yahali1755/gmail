@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { Model, Document } from "mongoose";
 
 import { SortOption, SortOrder } from "@mail/common";
+import { NotFoundError } from "../errors/NotFoundError";
 
 type FindEntityByIdRequestHandler<TDocument extends Document> = RequestHandler<{id: string}, {}, {}, {}, {entity: TDocument}>
 type FindAllEntitiesRequestHandler<TDocument extends Document, TQueryParameters extends Record<string, any> = {}> = RequestHandler<{}, {}, {}, TQueryParameters, {entities: TDocument[]}>
@@ -14,6 +15,10 @@ const getSortArgument = ({sortBy = "", sortOrder= SortOrder.Decending}: SortOpti
 
 export const findEntityById = <TDocument extends Document>(model: Model<TDocument>): FindEntityByIdRequestHandler<TDocument> => async (req, res, next) => {
     const entity = await model.findById(req.params.id);
+
+    if (!entity) {
+        next(new NotFoundError(`${model} not found`))
+    }
 
     res.locals.entity = entity;
 

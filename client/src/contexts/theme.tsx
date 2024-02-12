@@ -1,9 +1,11 @@
-import { useState, createContext, ReactNode, FC} from 'react'
+import { useState, createContext, ReactNode, FC, useContext} from 'react'
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 
 import { darkTheme, lightTheme } from '../theme/themes';
 
 export const ThemeContext = createContext(null);
+
+export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider: FC<{children: ReactNode}> = ({ children }) => {
     const [isDarkMode, setIsDarkMode] = useState(false);

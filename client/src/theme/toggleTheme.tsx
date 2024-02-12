@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { ThemeContext } from '../contexts/theme';
+import { useTheme } from '../contexts/theme';
+import { useAuth } from '../contexts/auth';
+import { useUserApi } from '../api/hooks/user-api';
 
 const styles = {
   iconsSize: {
@@ -17,11 +19,25 @@ const styles = {
 }
 
 const ThemeToggler = () => {
-  const { changeTheme, isDarkMode} = useContext(ThemeContext)
+  const { changeTheme, isDarkMode} = useTheme();
+  const { user } = useAuth();
+  const userApi = useUserApi();
+
+  const handleClick = () => {
+    console.log(user)
+
+    if (user) {
+      userApi.changeTheme({id: user.id})
+    }
+
+    changeTheme()
+  }
+
+  const isDarkTheme = user ? user.theme.isDarkTheme && isDarkMode : isDarkMode;
 
   return (
-    <IconButton sx={styles.iconButton} onClick={changeTheme} color="inherit">
-      {isDarkMode ? <Brightness7Icon sx={styles.iconsSize} /> : <Brightness4Icon sx={styles.iconsSize} />}
+    <IconButton sx={styles.iconButton} onClick={handleClick} color="inherit">
+      {isDarkTheme ? <Brightness7Icon sx={styles.iconsSize} /> : <Brightness4Icon sx={styles.iconsSize} />}
     </IconButton>
   );
 };

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid, SxProps, Theme, useTheme } from "@mui/material"
 
 import UserForm from "./UserForm";
-import PageContainer from "../common/PageContainer";
+import PageContainer from "../common/page/PageContainer";
 import { RouteType } from "../shell/Routes";
 
 const getUserFormContainerStyles: SxProps = (theme: Theme) => ({

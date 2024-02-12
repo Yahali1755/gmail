@@ -5,7 +5,7 @@ import { MailboxType } from '../../constants/MailboxType';
 import MailRow from '../MailRow';
 import useEmailBoxQuery from '../../query/use-email-query';
 import { useTableStyles } from './styles';
-import LoadingPage from '../../exterior/LoadingPage';
+import LoadingPage from '../../common/page/LoadingPage';
 import { usePaging } from '../../common/hooks/page';
 
 interface MailBoxProps {

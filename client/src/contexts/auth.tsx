@@ -4,10 +4,10 @@ import { Button, DialogActions, DialogContent, Typography } from "@mui/material"
 import { UserViewModel } from "@mail/common"
 
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
-import LoadingPage from "../exterior/LoadingPage"
+import LoadingPage from "../common/page/LoadingPage"
 import Dialog from "../common/Dialog"
 import { Route } from "../constants/Route"
-import BasePage from "../exterior/BasePage"
+import BasePage from "../common/page/BasePage"
 
 interface AuthProviderProps {
     children: ReactNode

@@ -1,16 +1,17 @@
 import jwt from "jsonwebtoken"
+import { RequestHandler } from "express";
 
 import { UserViewModel } from "@mail/common";
 
-import { RequestHandler } from "express";
-import { UserModel } from "../models/User";
+import { UserDocument, UserModel } from "../models/User";
 import InvalidFieldError from "../errors/InvalidFieldError";
+
 
 export const generateToken: RequestHandler<{}, {}, UserViewModel, {}, {token: string, user: UserViewModel}> = ({ body }, res, next) => {
     const token = jwt.sign(body, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
-    res.locals.token = token;
     res.locals.user = body;
+    res.locals.token = token;
 
     next()
 }
@@ -19,8 +20,7 @@ export const sendLoginData: RequestHandler<{}, {}, {}, {}, {user: UserViewModel,
     res.send({ token: res.locals.token, user: res.locals.user})
 }
 
-export const verifyUser: RequestHandler<{}, {}, UserViewModel, {}, {}> = async ({ body }, res, next) => {
-    const { email, password } = body
+export const verifyUser: RequestHandler<{}, {}, UserViewModel, {}, {}> = async ({body: {email, password}} , res, next) => {
     const user = await UserModel.findOne({ email });
 
     if(!user) {

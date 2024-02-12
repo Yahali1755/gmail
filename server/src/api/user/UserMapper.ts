@@ -8,9 +8,10 @@ export class UserMapper extends BaseMapper<UserDocument, UserViewModel> {
         super(UserModel)
     }
 
-    public mapToViewModel = ({ _id, password, email}: UserDocument) => ({
+    public mapToViewModel = ({ _id, password, email, theme}: UserDocument) => ({
         id: _id,
         password,
-        email
+        email,
+        theme
     })
 }

@@ -9,6 +9,7 @@ import FormTextField from "../common/form/FormTextField";
 import SubmitButton from "../common/form/SubmitButton";
 import Form from "../common/form/Form";
 import { useAuth } from "../contexts/auth";
+import { useTheme } from "../contexts/theme";
 
 const styles = {
   formTitle: {
@@ -23,6 +24,7 @@ const UserForm: FC = () => {
   const { watch } = formMethods;
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const { login, register } = useAuth();
+  const { isDarkMode } = useTheme();
   
   const password = watch('password');
   const confirmPassword = watch('confirm');
@@ -33,12 +35,18 @@ const UserForm: FC = () => {
       field && setError(`${field}`,{ message: `${message}`})
   }
 
+  const setUserPreferedTheme = (user: UserViewModel) => {
+    user.theme = {isDarkTheme: isDarkMode}
+  }
+
   const submit = (data: UserViewModel) => {
     if (isRegisterForm && password !== confirmPassword) {
       setError("InvalidConfirm", { message: "Passwords do not match"})
 
       return;
     }
+
+    setUserPreferedTheme(data);
 
     if (isRegisterForm) {
       register(data).catch(handleErrors)

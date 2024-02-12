@@ -5,10 +5,16 @@ import { EMAIL_REGEX } from '@mail/common';
 export interface UserDocument extends Document {
   password: string,
   email: string
+  theme: {
+    isDarkTheme: boolean
+  }
 } 
 
 const UserSchema = new Schema({
-  password: String,
+  password: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -16,6 +22,12 @@ const UserSchema = new Schema({
       validator: (value) => EMAIL_REGEX.test(value),
       message: 'Invalid email format',
     },
+  },
+  theme: {
+    isDarkTheme: {
+      type: Boolean,
+      default: false
+    }
   }
 });
 
