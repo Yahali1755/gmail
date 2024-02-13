@@ -1,23 +1,23 @@
 import { PaginationQueryParameters, SortOrder, TypeName, UserViewModel } from "@mail/common";
 
-import { MailboxType } from "../constants/MailboxType";
+import { EmailBoxType } from "../constants/EmailboxType";
 import { useEmailApi } from "../api/hooks/email-api";
 import { useAuth } from "../contexts/auth";
 import { usePaginatedQuery } from "./use-paginated-query";
 
-const getEmailBoxQueryFilters = (mailboxType: MailboxType, user: UserViewModel) => {
-    const emailQueryFiltersDictionary: Record<MailboxType, Record<string, any>> = {
-        [MailboxType.Inbox]: {recipient: user.email},
-        [MailboxType.Outbox]: {author: user.email}
+const getEmailBoxQueryFilters = (emailBoxType: EmailBoxType, user: UserViewModel) => {
+    const emailQueryFiltersDictionary: Record<EmailBoxType, Record<string, any>> = {
+        [EmailBoxType.Inbox]: {recipient: user.email},
+        [EmailBoxType.Outbox]: {author: user.email}
     }
     
-    return emailQueryFiltersDictionary[mailboxType]
+    return emailQueryFiltersDictionary[emailBoxType]
 }
 
-const useEmailBoxQuery = (mailboxType: MailboxType, paginationFilters: PaginationQueryParameters) => { 
+const useEmailBoxQuery = (emailBoxType: EmailBoxType, paginationFilters: PaginationQueryParameters) => { 
     const api = useEmailApi();
     const { user } = useAuth();
-    const emailBoxQueryFilters = getEmailBoxQueryFilters(mailboxType, user);
+    const emailBoxQueryFilters = getEmailBoxQueryFilters(emailBoxType, user);
 
     return usePaginatedQuery({
         filters: emailBoxQueryFilters,

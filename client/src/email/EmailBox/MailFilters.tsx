@@ -2,11 +2,11 @@ import { IconButton, Typography, TableCell, Select, MenuItem, Menu, Popper } fro
 import { FC, useRef, useState} from 'react';
 import FilterListIcon from '@mui/icons-material/FilterListRounded';
 
-import { MailboxType } from '../../constants/MailboxType';
+import { EmailBoxType } from '../../constants/EmailboxType';
 import { useOpen } from '../../common/hooks/open';
 
 interface MailBoxProps {
-  mailBoxType: MailboxType
+  mailBoxType: EmailBoxType
 }
 
 const MailFilters: FC= () => {

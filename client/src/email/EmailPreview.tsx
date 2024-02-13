@@ -1,13 +1,14 @@
 import { DialogContent, SxProps, Typography } from "@mui/material";
+import { EmailViewModel } from "@mail/common";
 import { FC } from "react";
 import moment from "moment";
 
 import Dialog from "../common/Dialog";
 
-interface MailPreviewProps {
+interface EmailPreviewProps {
     isOpen: boolean, 
     close: () => void,
-    email: any
+    email: EmailViewModel
 }
 
 const styles: Record<string, SxProps> = {
@@ -17,7 +18,7 @@ const styles: Record<string, SxProps> = {
     }
 }
 
-const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, email:  {author, content, createdAt, subject, recipients}}) => {
+const EmailPreview: FC<EmailPreviewProps> = ({ isOpen, close, email:  {author, content, createdAt, subject, recipients}}) => {
     const formattedCreatedAt = moment(createdAt).format("lll");
     const displayedRecipients = recipients.join(', ')
 
@@ -44,4 +45,4 @@ const MailPreview: FC<MailPreviewProps> = ({ isOpen, close, email:  {author, con
 }
 
 
-export default MailPreview;
+export default EmailPreview;

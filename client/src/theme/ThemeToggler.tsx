@@ -7,8 +7,8 @@ import { useTheme } from '../contexts/theme';
 
 const styles = {
   iconsSize: {
-    height: '40px',
-    width: '40px'
+    height: '30px',
+    width: '30px'
   }
 }
 

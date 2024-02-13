@@ -19,5 +19,5 @@ const injectParameters = (rawUrl: string, params: Record<string, any>) =>
 export const createAction = ({ method, url}: ApiAction<any, any>, httpClient: HttpClient) => (data: Record<string, any> = {}) => 
     isGetMethod(method) ? httpClient.sendRequest({ method, url: injectParameters(url, data), params: data}) : httpClient.sendRequest({ method, url: injectParameters(url, data), data})
 
-export const createActions = <TActionsDefinitionMap extends ActionsDefinitionMap>(actions: TActionsDefinitionMap, httpClient: HttpClient): ToActions<TActionsDefinitionMap> => 
+export const createActions = <TActionsDefinitionMap extends ActionsDefinitionMap>(actions: TActionsDefinitionMap, httpClient: HttpClient) => 
     mapValues(actions, action => createAction(action, httpClient)) as ToActions<TActionsDefinitionMap>

@@ -18,7 +18,7 @@ const LogoutButton: FC = () => {
     
     return (
         <IconButton onClick={handleClick} color="inherit">
-            <LogoutIcon sx={{height: '40px', width: '40px'}}/>
+            <LogoutIcon sx={{height: '30px', width: '30px'}}/>
         </IconButton>
     )
 }    

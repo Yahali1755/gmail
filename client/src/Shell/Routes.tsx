@@ -2,14 +2,14 @@ import React, { FC } from 'react'
 import { Route as RouteComponent, Routes as RoutesComponent } from 'react-router-dom'
 
 import UserRoute from "../user"
-import MailRoute from "../mail"
+import EmailRoute from "../email"
 
 export interface RouteType {
     path: string,
     component: FC
 }
 
-const routes: RouteType[] = [UserRoute, MailRoute]
+const routes: RouteType[] = [UserRoute, EmailRoute]
 
 const Routes = () => 
     <RoutesComponent>

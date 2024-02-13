@@ -1,18 +1,18 @@
 import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow, TableHead } from '@mui/material';
 import { ChangeEvent, FC, useEffect } from 'react';
 
-import { MailboxType } from '../../constants/MailboxType';
-import MailRow from '../MailRow';
+import { EmailBoxType } from '../../constants/EmailboxType';
+import EmailRow from '../EmailRow';
 import useEmailBoxQuery from '../../query/use-email-query';
 import { useTableStyles } from './styles';
 import LoadingPage from '../../common/page/LoadingPage';
 import { usePaging } from '../../common/hooks/page';
 
-interface MailBoxProps {
-  mailBoxType: MailboxType
+interface EmailBoxProps {
+  emailBoxType: EmailBoxType
 }
 
-const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
+const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
   const styles = useTableStyles();
   const { page, changePage, rowsPerPage, changeRowsPerPage } = usePaging();
 
@@ -25,19 +25,17 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
     changeRowsPerPage(parseInt(event.target.value))
   }
 
-  const { isLoading, data: { entities: emails = [], meta: { totalCount = 0} = {}} = {}} = useEmailBoxQuery(mailBoxType, { page, limit: rowsPerPage});
+  const { isLoading, data: { entities: emails = [], meta: { totalCount = 0} = {}} = {}} = useEmailBoxQuery(emailBoxType, { page, limit: rowsPerPage});
 
   useEffect(() => {
     changePage(0);
-  }, [mailBoxType])
+  }, [emailBoxType])
 
   return (
     <Box sx={styles.container}>
       <TableContainer sx={styles.tableContainer} component={Paper}>
       { 
-        isLoading ?
-          <LoadingPage circularProgressProps={{size: 50}}/>
-        :
+        <>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
@@ -51,16 +49,26 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
                 />
               </TableRow>
             </TableHead>
-            <TableBody>
-            { 
-              emails.map(email => <MailRow key={email.id} mailboxType={mailBoxType} email={email} />) 
+            {
+              !isLoading &&
+                <TableBody>
+                { 
+                  emails.map(email => <EmailRow key={email.id} mailboxType={emailBoxType} email={email} />) 
+                }
+                </TableBody>
             }
-            </TableBody>
           </Table>
-        }
-        </TableContainer>
+          {
+          isLoading &&
+          <Box height="90%">
+            <LoadingPage circularProgressProps={{size: 50}}/>
+          </Box>
+          }
+        </>
+      }
+      </TableContainer>
     </Box>
   )
 }
 
-export default MailBox;
+export default EmailBox;

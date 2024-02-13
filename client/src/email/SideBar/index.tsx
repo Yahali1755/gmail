@@ -9,36 +9,35 @@ import SendIcon from '@mui/icons-material/Send';
 import CreateIcon from '@mui/icons-material/Create';
 import { FC } from 'react';
 
-import HomePageIconButton from './HomePageIconButton';
 import { useOpen } from '../../common/hooks/open';
-import NewMailDialog from '../forms/NewMailDialog';
-import { MailboxType } from '../../constants/MailboxType';
+import NewEmailDialog from '../forms/NewEmailDialog';
+import { EmailBoxType } from '../../constants/EmailboxType';
 
 interface SideBarProps {
-  setMailBoxType: (mailboxType: MailboxType) => void,
-  mailboxType: MailboxType
+  setEmailBoxType: (emailBoxType: EmailBoxType) => void,
+  emailBoxType: EmailBoxType
 }
 
-const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
-  const {open: openCreateMail, close: closeCreateMail, isOpen: isCreateMailOpen} = useOpen();
+const SideBar: FC<SideBarProps> = ({ setEmailBoxType, emailBoxType }) => {
+  const {open: openCreateEmail, close: closeCreateEmail, isOpen: isCreateEmailOpen} = useOpen();
 
   return (
     <Grid width="160px" container direction='column'>
       <List>
         <Grid item>
-          <ListItem key='SendMail' disablePadding>
-            <ListItemButton onClick={openCreateMail}>
+          <ListItem key='Send Email' disablePadding>
+            <ListItemButton onClick={openCreateEmail}>
               <ListItemIcon sx={{color: "inherit"}}>
                 <CreateIcon/>
               </ListItemIcon>
-              <ListItemText primary='Send Mail'/>
+              <ListItemText primary='Send Email'/>
             </ListItemButton>
-            <NewMailDialog isOpen={isCreateMailOpen} close={closeCreateMail}/>
+            <NewEmailDialog isOpen={isCreateEmailOpen} close={closeCreateEmail}/>
           </ListItem>
         </Grid>
         <Grid item>
           <ListItem key='Inbox' disablePadding>
-            <ListItemButton selected={mailboxType === MailboxType.Inbox} onClick={() => setMailBoxType(MailboxType.Inbox)}>
+            <ListItemButton selected={emailBoxType === EmailBoxType.Inbox} onClick={() => setEmailBoxType(EmailBoxType.Inbox)}>
               <ListItemIcon sx={{color: "inherit"}}>
                 <InboxIcon />
               </ListItemIcon>
@@ -48,7 +47,7 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
         </Grid>
         <Grid item>
           <ListItem key='Sent' disablePadding>
-            <ListItemButton selected={mailboxType === MailboxType.Outbox} onClick={() => setMailBoxType(MailboxType.Outbox)}>
+            <ListItemButton selected={emailBoxType === EmailBoxType.Outbox} onClick={() => setEmailBoxType(EmailBoxType.Outbox)}>
               <ListItemIcon sx={{color: "inherit"}}>
                 <SendIcon />
               </ListItemIcon>

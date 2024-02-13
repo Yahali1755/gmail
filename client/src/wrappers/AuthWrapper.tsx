@@ -17,7 +17,7 @@ const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
 
     useEffect(() => {
         if (token) {
-            navigate(Route.Mail)
+            navigate(Route.EmailBox)
         } else {
             navigate(Route.User)
         }
