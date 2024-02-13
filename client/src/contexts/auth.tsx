@@ -23,6 +23,7 @@ interface AuthContextProps {
     user: UserViewModel
     login: (user: UserViewModel) => Promise<void>
     register: (user: UserViewModel) => Promise<void>
+    logout: () => void
 }
 
 const AuthContext = createContext({} as AuthContextProps)
@@ -33,7 +34,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const [loginData, setLoginData] = useState<LoginData>({} as LoginData)
     const [isLoading, setIsLoading] = useState(true)
     const [hasTokenExpired, setHasTokenExpired] = useState(false)
-    const TOKEN_EXPIRATION_INTERVAL = 2000
+    const TOKEN_EXPIRATION_INTERVAL = 30000
 
     const logout = () => {
         localStorage.removeItem("token")
@@ -61,14 +62,14 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     const login = (user: UserViewModel) => 
         loginRequest(user).then(({ data: {token, user} }) => {
-            setLoginData({token: token, user: user })
+            setLoginData({token, user })
             setToken(token)
         })
     
 
     const register = (user: UserViewModel) => 
         registerRequest(user).then(({ data: {token, user} }) => {
-            setLoginData({token: token, user: user })
+            setLoginData({token, user })
             setToken(token)
         })
     
@@ -77,7 +78,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
         if(token && !isTokenExpired(token)) {
             me(token).then(({ data }) => {
-                setLoginData({token: data.token, user: data.user })
+                setLoginData(data)
                 setHasTokenExpired(false);
             }).finally(() => {
                 setIsLoading(false)
@@ -95,7 +96,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                         <LoadingPage title="Loading User"/>
                     </BasePage>
                 :
-                <AuthContext.Provider value={{...loginData, login, register}}>
+                <AuthContext.Provider value={{...loginData, login, register, logout}}>
                     <Dialog open={hasTokenExpired} onClose={() => location.href = Route.User}>
                         <DialogContent>
                             <Typography>

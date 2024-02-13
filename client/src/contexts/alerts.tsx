@@ -1,9 +1,9 @@
-import { AlertColor, Alert as MuiAlert, Snackbar } from '@mui/material';
+import { AlertColor, Alert, Snackbar } from '@mui/material';
 import { useState, createContext, ReactNode, FC, useContext} from 'react'
 
 import { useOpen } from '../common/hooks/open';
 
-export interface Alert {
+export interface AlertType {
     message: string,
     severity: AlertColor
 }
@@ -20,10 +20,10 @@ export const useAlerts = () => useContext(AlertsContext);
 const defaultHideDuration = 5000;
 
 export const AlertsProvider: FC<{children: ReactNode}> = ({ children }) => {
-    const [alert, setAlert] = useState<Alert>();
+    const [alert, setAlert] = useState<AlertType>();
     const { isOpen, open, close }= useOpen()
 
-    const showAlert = (alert: Alert) => {
+    const showAlert = (alert: AlertType) => {
         setAlert(alert)
         open();
     }
@@ -41,13 +41,13 @@ export const AlertsProvider: FC<{children: ReactNode}> = ({ children }) => {
             {
                 alert && 
                 <Snackbar open={isOpen} autoHideDuration={defaultHideDuration} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} onClose={close}>
-                    <MuiAlert
+                    <Alert
                     onClose={close}
                     severity={alert.severity}
                     variant="filled"
                     >
                     { alert.message}
-                    </MuiAlert>
+                    </Alert>
                 </Snackbar>
             }
             { children }

@@ -6,6 +6,7 @@ import { Route } from "../../config/express";
 import { findEntityById } from "../../common/queries";
 import { UserModel } from "../../models/User";
 import { changeTheme } from "./user-handlers";
+import { sendSuccess } from "../../common/responses";
 
 const router = express.Router();
 
@@ -13,7 +14,8 @@ const findUser = findEntityById(UserModel)
 
 router.put('/:id/changeTheme',
     findUser,
-    changeTheme
+    changeTheme,
+    sendSuccess
 )
 
 export default {

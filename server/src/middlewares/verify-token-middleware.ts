@@ -5,7 +5,7 @@ import { UserViewModel } from "@mail/common";
 
 import UnauthorizedError from "../errors/UnauthorizedError";
 
-export const verifyToken: RequestHandler<{}, {}, {}, {}, {user: UserViewModel, token: string}> = (req, res, next) => {
+export const verifyToken: RequestHandler<{}, {}, UserViewModel, {}, {user: UserViewModel, token: string}> = (req, res, next) => {
     const token = req.header('Authorization');
   
     if (!token) {

@@ -9,14 +9,10 @@ const variableRegex = /:[a-zA-Z0-9_]+/g;
 const isGetMethod = (method: Method) => ['get', 'GET'].includes(method);
 
 const injectParameters = (rawUrl: string, params: Record<string, any>) => {
-    console.log(params)
-    console.log(variableRegex.test(rawUrl))
-    console.log(rawUrl?.replace(variableRegex, match => params?.match ? params.match.toString() : ''))
-
     return rawUrl?.replace(variableRegex, match => { 
         const paramKey = match.substring(1)
 
-        return params?.[paramKey] ? params.paramKey.toString() : ''
+        return params?.[paramKey] ? `${params[paramKey]}` : ''
     });
 }
 

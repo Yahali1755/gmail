@@ -1,34 +1,25 @@
 import express from "express"
 
-import { UserModel } from "../models/User";
-import { ensureEmailUniqness, generateToken, sendLoginData, verifyUser } from "./auth-handlers";
-import { insertEntity } from "../common/updates";
+import { ensureEmailUniqueness, findUserByEmail, insertUser, authenticate, verifyUser, me } from "./auth-handlers";
 import { verifyToken } from "../middlewares/verify-token-middleware";
-import { mapBodyToEntity } from "../common/mapping";
-import { UserMapper } from "../api/user/UserMapper";
 
 const router = express.Router();
-const mapper = new UserMapper();
-
-const insertUser = insertEntity(UserModel);
 
 router.post('/login',
+    findUserByEmail,
     verifyUser,
-    generateToken,
-    sendLoginData
+    authenticate
 );
 
 router.get('/me',
     verifyToken,
-    sendLoginData
+    me
 );
 
 router.post('/register',
-    ensureEmailUniqness,
-    mapBodyToEntity(mapper),
+    ensureEmailUniqueness,
     insertUser,
-    generateToken,
-    sendLoginData
+    authenticate
 );
 
 export default router;

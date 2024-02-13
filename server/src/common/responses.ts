@@ -10,7 +10,7 @@ type SendEntityRequestHandler<TDocument extends Document> = RequestHandler<{}, {
 type SendEntitiesRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, {entities: TDocument[]}>
 type SendPaginatedEntitiesRequestHandler<TDocument extends Document> = RequestHandler<{}, {}, {}, {}, PaginationLocalsObject<TDocument>>
 
-export const sendSuccess = (): RequestHandler => (req, res) => res.sendStatus(200);
+export const sendSuccess: RequestHandler = (req, res) => res.sendStatus(200);
 
 export const sendEntity = <TDocument extends Document, TViewModel extends BaseViewModel>(mapper: BaseMapper<TDocument, TViewModel>): 
     SendEntityRequestHandler<TDocument> => (req, res) => res.status(200).send(mapper.mapToViewModel(res.locals.entity));

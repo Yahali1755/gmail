@@ -10,14 +10,15 @@ interface ProvidersProps {
 }
 
 const Providers: FC<ProvidersProps> = ({ children }) =>
-    <ThemeProvider>
-        <QueryProvider>
-            <AlertsProvider>
-                <AuthProvider>
-                    { children }
-                </AuthProvider>
-            </AlertsProvider>
-        </QueryProvider>
-    </ThemeProvider>
+    <AuthProvider>
+        <ThemeProvider>
+            <QueryProvider>
+                <AlertsProvider>
+                        { children }
+                </AlertsProvider>
+            </QueryProvider>
+        </ThemeProvider>
+    </AuthProvider>
+
 
 export default Providers;

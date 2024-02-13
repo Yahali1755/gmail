@@ -19,7 +19,7 @@ export const findEntityById = <TDocument extends Document>(model: Model<TDocumen
     if (!entity) {
         next(new NotFoundError(`${model} not found`))
     }
-
+    
     res.locals.entity = entity;
 
     next()
