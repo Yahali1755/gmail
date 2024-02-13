@@ -38,6 +38,8 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem("token")
+
+        setLoginData(null);
     }
 
     const isTokenExpired = (token: string) => {

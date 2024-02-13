@@ -16,11 +16,11 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
   const styles = useTableStyles();
   const { page, changePage, rowsPerPage, changeRowsPerPage } = usePaging();
 
-  const handleChangePage = (_, page: number) => {
+  const handlePageChange = (_, page: number) => {
     changePage(page)
   }
 
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = (event: ChangeEvent<HTMLInputElement>) => {
     changePage(0)
     changeRowsPerPage(parseInt(event.target.value))
   }
@@ -46,8 +46,8 @@ const MailBox: FC<MailBoxProps> = ({ mailBoxType }) => {
                   rowsPerPage={rowsPerPage}
                   page={page}
                   labelRowsPerPage={"Emails per page:"}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  onPageChange={handlePageChange}
+                  onRowsPerPageChange={handleRowsPerPageChange}
                 />
               </TableRow>
             </TableHead>

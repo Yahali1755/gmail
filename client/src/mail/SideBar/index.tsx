@@ -26,11 +26,6 @@ const SideBar: FC<SideBarProps> = ({ setMailBoxType, mailboxType }) => {
     <Grid width="160px" container direction='column'>
       <List>
         <Grid item>
-          <ListItem key='HomePageIconButton' disablePadding>
-            <HomePageIconButton/>
-          </ListItem>
-        </Grid>
-        <Grid item>
           <ListItem key='SendMail' disablePadding>
             <ListItemButton onClick={openCreateMail}>
               <ListItemIcon sx={{color: "inherit"}}>

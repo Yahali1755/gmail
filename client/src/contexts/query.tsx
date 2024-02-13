@@ -9,7 +9,7 @@ interface QueryProvidersProps {
 
 const QueryProvider: FC<QueryProvidersProps> = ({ children }) =>
     <QueryClientProvider client={queryClient}>
-            { children }
+        { children }
     </QueryClientProvider>
 
 export default QueryProvider;

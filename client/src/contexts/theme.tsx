@@ -1,26 +1,39 @@
-import { useState, createContext, ReactNode, FC} from 'react'
+import { useState, createContext, ReactNode, FC, useEffect, useContext} from 'react'
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 
 import { darkTheme, lightTheme } from '../theme/themes';
-import { useAuth } from './auth';
-import { useUserApi } from '../api/hooks/user-api';
 
-export const ThemeContext = createContext(null);
+interface ThemeContextProps {
+    isDarkTheme: boolean,
+    changeTheme: () => void
+}
 
-export const ThemeProvider: FC<{children: ReactNode}> = ({ children }) => {
-    const [isDarkMode, setIsDarkMode] = useState(true);
-    const { user } = useAuth()
-    const userApi = useUserApi();
+export const ThemeContext = createContext<ThemeContextProps>(null);
+
+interface ThemeProviderProps {
+    children: ReactNode
+}
+
+export const useTheme = () => useContext(ThemeContext);
+
+export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
+    const [isDarkTheme, setIsDarkTheme] = useState(false);
 
     const changeTheme = () => {
-        userApi.changeTheme({id: user.id})
+        setIsDarkTheme(!isDarkTheme);
 
-        // setIsDarkMode();
+        localStorage.setItem("isDarkTheme", `${!isDarkTheme}`)
     }
 
+    useEffect(() => {
+        const isDark = localStorage.getItem("isDarkTheme") === "true" 
+
+        setIsDarkTheme(isDark)
+    }, [])
+
     return (
-        <ThemeContext.Provider value={{isDarkMode, changeTheme}}>
-            <MuiThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <ThemeContext.Provider value={{isDarkTheme, changeTheme}}>
+            <MuiThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
                 { children }
             </MuiThemeProvider>
         </ThemeContext.Provider>

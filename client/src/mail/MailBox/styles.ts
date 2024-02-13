@@ -8,9 +8,8 @@ export const useTableStyles = () => {
             flex: 1,
             display: "flex",
             width: "100%",
-            height: '100%',
-            padding: theme.spacing(6, 6, 2, 0),
-            borderRadius: theme.spacing(1)
+            height: '85%',
+            padding: theme.spacing(0, 6, 2, 0),
         },
         tableContainer: {
             borderRadius: theme.spacing(1.5),

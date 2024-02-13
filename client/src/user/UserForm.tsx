@@ -33,23 +33,17 @@ const UserForm: FC = () => {
       field && setError(`${field}`,{ message: `${message}`})
   }
 
-  const setBeforeSubmit = (user: UserViewModel) => {
-    user.theme = {isDarkTheme: !user.theme.isDarkTheme}
-  }
-
-  const submit = (data: Record<string, any>) => {
+  const submit = (data: UserViewModel) => {
     if (isRegisterForm && password !== confirmPassword) {
       setError("InvalidConfirm", { message: "Passwords do not match"})
 
       return;
     }
 
-    setBeforeSubmit(data as UserViewModel);
-
     if (isRegisterForm) {
-      register(data as UserViewModel).catch(handleErrors)
+      register(data).catch(handleErrors)
     } else {
-      login(data as UserViewModel).catch(handleErrors)
+      login(data).catch(handleErrors)
     }
   }
 
