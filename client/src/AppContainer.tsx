@@ -6,7 +6,7 @@ interface AppContainerProps {
 }
 
 const AppContainer: FC<AppContainerProps> = ({children}) => 
-    <Box height="100vh" display='flex' flexDirection='column'>
+    <Box height="100vh">
         { children }
     </Box>
 

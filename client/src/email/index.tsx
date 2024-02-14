@@ -18,7 +18,7 @@ const Email = () => {
                 <Grid item>
                     <Bar/>
                 </Grid>
-                <Grid xs flex={1} item>
+                <Grid xs minHeight={0} item>
                     <Grid height="100%" container>
                         <Grid height="100%" item>
                             <SideBar setEmailBoxType={setEmailboxType} emailBoxType={emailBoxType}/>
