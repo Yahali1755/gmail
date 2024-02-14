@@ -3,8 +3,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import { useAuth } from "../contexts/auth";
-import { Route } from "../constants/Route";
+import { useAuth } from "../../contexts/auth";
+import { Route } from "../../constants/Route";
 
 const LogoutButton: FC = () => {
     const { logout } = useAuth();

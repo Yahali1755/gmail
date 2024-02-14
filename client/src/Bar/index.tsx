@@ -1,11 +1,10 @@
-import LogoutIcon from '@mui/icons-material/Logout';
-import { AppBar as MuiAppBar, Grid, useTheme, SxProps } from '@mui/material';
+import { AppBar, Grid, useTheme, SxProps } from '@mui/material';
 
 import ThemeToggler from '../theme/ThemeToggler';
-import HomePageIconButton from './SideBar/HomePageIconButton';
-import LogoutButton from '../common/LogoutButton';
+import HomePageIconButton from '../email/SideBar/HomePageIconButton';
+import LogoutButton from '../common/components/LogoutButton';
 
-const AppBar = () => {
+const Bar = () => {
     const theme = useTheme()
 
     const styles: SxProps = {
@@ -14,7 +13,7 @@ const AppBar = () => {
     }
 
     return (
-        <MuiAppBar position="static" sx={styles} elevation={0}>
+        <AppBar position="static" sx={styles} elevation={0}>
                 <Grid width="100%" container>
                     <Grid xs={2} item>
                         <HomePageIconButton/>
@@ -30,8 +29,8 @@ const AppBar = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-        </MuiAppBar>
+        </AppBar>
     )
 }
 
-export default AppBar
+export default Bar

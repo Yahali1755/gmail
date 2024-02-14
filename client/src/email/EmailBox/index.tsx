@@ -53,7 +53,7 @@ const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
               !isLoading &&
                 <TableBody>
                 { 
-                  emails.map(email => <EmailRow key={email.id} mailboxType={emailBoxType} email={email} />) 
+                  emails.map(email => <EmailRow key={email.id} emailBoxType={emailBoxType} email={email} />) 
                 }
                 </TableBody>
             }
