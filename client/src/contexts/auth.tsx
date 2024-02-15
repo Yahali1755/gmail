@@ -8,6 +8,7 @@ import LoadingPage from "../common/page/LoadingPage"
 import Dialog from "../common/dialog"
 import { Route } from "../constants/Route"
 import BasePage from "../common/page/BasePage"
+import { UserFormData } from "../user/UserForm"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -21,8 +22,8 @@ export interface LoginData {
 interface AuthContextProps {
     token: string,
     user: UserViewModel
-    login: (user: UserViewModel) => Promise<void>
-    register: (user: UserViewModel) => Promise<void>
+    login: (user: UserFormData) => Promise<void>
+    register: (user: UserFormData) => Promise<void>
     logout: () => void
 }
 
@@ -62,14 +63,14 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         return () => clearInterval(tokenExpirationInterval)
     }, [])
 
-    const login = (user: UserViewModel) => 
+    const login = (user: UserFormData) => 
         loginRequest(user).then(({ data: {token, user} }) => {
             setLoginData({token, user })
             setToken(token)
         })
     
 
-    const register = (user: UserViewModel) => 
+    const register = (user: UserFormData) => 
         registerRequest(user).then(({ data: {token, user} }) => {
             setLoginData({token, user })
             setToken(token)

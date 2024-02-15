@@ -1,6 +1,6 @@
-import { Dialog as MuiDialog, DialogContent, DialogTitle, Slide, Paper, PaperProps, DialogActions, Breakpoint, 
-  DialogProps as MuiDialogProps, DialogContentProps, DialogTitleProps } from '@mui/material';
-import React, { FC, ReactNode } from 'react';
+import { Dialog as MuiDialog, DialogTitle, Slide, Paper, PaperProps,
+  DialogProps as MuiDialogProps, DialogTitleProps } from '@mui/material';
+import React, { FC } from 'react';
 import { TransitionProps } from '@mui/material/transitions';
 import Draggable from 'react-draggable';
 
