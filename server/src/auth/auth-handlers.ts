@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import { RequestHandler } from "express";
 
-import { UserViewModel } from "@mail/common";
+import { AuthData, UserViewModel } from "@mail/common";
 
 import { UserDocument, UserModel } from "../models/User";
 import InvalidFieldError from "../errors/InvalidFieldError";
@@ -51,22 +51,22 @@ export const ensureEmailUniqueness: AuthRequestHandler = async ({ body: {email}}
     next()
 }
 
-const signToken = (user: UserViewModel) => 
-    jwt.sign(user, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
+const signToken = (email: string) => 
+    jwt.sign(email, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
 const authenticateUser = async (userDocument: UserDocument) => {
     const user = mapper.mapToViewModel(userDocument)
-    const token = signToken(user);
+    const token = signToken(user.email);
 
-    return { token, user } 
+    return { token, email: user.email } as AuthData
 }
 
 export const authenticate: AuthRequestHandler = async (req, res) => {
-    const { token, user } = await authenticateUser(res.locals.userDocument)
+    const { token, email } = await authenticateUser(res.locals.userDocument)
 
-    res.send({ token, user})
+    res.send({ token, email } as AuthData)
 }
 
-export const me: RequestHandler<{}, {}, UserViewModel, {}, {user: UserViewModel, token: string}> = async (req, res) => {
-    res.send({ token: res.locals.token, user: res.locals.user})
+export const me: RequestHandler<{}, {}, UserViewModel, {}, AuthData> = async (req, res) => {
+    res.send({ token: res.locals.token, email: res.locals.email})
 }

@@ -1,11 +1,11 @@
 import jwt, { JwtPayload} from "jsonwebtoken"
 import { RequestHandler } from "express";
 
-import { UserViewModel } from "@mail/common";
+import { AuthData, UserViewModel } from "@mail/common";
 
 import UnauthorizedError from "../errors/UnauthorizedError";
 
-export const verifyToken: RequestHandler<{}, {}, UserViewModel, {}, {user: UserViewModel, token: string}> = (req, res, next) => {
+export const verifyToken: RequestHandler<{}, {}, UserViewModel, {}, AuthData> = (req, res, next) => {
     const token = req.header('Authorization');
   
     if (!token) {
@@ -19,9 +19,9 @@ export const verifyToken: RequestHandler<{}, {}, UserViewModel, {}, {user: UserV
         next(new UnauthorizedError("invalid token"))
       }
 
-      const { exp, iat, ...userPayload } = decodedPayload as JwtPayload;
+      const { email } = decodedPayload as JwtPayload;
 
-      res.locals.user = userPayload as UserViewModel;
+      res.locals.email = email;
       res.locals.token = tokenWithoutBearer;
     });
 

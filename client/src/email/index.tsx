@@ -7,7 +7,7 @@ import { Route } from "../constants/Route";
 import { RouteType } from "../shell/Routes";
 import { useState } from "react";
 import { EmailBoxType } from "../constants/EmailboxType";
-import Bar from "../Bar"
+import Bar from "./Bar"
 
 const Email = () => {
     const [emailBoxType, setEmailboxType] = useState(EmailBoxType.Inbox)

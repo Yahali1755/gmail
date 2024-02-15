@@ -57,7 +57,7 @@ export const findPaginatedEntities = <TDocument extends Document, TQueryParamete
     FindPaginatedEntitiesRequestHandler<TDocument, TQueryParameters> => async (req, res, next) => {
     const { limit, page, sortBy, sortOrder } = convertBaseQueryParameters(req.query);
     const filters = convertEntityQueryParameters(req.query)
-    const sort = getSortArgument({ sortBy, sortOrder})
+    const sort = getSortArgument({ sortBy, sortOrder })
 
     const totalCount = await model.countDocuments(filters);
     const entities = await model.find(filters).skip(page * limit).limit(limit).sort(sort);

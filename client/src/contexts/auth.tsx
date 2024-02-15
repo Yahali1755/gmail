@@ -1,7 +1,7 @@
 import { ReactNode, FC, useState, createContext, useContext, useEffect } from "react"
 import { Button, DialogActions, DialogContent, Typography } from "@mui/material"
 
-import { UserViewModel } from "@mail/common"
+import { AuthData } from "@mail/common"
 
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
 import LoadingPage from "../common/page/LoadingPage"
@@ -14,14 +14,9 @@ interface AuthProviderProps {
     children: ReactNode
 }
 
-export interface LoginData {
-    token: string,
-    user: UserViewModel
-}
-
 interface AuthContextProps {
-    token: string,
-    user: UserViewModel
+    token: string
+    email: string
     login: (user: UserFormData) => Promise<void>
     register: (user: UserFormData) => Promise<void>
     logout: () => void
@@ -32,7 +27,7 @@ const AuthContext = createContext({} as AuthContextProps)
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-    const [loginData, setLoginData] = useState<LoginData>({} as LoginData)
+    const [authData, setAuthData] = useState<AuthData>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [hasTokenExpired, setHasTokenExpired] = useState(false)
     const TOKEN_EXPIRATION_INTERVAL = 30000
@@ -40,7 +35,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const logout = () => {
         localStorage.removeItem("token")
 
-        setLoginData(null);
+        setAuthData(null);
     }
 
     const isTokenExpired = (token: string) => {
@@ -64,15 +59,15 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     }, [])
 
     const login = (user: UserFormData) => 
-        loginRequest(user).then(({ data: {token, user} }) => {
-            setLoginData({token, user })
+        loginRequest(user).then(({ data: {token, email} }) => {
+            setAuthData({ token, email })
             setToken(token)
         })
     
 
     const register = (user: UserFormData) => 
-        registerRequest(user).then(({ data: {token, user} }) => {
-            setLoginData({token, user })
+        registerRequest(user).then(({ data: {token, email} }) => {
+            setAuthData({ token, email })
             setToken(token)
         })
     
@@ -81,7 +76,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
         if(token && !isTokenExpired(token)) {
             me(token).then(({ data }) => {
-                setLoginData(data)
+                setAuthData(data)
                 setHasTokenExpired(false);
             }).finally(() => {
                 setIsLoading(false)
@@ -99,7 +94,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                         <LoadingPage title="Loading User"/>
                     </BasePage>
                 :
-                <AuthContext.Provider value={{...loginData, login, register, logout}}>
+                <AuthContext.Provider value={{...authData, login, register, logout}}>
                     <Dialog open={hasTokenExpired} onClose={() => location.href = Route.User}>
                         <DialogContent>
                             <Typography>

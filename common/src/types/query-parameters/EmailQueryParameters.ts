@@ -1,5 +1,5 @@
-import { SortOption as SortQueryParameters} from "../types";
-import { PaginationQueryParameters } from "./pagination-query-parameters";
+import { SortOption as SortQueryParameters} from "..";
+import { PaginationQueryParameters } from "./PaginationQueryParameters";
 
 export interface EmailQueryParameters extends PaginationQueryParameters, SortQueryParameters {
     recipient: string,
