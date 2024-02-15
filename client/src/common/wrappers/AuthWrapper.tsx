@@ -1,10 +1,10 @@
 import React, { FC, ReactNode, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Route } from '../constants/Route';
-import { useAuth } from '../contexts/auth';
-import LoadingPage from '../common/page/LoadingPage';
-import BasePage from '../common/page/BasePage';
+import { Route } from '../../constants/Route';
+import { useAuth } from '../../contexts/auth';
+import LoadingPage from '../page/LoadingPage';
+import BasePage from '../page/BasePage';
 
 interface AuthWrapperProps {
     children: ReactNode
