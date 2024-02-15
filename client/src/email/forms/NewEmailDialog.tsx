@@ -35,7 +35,7 @@ const NewEmailDialog: FC<NewMailDialogProps> = ({ isOpen, close }) => {
             )
     
     return (
-        <FormDialog onSubmissionSuccessMessage="Email sent!" isEditEnabled={true} submitButtonProps={{label: "Send"}} onSubmit={submit} fullWidth maxWidth="md" dialogTitle="New Mail" formMethods={formMethods} open={isOpen} onClose={close}>
+        <FormDialog onSubmissionSuccessMessage="Email sent!" isEditEnabled={true} submitButtonProps={{label: "Send"}} onSubmit={submit} fullWidth maxWidth="md" dialogTitle="New Email" formMethods={formMethods} open={isOpen} onClose={close}>
             <FormMultipleFreeSoloAutocomplete validationRegEx={EMAIL_REGEX} required autoSelect key="recipients" textFieldProps={{variant: "standard", label:"To"}} autoFocus fullWidth name="recipients"/>
             <FormTextField required={true} key="subject" label="Subject" variant="standard" fullWidth name="subject"/>
             <FormTextField sx={styles.content} key="content" label="" multiline rows={8} variant="standard" fullWidth name="content"/>

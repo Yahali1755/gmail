@@ -5,7 +5,7 @@ import { UserViewModel } from "@mail/common"
 
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
 import LoadingPage from "../common/page/LoadingPage"
-import Dialog from "../common/Dialog"
+import Dialog from "../common/dialog"
 import { Route } from "../constants/Route"
 import BasePage from "../common/page/BasePage"
 

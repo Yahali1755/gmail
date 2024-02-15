@@ -22,8 +22,6 @@ const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps
         const invalidValues = values?.filter(value => !validationRegEx.test(value))
 
         if (invalidValues.length) {
-            console.log(invalidValues.map(value => value + ' is invalid').join(', '))
-
             return invalidValues.map(value => value + ' is invalid').join(', ')
         }
 
@@ -64,10 +62,11 @@ const FormMultipleFreeSoloAutocomplete: FC<FormMultipleFreeSoloAutocompleteProps
         onChange={(_, values) => {
             onChange(values);
         }}
+        value={value}
         renderInput={(params) => (
             <TextField
             {...params}
-            value={value}
+            required={required && !value.length}
             error={invalid}
             helperText={error?.message}
             {...textFieldProps}

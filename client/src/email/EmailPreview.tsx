@@ -3,7 +3,7 @@ import { EmailViewModel } from "@mail/common";
 import { FC } from "react";
 import moment from "moment";
 
-import Dialog from "../common/Dialog";
+import Dialog from "../common/dialog";
 
 interface EmailPreviewProps {
     isOpen: boolean, 
