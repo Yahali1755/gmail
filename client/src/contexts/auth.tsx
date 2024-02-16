@@ -9,6 +9,7 @@ import Dialog from "../common/dialog"
 import { Route } from "../constants/Route"
 import BasePage from "../common/page/BasePage"
 import { UserFormData } from "../user/UserForm"
+import { AxiosResponse } from "axios"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -22,7 +23,7 @@ interface AuthContextProps {
     logout: () => void
 }
 
-const AuthContext = createContext({} as AuthContextProps)
+const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -30,7 +31,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const [authData, setAuthData] = useState<AuthData>(null)
     const [isLoading, setIsLoading] = useState(true)
     const [hasTokenExpired, setHasTokenExpired] = useState(false)
-    const TOKEN_EXPIRATION_INTERVAL = 30000
+    const TOKEN_EXPIRATION_CHECK_INTERVAL = 30000
 
     const logout = () => {
         localStorage.removeItem("token")
@@ -53,23 +54,19 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                 setHasTokenExpired(true);
                 logout();
             }
-        }, TOKEN_EXPIRATION_INTERVAL)
+        }, TOKEN_EXPIRATION_CHECK_INTERVAL)
 
         return () => clearInterval(tokenExpirationInterval)
     }, [])
 
-    const login = (user: UserFormData) => 
-        loginRequest(user).then(({ data: {token, email} }) => {
-            setAuthData({ token, email })
-            setToken(token)
-        })
-    
+    const handleAuthResponse = ({data: {token, email}}: AxiosResponse<AuthData>) => {
+        setAuthData({ token, email })
+        setToken(token)
+    }
 
-    const register = (user: UserFormData) => 
-        registerRequest(user).then(({ data: {token, email} }) => {
-            setAuthData({ token, email })
-            setToken(token)
-        })
+    const login = (user: UserFormData) => loginRequest(user).then(handleAuthResponse)
+
+    const register = (user: UserFormData) => registerRequest(user).then(handleAuthResponse)
     
     useEffect(() => {
         const token = localStorage.getItem("token");

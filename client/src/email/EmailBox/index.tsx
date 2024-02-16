@@ -42,7 +42,7 @@ const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
                 <TablePagination
                   count={totalCount}
                   rowsPerPage={rowsPerPage}
-                  page={page}
+                  page={isLoading ? 0 : page}
                   labelRowsPerPage={"Emails per page:"}
                   onPageChange={handlePageChange}
                   onRowsPerPageChange={handleRowsPerPageChange}

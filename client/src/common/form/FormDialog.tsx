@@ -23,6 +23,7 @@ const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, subm
   const wrappedOnSubmit = (data: Record<string, any>) => {
     onSubmit(data)
       .then(onClose)
+      .then(() => formMethods.reset())
       .then(() => alerts.success(onSubmissionSuccessMessage))
       .catch(({ message }) => alerts.error(message))
   }

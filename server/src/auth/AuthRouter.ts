@@ -1,6 +1,6 @@
 import express from "express"
 
-import { ensureEmailUniqueness, findUserByEmail, insertUser, authenticate, verifyUser, me } from "./auth-handlers";
+import { ensureEmailUniqueness, findUserByEmail, insertUser, authenticate, verifyUser, sendAuthData } from "./auth-handlers";
 import { verifyToken } from "../middlewares/verify-token-middleware";
 
 const router = express.Router();
@@ -13,7 +13,7 @@ router.post('/login',
 
 router.get('/me',
     verifyToken,
-    me
+    sendAuthData
 );
 
 router.post('/register',

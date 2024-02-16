@@ -3,10 +3,10 @@ import { RequestHandler} from "express";
 import { EmailDocument } from "../../../models/Email";
 import { UserDocument } from "../../../models/User";
 
-type PrepareEmailForInsertRequestHandler = RequestHandler<{}, {}, {}, {}, {entity: EmailDocument, user: UserDocument}>
+type PrepareEmailForInsertRequestHandler = RequestHandler<{}, {}, {}, {}, {entity: EmailDocument, email: string}>
 
 export const prepareEmailForInsert: PrepareEmailForInsertRequestHandler = (req, res, next) => {
-    res.locals.entity.author = res.locals.user.email;
+    res.locals.entity.author = res.locals.email;
 
     next()
 }

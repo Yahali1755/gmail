@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material"
 import { useForm } from "react-hook-form";
 import { AxiosError } from "axios";
@@ -27,10 +27,13 @@ export interface UserFormData {
 
 const UserForm: FC = () => {
   const formMethods = useForm();
-  const { setError, formState: { errors } } = formMethods;
+  const { setError, formState: { errors }, clearErrors, watch } = formMethods;
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const { login, register } = useAuth();
   const alerts = useAlerts()
+
+  const password = watch('password');
+  const confirmPassword = watch('confirmPassword');
 
   const handleFieldErrors = (error: AxiosError<{field: string, message: string}>) => {
       const {response: {data: {field = '', message = ''} = {}}} = error
@@ -45,7 +48,7 @@ const UserForm: FC = () => {
   }
 
   const submit = (data: UserFormData) => {
-    if (isRegisterForm && data.password !== data.confirmPassword) {
+    if (isRegisterForm && password !== confirmPassword) {
       setError("invalidConfirm", { message: "Passwords do not match"})
 
       return;
@@ -60,6 +63,12 @@ const UserForm: FC = () => {
     }
   }
 
+  useEffect(() => {
+    if (password === confirmPassword) {
+      clearErrors("invalidConfirm")
+    }
+  }, [password, confirmPassword])
+
   return (
     <Form onSubmit={submit} formMethods={formMethods}>
         <Grid container width='100%' direction='column' alignItems='center' spacing={3}>
@@ -67,7 +76,7 @@ const UserForm: FC = () => {
             <Typography sx={styles.formTitle}> {isRegisterForm ? "Register" : "Login"} </Typography>
           </Grid> 
           <Grid width="80%" item> 
-            <FormTextField required fullWidth autoFocus  error={!!errors?.email} helperText={<>{errors?.email?.message}</>}
+            <FormTextField required fullWidth autoFocus error={!!errors?.email} helperText={<>{errors?.email?.message}</>}
               label="Email" name="email" validationRegEx={EMAIL_REGEX}/>
           </Grid>
           <Grid width="80%" item> 
@@ -77,7 +86,7 @@ const UserForm: FC = () => {
           {
             isRegisterForm && 
               <Grid width="80%" item>
-                <FormTextField required minLength={8} error={!!errors?.InvalidConfirm} helperText={<>{errors?.invalidConfirm?.message}</>} 
+                <FormTextField required minLength={8} error={!!errors?.invalidConfirm} helperText={<>{errors?.invalidConfirm?.message}</>} 
                   fullWidth label="Confirm Password" name="confirmPassword"/>
               </Grid>
           }

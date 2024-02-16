@@ -5,10 +5,10 @@ import { useEmailApi } from "../api/hooks/email-api";
 import { useAuth } from "../contexts/auth";
 import { usePaginatedQuery } from "./use-paginated-query";
 
-const getEmailBoxQueryFilters = (emailBoxType: EmailBoxType, user: UserViewModel) => {
+const getEmailBoxQueryFilters = (emailBoxType: EmailBoxType, email: string) => {
     const emailQueryFiltersDictionary: Record<EmailBoxType, Record<string, any>> = {
-        [EmailBoxType.Inbox]: {recipient: user.email},
-        [EmailBoxType.Outbox]: {author: user.email}
+        [EmailBoxType.Inbox]: {recipient: email},
+        [EmailBoxType.Outbox]: {author: email}
     }
     
     return emailQueryFiltersDictionary[emailBoxType]
@@ -16,8 +16,8 @@ const getEmailBoxQueryFilters = (emailBoxType: EmailBoxType, user: UserViewModel
 
 const useEmailBoxQuery = (emailBoxType: EmailBoxType, paginationFilters: PaginationQueryParameters) => { 
     const api = useEmailApi();
-    const { user } = useAuth();
-    const emailBoxQueryFilters = getEmailBoxQueryFilters(emailBoxType, user);
+    const { email } = useAuth();
+    const emailBoxQueryFilters = getEmailBoxQueryFilters(emailBoxType, email);
 
     return usePaginatedQuery({
         filters: emailBoxQueryFilters,

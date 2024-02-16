@@ -16,7 +16,7 @@ const FormTextField: FC<FormTextFieldProps> = ({ name, label, minLength, validat
         rules: { 
             minLength: { 
                 value: minLength, 
-                message: `${name} has to be at least ${minLength} characters`
+                message: `This field has have least ${minLength} characters`
             },  
             pattern: {
                 value: validationRegEx,

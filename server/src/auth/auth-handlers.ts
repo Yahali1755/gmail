@@ -30,7 +30,7 @@ export const insertUser: AuthRequestHandler = async ({ body }, res, next) => {
 }
 
 export const verifyUser: AuthRequestHandler = async ({body: {email, password}}, {locals: {userDocument: user}}, next) => {
-    if(!user) {
+    if (!user) {
         next(new InvalidFieldError("Email address isn't found", {field: "email"}))
     }
 
@@ -52,21 +52,22 @@ export const ensureEmailUniqueness: AuthRequestHandler = async ({ body: {email}}
 }
 
 const signToken = (email: string) => 
-    jwt.sign(email, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
+    jwt.sign({email}, process.env.TOKEN_SECRET_KEY, { expiresIn: process.env.TOKEN_EXPIRATION_TIME });
 
-const authenticateUser = async (userDocument: UserDocument) => {
-    const user = mapper.mapToViewModel(userDocument)
-    const token = signToken(user.email);
 
-    return { token, email: user.email } as AuthData
+const authenticateUser = (userDocument: UserDocument): AuthData => {
+    const { email } = mapper.mapToViewModel(userDocument)
+    const token = signToken(email);
+
+    return { token, email }
 }
 
-export const authenticate: AuthRequestHandler = async (req, res) => {
-    const { token, email } = await authenticateUser(res.locals.userDocument)
+export const authenticate: AuthRequestHandler = (req, res) => {
+    const { token, email } = authenticateUser(res.locals.userDocument)
 
     res.send({ token, email } as AuthData)
 }
 
-export const me: RequestHandler<{}, {}, UserViewModel, {}, AuthData> = async (req, res) => {
-    res.send({ token: res.locals.token, email: res.locals.email})
+export const sendAuthData: RequestHandler<{}, {}, UserViewModel, {}, AuthData> = (req, res) => {
+    res.send({ token: res.locals.token, email: res.locals.email} as AuthData)
 }

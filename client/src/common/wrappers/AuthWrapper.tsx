@@ -21,7 +21,7 @@ const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
         } else {
             navigate(Route.User)
         }
-    }, [])
+    }, [token])
 
     return location.pathname === Route.User ? 
         (   

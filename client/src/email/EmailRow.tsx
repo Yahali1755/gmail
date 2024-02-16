@@ -23,7 +23,7 @@ const EmailRow: FC<EmailRowProps> = ({ email, emailBoxType }) => {
     <>
       <TableRow key={email.id} onClick={openEmailPreview} hover>
         <TableCell width="15%"> 
-          <Typography fontWeight="bold">
+          <Typography whiteSpace="nowrap" fontWeight="bold">
             { emailBoxType === EmailBoxType.Outbox ? `To: ${displayedRecipients}` : author}
           </Typography>
         </TableCell>
