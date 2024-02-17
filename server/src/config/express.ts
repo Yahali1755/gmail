@@ -20,7 +20,7 @@ const configureRoutes = (app: Express) => {
 } 
 
 const configureStaticFiles = (app: Express) => {
-    const clientPath = process.env.CLIENT_PATH || path.resolve(__dirname, "../../../client/build")
+    const clientPath = process.env.CLIENT_PATH || path.resolve(__dirname, "../../../client/dist")
 
     app.use(express.static(clientPath))
 }

@@ -1,15 +1,15 @@
 import { ReactNode, FC, useState, createContext, useContext, useEffect } from "react"
 import { Button, DialogActions, DialogContent, Typography } from "@mui/material"
+import { AxiosResponse } from "axios"
 
 import { AuthData } from "@mail/common"
 
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
 import LoadingPage from "../common/page/LoadingPage"
-import Dialog from "../common/dialog"
+import Dialog from "../common/Dialog"
 import { Route } from "../constants/Route"
 import BasePage from "../common/page/BasePage"
 import { UserFormData } from "../user/UserForm"
-import { AxiosResponse } from "axios"
 
 interface AuthProviderProps {
     children: ReactNode
