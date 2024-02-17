@@ -1,16 +1,12 @@
 import { UserViewModel } from "@mail/common";
 
-import { BaseMapper } from "../../common/BaseMapper";
+import { MapToViewModelFunction, baseMapToModel } from "../../common/BaseMapper";
 import { UserDocument, UserModel } from "../../models/User";
 
-export class UserMapper extends BaseMapper<UserDocument, UserViewModel> {
-    constructor() {
-        super(UserModel)
-    }
+export const userMapToModel = baseMapToModel(UserModel);
 
-    public mapToViewModel = ({ _id, password, email}: UserDocument) => ({
-        id: _id,
-        password,
-        email
-    })
-}
+export const userMapToViewModel: MapToViewModelFunction<UserDocument, UserViewModel> = ({ _id, password, email}: UserDocument) => ({
+    id: _id,
+    password,
+    email
+})

@@ -2,13 +2,10 @@ import React from 'react'
 import { BrowserRouter } from "react-router-dom";
 
 import Routes from "./Routes"
-import AppContainer from '../AppContainer';
  
 const Shell = () => 
     <BrowserRouter>
-        <AppContainer>
-            <Routes/>
-        </AppContainer>
+        <Routes/>
     </BrowserRouter>
 
 export default Shell

@@ -2,11 +2,11 @@ import { RequestHandler } from "express";
 import { Document } from "mongoose";
 
 import { BaseViewModel } from "@mail/common";
-import { BaseMapper } from "./BaseMapper";
+import { MapToModelFunction } from "./BaseMapper";
 
-export const mapBodyToEntity = <TViewModel extends BaseViewModel, TDocument extends Document>(mapper: BaseMapper<TDocument, TViewModel>)
+export const mapBodyToEntity = <TViewModel extends BaseViewModel, TDocument extends Document>(mapToModel: MapToModelFunction<TDocument, TViewModel>)
     : RequestHandler<{}, {}, TViewModel, {}, {entity: TDocument}> => (req, res, next) => {
-    const entity = mapper.mapToModel(req.body);
+    const entity = mapToModel(req.body);
     
     res.locals.entity = entity;
 

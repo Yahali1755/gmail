@@ -5,9 +5,8 @@ import { AuthData, UserViewModel } from "@mail/common";
 
 import { UserDocument, UserModel } from "../models/User";
 import InvalidFieldError from "../errors/InvalidFieldError";
-import { UserMapper } from "../api/user/UserMapper";
+import { userMapToViewModel, userMapToModel } from "../api/user/UserMapper";
 
-const mapper = new UserMapper();
 type AuthRequestHandler = RequestHandler<{}, {}, UserViewModel, {}, {userDocument: UserDocument}>;
 
 export const findUserByEmail: AuthRequestHandler = async ({body: {email, password}} , res, next) => {    
@@ -19,7 +18,7 @@ export const findUserByEmail: AuthRequestHandler = async ({body: {email, passwor
 }
 
 export const insertUser: AuthRequestHandler = async ({ body }, res, next) => {
-    const userDocument = mapper.mapToModel(body)
+    const userDocument = userMapToModel(body)
     const newUser = await userDocument.save();
 
     const insertedUser = await UserModel.findById(newUser._id);
@@ -56,7 +55,7 @@ const signToken = (email: string) =>
 
 
 const authenticateUser = (userDocument: UserDocument): AuthData => {
-    const { email } = mapper.mapToViewModel(userDocument)
+    const { email } = userMapToViewModel(userDocument)
     const token = signToken(email);
 
     return { token, email }

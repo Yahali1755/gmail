@@ -2,15 +2,10 @@ import { Document, Model } from "mongoose";
 
 import { BaseViewModel } from "@mail/common";
 
-export abstract class BaseMapper<TDocument extends Document, TViewModel extends BaseViewModel> {
-    protected model: Model<TDocument>;
+export type MapToViewModelFunction<TDocument extends Document, TViewModel extends BaseViewModel> = (document: TDocument) => TViewModel
 
-    constructor(model: Model<TDocument>) {
-        this.model = model;
-    }
+export type MapToModelFunction<TDocument extends Document, TViewModel extends BaseViewModel> = (viewModel: TViewModel) => TDocument
 
-    public mapToModel = ({id, ...properties}: TViewModel) => 
-        id ? new this.model({_id: id, ...properties}) : new this.model({...properties});
-
-    public abstract mapToViewModel: (document: TDocument) => TViewModel;
-}
+export const baseMapToModel = <TDocument extends Document, TViewModel extends BaseViewModel>
+    (model: Model<TDocument>): MapToModelFunction<TDocument, TViewModel> => ({id, ...properties}: TViewModel) =>
+    id ? new model({_id: id, ...properties}) : new model({...properties});
