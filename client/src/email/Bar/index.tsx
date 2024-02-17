@@ -14,21 +14,21 @@ const Bar = () => {
 
     return (
         <AppBar position="static" sx={styles} elevation={0}>
-                <Grid width="100%" container>
-                    <Grid xs={2} item>
-                        <HomePageIconButton/>
-                    </Grid>
-                    <Grid xs={10} item>
-                        <Grid justifyContent='flex-end' container>
-                            <Grid item>
-                                <LogoutButton/>
-                            </Grid>
-                            <Grid item>
-                                <ThemeToggler/>
-                            </Grid>
+            <Grid width="100%" container>
+                <Grid xs={2} item>
+                    <HomePageIconButton/>
+                </Grid>
+                <Grid xs={10} item>
+                    <Grid justifyContent='flex-end' container>
+                        <Grid item>
+                            <LogoutButton/>
+                        </Grid>
+                        <Grid item>
+                            <ThemeToggler/>
                         </Grid>
                     </Grid>
                 </Grid>
+            </Grid>
         </AppBar>
     )
 }

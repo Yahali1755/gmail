@@ -3,7 +3,7 @@ import { ButtonProps, IconButton } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
 
 const CloseButton: FC<ButtonProps> = ({...props}) => 
-    <IconButton {...props}>
+    <IconButton sx={{position: "absolute", right: 0, ...props.sx}} {...props}>
         <CloseIcon/>
     </IconButton>
 

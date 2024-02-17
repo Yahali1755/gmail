@@ -1,4 +1,4 @@
-import { PaginationQueryParameters, SortOrder, TypeName, UserViewModel } from "@mail/common";
+import { PaginationQueryParameters, SortOrder, TypeName } from "@mail/common";
 
 import { EmailBoxType } from "../constants/EmailboxType";
 import { useEmailApi } from "../api/hooks/email-api";
@@ -27,7 +27,7 @@ const useEmailBoxQuery = (emailBoxType: EmailBoxType, paginationFilters: Paginat
         },
         paginationFilters,
         typeName: TypeName.Email,
-        query: api.getPaginated
+        query: api.getPaginated, 
     })
 }
 

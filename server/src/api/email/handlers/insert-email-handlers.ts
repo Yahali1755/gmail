@@ -1,7 +1,6 @@
 import { RequestHandler} from "express";
 
 import { EmailDocument } from "../../../models/Email";
-import { UserDocument } from "../../../models/User";
 
 type PrepareEmailForInsertRequestHandler = RequestHandler<{}, {}, {}, {}, {entity: EmailDocument, email: string}>
 

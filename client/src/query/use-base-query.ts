@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { UseQueryOptions, useQuery } from "@tanstack/react-query";
 
 import { SortOption, TypeName } from "@mail/common";
 
@@ -9,16 +9,18 @@ export type BaseQueryOptions<TReturnType, TQueryParameters extends Record<string
     filters?: TQueryParameters,
     query: ActionFunction<TQueryParameters, TReturnType>
     sort?: SortOption
-}
+} & Omit<UseQueryOptions<TReturnType>, "queryKey" | "queryFn" >
 
-export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, sort, query}: BaseQueryOptions<TReturnType, TQueryParameters>) => {
+export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, sort, query, ...props}: BaseQueryOptions<TReturnType, TQueryParameters>) => {
     const queryParameters = {...sort, ...filters}
 
     return useQuery<TReturnType>({
         queryKey: [typeName, sort, filters],
         queryFn: () => query(queryParameters),
         staleTime: +process.env.STALE_TIME || 30000,
-        refetchInterval: +process.env.REFETCH_INTERVAL || 30000
+        refetchInterval: +process.env.REFETCH_INTERVAL || 30000,
+        ...props
     })
 }
+
 

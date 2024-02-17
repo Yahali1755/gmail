@@ -9,7 +9,7 @@ type PaginationQueryOptions<TReturnType, TQueryParameters extends Record<string,
 export const usePaginatedQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, query, sort, paginationFilters}: PaginationQueryOptions<TReturnType, TQueryParameters>) => {
     const filtersWithPagination = { ...filters, ...paginationFilters}
 
-    return useBaseQuery({
+    return useBaseQuery<TReturnType>({
         sort,
         typeName,
         filters: filtersWithPagination,

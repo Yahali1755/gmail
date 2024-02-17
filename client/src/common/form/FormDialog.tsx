@@ -10,7 +10,7 @@ import { useAlerts } from '../../contexts/alerts';
 
 interface FormDialogProps extends DialogProps {
   formMethods: UseFormReturn,
-  onSubmit?: (data?: Record<string, any>) => Promise<void>
+  onSubmit: (data: Record<string, any>) => Promise<void>
   onSubmissionSuccessMessage?: string
   children: ReactNode
   isEditEnabled?: boolean,

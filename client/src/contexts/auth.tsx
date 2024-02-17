@@ -37,6 +37,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         localStorage.removeItem("token")
 
         setAuthData(null);
+        setHasTokenExpired(false);
     }
 
     const isTokenExpired = (token: string) => {
@@ -52,7 +53,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
             if (token && isTokenExpired(token)) {
                 setHasTokenExpired(true);
-                logout();
             }
         }, TOKEN_EXPIRATION_CHECK_INTERVAL)
 
@@ -62,6 +62,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const handleAuthResponse = ({data: {token, email}}: AxiosResponse<AuthData>) => {
         setAuthData({ token, email })
         setToken(token)
+        setHasTokenExpired(false)
     }
 
     const login = (user: UserFormData) => loginRequest(user).then(handleAuthResponse)
@@ -74,7 +75,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         if(token && !isTokenExpired(token)) {
             me(token).then(({ data }) => {
                 setAuthData(data)
-                setHasTokenExpired(false);
             }).finally(() => {
                 setIsLoading(false)
             })
@@ -92,14 +92,14 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                     </BasePage>
                 :
                 <AuthContext.Provider value={{...authData, login, register, logout}}>
-                    <Dialog open={hasTokenExpired} onClose={() => location.href = Route.User}>
+                    <Dialog open={hasTokenExpired} onClose={logout}>
                         <DialogContent>
                             <Typography>
                                 Your authentication validity expired, refresh the page to continue
                             </Typography>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={() => location.href = Route.User}> refresh </Button>
+                            <Button onClick={logout}> refresh </Button>
                         </DialogActions>
                     </Dialog>
                     {

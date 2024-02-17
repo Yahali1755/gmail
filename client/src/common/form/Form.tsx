@@ -2,7 +2,7 @@ import { ReactNode, FC } from 'react';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 
 interface FormProps {
-  onSubmit: (data?) => void
+  onSubmit: (data: Record<string, any>) => void
   children: ReactNode
   formMethods: UseFormReturn
 }
