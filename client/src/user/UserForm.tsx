@@ -12,13 +12,6 @@ import { useAuth } from "../contexts/auth";
 import { useAlerts } from "../contexts/alerts";
 import { hashString } from "../utils/hash";
 
-const styles = {
-  formTitle: {
-    fontSize: '32px',
-    marginTop: 4
-  }
-};
-
 export interface UserFormData {
   password: string,
   email: string,
@@ -71,34 +64,39 @@ const UserForm: FC = () => {
 
   return (
     <Form onSubmit={submit} formMethods={formMethods}>
-        <Grid container width='100%' direction='column' alignItems='center' spacing={3}>
+        <Grid marginTop={2} container xs direction='column' alignItems='center'
+           justifyContent='center' spacing={3}>
           <Grid item> 
-            <Typography sx={styles.formTitle}> {isRegisterForm ? "Register" : "Login"} </Typography>
+            <Typography fontSize="2em"> 
+              {isRegisterForm ? "Register" : "Login"} 
+              </Typography>
           </Grid> 
-          <Grid width="80%" item> 
+          <Grid width="100%" item> 
             <FormTextField required fullWidth autoFocus error={!!errors?.email} helperText={<>{errors?.email?.message}</>}
               label="Email" name="email" validationRegEx={EMAIL_REGEX}/>
           </Grid>
-          <Grid width="80%" item> 
+          <Grid width="100%" item> 
             <FormTextField required minLength={8} fullWidth label="Password" name="password" error={!!errors?.password} 
               helperText={<>{errors?.password?.message}</>}/>
           </Grid>
           {
             isRegisterForm && 
-              <Grid width="80%" item>
+              <Grid width="100%" item>
                 <FormTextField required minLength={8} error={!!errors?.invalidConfirm} helperText={<>{errors?.invalidConfirm?.message}</>} 
                   fullWidth label="Confirm Password" name="confirmPassword"/>
               </Grid>
           }
-          <Grid position="relative" container item>
-            {
-              !isRegisterForm && 
-                <Grid position="absolute" left="12%" xs={3} item>
-                  <Button onClick={() => setIsRegisterForm(true)} > Create account </Button>
-                </Grid>
-            }
-            <Grid position="absolute" left="73%" xs={3} item>
-              <SubmitButton label='Save'/> 
+          <Grid width="100%" item>
+            <Grid container justifyContent='space-between'>
+              {
+                !isRegisterForm && 
+                  <Grid item>
+                    <Button onClick={() => setIsRegisterForm(true)} > Create account </Button>
+                  </Grid>
+              }
+              <Grid item>
+                <SubmitButton label='Save'/> 
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

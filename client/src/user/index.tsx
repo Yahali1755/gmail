@@ -5,18 +5,22 @@ import UserForm from "./UserForm";
 import PageContainer from "../common/page/PageContainer";
 import { RouteType } from "../shell/Routes";
 
-const getUserFormContainerStyles: SxProps = ({
+const formContainerStyles: SxProps = ({
     height: '500px',
     width: '400px',
     border: `1px solid`,
     marginTop: 'auto',
-    marginBottom: 'auto'
+    marginBottom: 'auto',
+    justifyContent: 'center',
+    alignItems: 'baseline'
 })
 
 const User: FC = () => 
     <PageContainer>
-        <Grid item sx={getUserFormContainerStyles}>
-            <UserForm/>
+        <Grid container sx={formContainerStyles}>
+            <Grid width="80%" item>
+                <UserForm/>
+            </Grid>
         </Grid>
     </PageContainer>
 

@@ -8,7 +8,7 @@ interface LoadingPageProps {
 }
 
 const LoadingPage: FC<LoadingPageProps> = ({ title, circularProgressProps, titleProps }) => 
-    <Grid container spacing={2} height="100%" direction='column' justifyContent='center' alignItems='center'>
+    <Grid container spacing={2} flex={1} height='100%' direction='column' justifyContent='center' alignItems='center'>
         { 
             title &&
             <Grid item>

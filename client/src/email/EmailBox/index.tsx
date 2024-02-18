@@ -54,13 +54,15 @@ const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
                 <TableBody>
                 { 
                   emails.map(email => <EmailRow key={email.id} emailBoxType={emailBoxType} email={email} />) 
-                }
+                }     
                 </TableBody>
             }
           </Table>
           {
           isLoading &&
-            <LoadingPage circularProgressProps={{size: 50}}/>
+              <Box height="90%">
+                <LoadingPage circularProgressProps={{size: 50}}/>
+              </Box>
           }
         </>
       }
