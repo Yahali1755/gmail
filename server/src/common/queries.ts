@@ -11,7 +11,7 @@ export const convertBaseQueryParameters = <TQueryParameters extends Record<strin
     ({page = 0, limit = 0, sortBy ="", sortOrder = SortOrder.Decending}: TQueryParameters) => 
     ({page: +page, limit: +limit, sortBy, sortOrder: +sortOrder as SortOrder})
 
-const getSortArgument = ({sortBy = "", sortOrder= SortOrder.Decending}: SortOption) => sortBy ? { [sortBy]: sortOrder} : {}
+const getSortArgument = ({sortBy = "", sortOrder= SortOrder.Decending}: SortOption) => sortBy ?? { [sortBy]: sortOrder}
 
 export const findEntityById = <TDocument extends Document>(model: Model<TDocument>): FindEntityByIdRequestHandler<TDocument> => async (req, res, next) => {
     const entity = await model.findById(req.params.id);
@@ -34,7 +34,7 @@ export const findEntities = <TDocument extends Document, TQueryParameters extend
     const filters = convertEntityQueryParameters(req.query)
     const sort = getSortArgument({ sortBy, sortOrder})
 
-    const entities = await model.find(filters).sort(sort);
+    const entities = await model.find(filters).sort();
 
     res.locals.entities = entities;
 
@@ -60,7 +60,7 @@ export const findPaginatedEntities = <TDocument extends Document, TQueryParamete
     const sort = getSortArgument({ sortBy, sortOrder })
 
     const totalCount = await model.countDocuments(filters);
-    const entities = await model.find(filters).skip(page * limit).limit(limit).sort(sort);
+    const entities = await model.find(filters).skip(page * limit).limit(limit).sort();
 
     res.locals.entities = entities;
     res.locals.meta = { totalCount }
