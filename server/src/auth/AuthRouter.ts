@@ -1,9 +1,15 @@
 import express from "express"
 
-import { ensureEmailUniqueness, findUserByEmail, insertUser, authenticate, verifyUser, sendAuthData } from "./auth-handlers";
+import { ensureEmailUniqueness, findUserByEmail, authenticate, verifyUser, sendAuthData, beforeInsertUser } from "./auth-handlers";
 import { verifyToken } from "../middlewares/verify-token-middleware";
+import { UserDocument, UserModel } from "../models/User";
+import { insertEntity } from "../common/updates";
+import { mapBodyToEntity } from "../common/mapping";
+import { userMapToModel } from "../api/user/UserMapper";
 
 const router = express.Router();
+
+const insertUser = insertEntity<UserDocument>(UserModel)
 
 router.post('/login',
     findUserByEmail,
@@ -18,6 +24,8 @@ router.get('/me',
 
 router.post('/register',
     ensureEmailUniqueness,
+    mapBodyToEntity(userMapToModel),
+    beforeInsertUser,
     insertUser,
     authenticate
 );

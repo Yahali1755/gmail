@@ -1,5 +1,5 @@
 export const convertEmailQueryParams =  <TQueryParameters extends Record<string, any>>(parameters: TQueryParameters) => {
-    const { recipient = undefined, author = undefined} = parameters;
+    const { recipient, author} = parameters;
     const condition = [];
 
     if (recipient) {

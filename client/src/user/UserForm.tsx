@@ -36,8 +36,6 @@ const UserForm: FC = () => {
 
   const setBeforeSubmit = (data: UserFormData) => {
     delete data.confirmPassword
-
-    data.password = hashString(data.password)
   }
 
   const submit = (data: UserFormData) => {

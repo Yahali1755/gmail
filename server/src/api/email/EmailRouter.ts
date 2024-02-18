@@ -9,8 +9,8 @@ import { mapBodyToEntity } from "../../common/mapping";
 import { insertEntity } from "../../common/updates";
 import { prepareEmailForInsert } from "./handlers/insert-email-handlers";
 import { convertEmailQueryParams } from "./handlers/find-email-handlers";
-import { Route } from "../../config/express";
 import { emailMapToModel, emailMapToViewModel } from "./EmailMapper";
+import { Route } from "..";
 
 const router = express.Router();
 

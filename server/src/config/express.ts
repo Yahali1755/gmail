@@ -7,12 +7,7 @@ import { errorMiddleware } from "../middlewares/error-middleware";
 import { logMiddleware } from "../middlewares/log-middleware";
 import { logger } from "../logger";
 import { verifyToken } from "../middlewares/verify-token-middleware";
-import apiRouter from "../api/ApiRouter";
-
-export interface Route {
-    path: string
-    router: Router
-}
+import apiRouter from "../api";
 
 const configureRoutes = (app: Express) => {
     app.use("/auth", authRouter)
