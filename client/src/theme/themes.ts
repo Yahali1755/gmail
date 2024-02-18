@@ -16,6 +16,14 @@ const baseTheme = {
                 backgroundColor: theme.palette.background.default,
                 borderRadius: theme.spacing(0.5),
             }})
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    textTransform: 'none',
+                    fontSize: '1.05em'
+                }
+            }
         }
     } 
 } as ThemeOptions

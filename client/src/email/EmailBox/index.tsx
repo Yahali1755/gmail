@@ -60,7 +60,7 @@ const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
           </Table>
           {
           isLoading &&
-              <Box height="90%">
+              <Box height="93%">
                 <LoadingPage circularProgressProps={{size: 50}}/>
               </Box>
           }
