@@ -28,7 +28,7 @@ const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-    const [authData, setAuthData] = useState<AuthData>(null)
+    const [authData, setAuthData] = useState<AuthData>({} as AuthData)
     const [isLoading, setIsLoading] = useState(true)
     const [hasTokenExpired, setHasTokenExpired] = useState(false)
     const TOKEN_EXPIRATION_CHECK_INTERVAL = 30000
@@ -36,7 +36,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const logout = () => {
         localStorage.removeItem("token")
 
-        setAuthData(null);
+        setAuthData({} as AuthData);
         setHasTokenExpired(false);
     }
 
@@ -62,7 +62,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const handleAuthResponse = ({data: {token, email}}: AxiosResponse<AuthData>) => {
         setAuthData({ token, email })
         setToken(token)
-        setHasTokenExpired(false)
     }
 
     const login = (user: UserFormData) => loginRequest(user).then(handleAuthResponse)
