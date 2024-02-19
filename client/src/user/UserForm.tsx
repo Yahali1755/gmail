@@ -60,9 +60,9 @@ const UserForm: FC = () => {
   }, [password, confirmPassword])
 
   return (
-    <Form onSubmit={submit} formMethods={formMethods}>
-        <Grid marginTop={2} container xs direction='column' alignItems='center'
-           justifyContent='center' spacing={3}>
+    <Form onSubmit={submit} formMethods={formMethods}>      
+        <Grid marginTop={2} container direction='column' alignItems='center'
+           justifyContent='center' rowSpacing={3}>
           <Grid item> 
             <Typography fontSize="2em"> 
               {isRegisterForm ? "Register" : "Login"} 
