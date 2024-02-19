@@ -7,6 +7,7 @@ import { AuthData, UserViewModel } from "@mail/common";
 import { UserDocument, UserModel } from "../models/User";
 import InvalidFieldError from "../errors/InvalidFieldError";
 import { userMapToViewModel } from "../api/user/UserMapper";
+import { hash } from "../utils/hash";
 
 type AuthRequestHandler = RequestHandler<{}, {}, UserViewModel, {}, {entity: UserDocument}>;
 
@@ -23,9 +24,7 @@ export const ensureEmailUniqueness: AuthRequestHandler = async ({ body: {email}}
 export const hashPassword: AuthRequestHandler = async (req, res, next) => {
     const { locals: { entity: { password }}} = res
 
-    const saltRounds = 10;
-
-    const hashedPassword = await bcrypt.hash(password, saltRounds)
+    const hashedPassword = await hash(password)
 
     res.locals.entity.password = hashedPassword;
 
@@ -71,8 +70,6 @@ const authenticateUser = (userDocument: UserDocument): AuthData => {
 
 export const authenticate: AuthRequestHandler = (req, res) => {
     const { token, email } = authenticateUser(res.locals.entity)
-
-    console.log('nice')
 
     res.send({ token, email } as AuthData)
 }

@@ -10,7 +10,6 @@ import SubmitButton from "../common/form/SubmitButton";
 import Form from "../common/form/Form";
 import { useAuth } from "../contexts/auth";
 import { useAlerts } from "../contexts/alerts";
-import { hashString } from "../utils/hash";
 
 export interface UserFormData {
   password: string,
