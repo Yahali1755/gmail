@@ -10,7 +10,8 @@ const formContainerStyles: SxProps = ({
     width: '400px',
     border: `1px solid`,
     justifyContent: 'center',
-    alignItems: 'baseline'
+    alignItems: 'baseline',
+    alignSelf: 'center'
 })
 
 const User: FC = () => 

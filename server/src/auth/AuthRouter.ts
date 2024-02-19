@@ -23,7 +23,6 @@ router.get('/me',
 );
 
 router.post('/register',
-    ensureEmailUniqueness,
     mapBodyToEntity(userMapToModel),
     beforeInsertUser,
     insertUser,

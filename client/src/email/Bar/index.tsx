@@ -1,7 +1,7 @@
 import { AppBar, Grid, useTheme, SxProps } from '@mui/material';
 
 import ThemeToggler from '../../theme/ThemeToggler';
-import HomePageIconButton from '../SideBar/HomePageIconButton';
+import HomePageIconButton from './HomePageIconButton';
 import LogoutButton from '../../common/components/LogoutButton';
 
 const Bar = () => {
