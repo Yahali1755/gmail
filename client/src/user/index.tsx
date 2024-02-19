@@ -9,8 +9,6 @@ const formContainerStyles: SxProps = ({
     height: '500px',
     width: '400px',
     border: `1px solid`,
-    marginTop: 'auto',
-    marginBottom: 'auto',
     justifyContent: 'center',
     alignItems: 'baseline'
 })
@@ -18,7 +16,7 @@ const formContainerStyles: SxProps = ({
 const User: FC = () => 
     <PageContainer>
         <Grid container sx={formContainerStyles}>
-            <Grid width="80%" item>
+            <Grid xs={9} item>
                 <UserForm/>
             </Grid>
         </Grid>
