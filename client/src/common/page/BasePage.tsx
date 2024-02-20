@@ -1,4 +1,4 @@
-import { CssBaseline, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { FC, ReactNode } from "react";
 
 interface BasePageProps {
@@ -6,10 +6,8 @@ interface BasePageProps {
 }
 
 const BasePage: FC<BasePageProps> = ({ children }) => 
-    <CssBaseline>
-        <Grid container height='100%' width="100%" alignItems='baseline' justifyContent='center'>
-        { children }
-        </Grid>
-    </CssBaseline>
+    <Grid container height='100%' width="100%" alignItems='baseline' justifyContent='center'>
+    { children }
+    </Grid>
 
 export default BasePage;

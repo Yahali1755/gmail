@@ -1,5 +1,5 @@
 import { useState, createContext, ReactNode, FC, useEffect, useContext} from 'react'
-import { ThemeProvider as MuiThemeProvider } from '@mui/material';
+import { Box, CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material';
 
 import { darkTheme, lightTheme } from '../theme/themes';
 
@@ -34,7 +34,12 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
     return (
         <ThemeContext.Provider value={{isDarkTheme, changeTheme}}>
             <MuiThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
-                { children }
+                <>
+                    <CssBaseline/>
+                    <Box sx={{height: '100vh'}}>
+                    { children }
+                    </Box> 
+                </>
             </MuiThemeProvider>
         </ThemeContext.Provider>
     );
