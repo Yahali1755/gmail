@@ -14,11 +14,11 @@ const Email = () => {
 
     return (
         <PageContainer>
-            <Grid container height='100%' direction='column'>
-                <Grid item>
+            <Grid container height='100%' flexDirection='column'>
+                <Grid width="100%" item>
                     <Bar/>
                 </Grid>
-                <Grid xs minHeight={0} item>
+                <Grid xs overflow='auto' item>
                     <Grid height="100%" container>
                         <Grid height="100%" item>
                             <SideBar setEmailBoxType={setEmailboxType} emailBoxType={emailBoxType}/>

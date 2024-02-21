@@ -1,4 +1,4 @@
-import { Table, TableBody, TableContainer, Paper, Box, TablePagination, TableRow, TableHead } from '@mui/material';
+import { Table, TableBody, TableContainer, Paper, Box, TablePagination, Grid } from '@mui/material';
 import { ChangeEvent, FC, useEffect } from 'react';
 
 import { EmailBoxType } from '../../constants/EmailboxType';
@@ -33,40 +33,39 @@ const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
 
   return (
     <Box sx={styles.container}>
-      <TableContainer sx={styles.tableContainer} component={Paper}>
-      { 
-        <>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TablePagination
-                  count={totalCount}
-                  rowsPerPage={rowsPerPage}
-                  page={isLoading ? 0 : page}
-                  labelRowsPerPage={"Emails per page:"}
-                  onPageChange={handlePageChange}
-                  onRowsPerPageChange={handleRowsPerPageChange}
-                />
-              </TableRow>
-            </TableHead>
-            {
-              !isLoading &&
-                <TableBody>
-                { 
-                  emails.map(email => <EmailRow key={email.id} emailBoxType={emailBoxType} email={email} />) 
-                }     
-                </TableBody>
-            }
-          </Table>
-          {
-          isLoading &&
-              <Box height="calc(100% - 40px)">
-                <LoadingPage circularProgressProps={{size: 50}}/>
-              </Box>
-          }
-        </>
-      }
-      </TableContainer>
+      <Grid component={Paper} sx={styles.tableContainer} container>
+        <Grid item>
+          <Grid sx={styles.paginationContainer} container justifyContent='flex-end'>
+            <Grid item>
+              <TablePagination
+                component='div'
+                count={totalCount}
+                rowsPerPage={rowsPerPage}
+                page={isLoading ? 0 : page}
+                labelRowsPerPage={"Emails per page:"}
+                onPageChange={handlePageChange}
+                onRowsPerPageChange={handleRowsPerPageChange}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs overflow='auto' item>
+        {
+          isLoading ?
+            <LoadingPage circularProgressProps={{size: 50}}/>
+          :
+          <TableContainer sx={styles.tableContentContainer} component={Paper}>
+            <Table>
+              <TableBody>
+              { 
+                emails.map(email => <EmailRow key={email.id} emailBoxType={emailBoxType} email={email} />) 
+              }     
+              </TableBody>
+            </Table>
+          </TableContainer>
+        }
+        </Grid>
+      </Grid>
     </Box>
   )
 }

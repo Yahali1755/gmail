@@ -66,7 +66,7 @@ const UserForm: FC = () => {
           <Grid item> 
             <Typography fontSize="2em"> 
               {isRegisterForm ? "Register" : "Login"} 
-              </Typography>
+            </Typography>
           </Grid> 
           <Grid width="100%" item> 
             <FormTextField required fullWidth autoFocus error={!!errors?.email} helperText={<>{errors?.email?.message}</>}
