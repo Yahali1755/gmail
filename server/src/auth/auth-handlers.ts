@@ -11,7 +11,9 @@ import { hash } from "../utils/hash";
 
 type AuthRequestHandler = RequestHandler<{}, {}, UserViewModel, {}, {entity: UserDocument}>;
 
-export const ensureEmailUniqueness: AuthRequestHandler = async (req, { locals: {entity: user}}, next) => {    
+export const ensureEmailUniqueness: AuthRequestHandler = async (req, { locals: {entity: { email }}}, next) => {    
+    const user = await UserModel.findOne({ email });
+
     if (user) {
         next(new InvalidFieldError("email address in use", {field: "email"}))
     }

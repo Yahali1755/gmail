@@ -1,6 +1,6 @@
 import { Button, Typography } from '@mui/material';
 
-import MailImage from "../../assets/mail.png"
+import MailImage from "../../../assets/mail.png"
 
 const HomePageIconButton = () => {
     const reload = () => {

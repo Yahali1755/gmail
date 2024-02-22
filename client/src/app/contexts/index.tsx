@@ -1,9 +1,9 @@
 import { ReactNode, FC } from "react"
 
-import { ThemeProvider } from "./contexts/theme";
-import AuthProvider from "./contexts/auth";
-import QueryProvider from "./contexts/query";
-import { AlertsProvider } from "./contexts/alerts";
+import { ThemeProvider } from "./theme";
+import AuthProvider from "./auth";
+import QueryProvider from "./query";
+import { AlertsProvider } from "./alerts";
 
 interface ProvidersProps {
     children: ReactNode
