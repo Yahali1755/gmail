@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { Grid, SxProps, Theme, useTheme } from "@mui/material"
+import { Grid, SxProps } from "@mui/material"
 
 import UserForm from "./UserForm";
 import PageContainer from "../common/page/PageContainer";
-import { RouteType } from "../shell/Routes";
+import { RouteType } from "../shell";
+import { Route } from "../constants/Route";
 
 const formContainerStyles: SxProps = ({
     height: '500px',
@@ -25,6 +26,6 @@ const User: FC = () =>
 
 
 export default {
-    path: "/",
+    path: Route.User,
     component: User
 } as RouteType
