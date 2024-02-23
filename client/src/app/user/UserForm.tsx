@@ -10,6 +10,8 @@ import SubmitButton from "../common/form/SubmitButton";
 import Form from "../common/form/Form";
 import { useAuth } from "../contexts/auth";
 import { useAlerts } from "../contexts/alerts";
+import { useNavigate } from "react-router-dom";
+import { Route } from "../constants/Route";
 
 export interface UserFormData {
   password: string,
@@ -23,6 +25,8 @@ const UserForm: FC = () => {
   const [isRegisterForm, setIsRegisterForm] = useState(false);
   const { login, register } = useAuth();
   const alerts = useAlerts()
+  const { token } = useAuth()
+  const navigate = useNavigate()
 
   const password = watch('password');
   const confirmPassword = watch('confirmPassword');
@@ -48,8 +52,10 @@ const UserForm: FC = () => {
 
     if (isRegisterForm) {
       register(data).catch(handleFieldErrors)
+        .then(() => navigate(Route.EmailBox))
     } else {
       login(data).catch(handleFieldErrors)
+        .then(() => navigate(Route.EmailBox))
     }
   }
 

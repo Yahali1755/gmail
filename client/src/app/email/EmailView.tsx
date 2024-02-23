@@ -5,7 +5,7 @@ import moment from "moment";
 
 import Dialog from "../common/Dialog";
 
-interface EmailPreviewProps {
+interface EmailViewProps {
     isOpen: boolean, 
     close: () => void,
     email: EmailViewModel
@@ -18,7 +18,7 @@ const styles: Record<string, SxProps> = {
     }
 }
 
-const EmailPreview: FC<EmailPreviewProps> = ({ isOpen, close, email:  {author, content, createdAt, subject, recipients}}) => {
+const EmailView: FC<EmailViewProps> = ({ isOpen, close, email:  {author, content, createdAt, subject, recipients}}) => {
     const formattedCreatedAt = moment(createdAt).format("lll");
     const displayedRecipients = recipients.join(', ')
 
@@ -45,4 +45,4 @@ const EmailPreview: FC<EmailPreviewProps> = ({ isOpen, close, email:  {author, c
 }
 
 
-export default EmailPreview;
+export default EmailView;

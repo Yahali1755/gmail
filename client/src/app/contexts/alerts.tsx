@@ -28,7 +28,7 @@ export const AlertsProvider: FC<{children: ReactNode}> = ({ children }) => {
         open();
     }
 
-    const success = (message = "Action successfully completed!") => {
+    const success = (message: string) => {
         showAlert({severity: "success", message})
     }
 

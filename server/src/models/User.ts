@@ -15,6 +15,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator: (value) => EMAIL_REGEX.test(value),
       message: 'Invalid email format',

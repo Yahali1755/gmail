@@ -2,7 +2,7 @@ import { Table, TableBody, TableContainer, Paper, Box, TablePagination, Grid } f
 import { ChangeEvent, FC, useEffect } from 'react';
 
 import { EmailBoxType } from '../../constants/EmailboxType';
-import EmailRow from '../EmailRow';
+import EmailTableRow from '../EmailTableRow';
 import useEmailBoxQuery from '../../query/use-email-query';
 import { useTableStyles } from './styles';
 import LoadingPage from '../../common/page/LoadingPage';
@@ -25,7 +25,7 @@ const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
     changeRowsPerPage(parseInt(event.target.value))
   }
 
-  const { isLoading, data: { entities: emails = [], meta: { totalCount = 0} = {}} = {}} = useEmailBoxQuery(emailBoxType, { page, limit: rowsPerPage});
+  const { isLoading, data: { entities: emails, meta: { totalCount = 0} = {}} = {}} = useEmailBoxQuery(emailBoxType, { page, limit: rowsPerPage});
 
   useEffect(() => {
     changePage(0);
@@ -58,7 +58,7 @@ const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
             <Table>
               <TableBody>
               { 
-                emails.map(email => <EmailRow key={email.id} emailBoxType={emailBoxType} email={email} />) 
+                emails.map(email => <EmailTableRow key={email.id} emailBoxType={emailBoxType} email={email} />) 
               }     
               </TableBody>
             </Table>

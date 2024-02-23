@@ -5,23 +5,23 @@ import moment from 'moment';
 import { EmailViewModel } from '@mail/common';
 
 import { useOpen } from '../common/hooks/open';
-import EmailPreview from './EmailPreview';
+import EmailView from './EmailView';
 import { EmailBoxType } from '../constants/EmailboxType';
 
-interface EmailRowProps {
+interface EmailTableRowProps {
   email: EmailViewModel,
   emailBoxType: EmailBoxType
 }
 
-const EmailRow: FC<EmailRowProps> = ({ email, emailBoxType }) => {
+const EmailTableRow: FC<EmailTableRowProps> = ({ email, emailBoxType }) => {
   const {author, content, createdAt, subject, recipients} = email
-  const { isOpen: isEmailPreviewOpen, open: openEmailPreview, close: closeEmailPreview} = useOpen();
+  const { isOpen: isEmailViewOpen, open: openEmailView, close: closeEmailView} = useOpen();
   const formattedCreatedAt = moment(createdAt).format("MMM D")
   const displayedRecipients = recipients.join(', ')
 
   return (
     <>
-      <TableRow key={email.id} onClick={openEmailPreview} hover>
+      <TableRow key={email.id} onClick={openEmailView} hover>
         <TableCell width='200px'> 
           <Typography whiteSpace="nowrap" fontWeight="bold" width='200px' overflow='hidden' textOverflow='ellipsis'>
             { emailBoxType === EmailBoxType.Outbox ? `To: ${displayedRecipients}` : author}
@@ -40,10 +40,10 @@ const EmailRow: FC<EmailRowProps> = ({ email, emailBoxType }) => {
           { formattedCreatedAt } 
         </TableCell>
       </TableRow>
-      <EmailPreview email={email} 
-        isOpen={isEmailPreviewOpen} close={closeEmailPreview}/>
+      <EmailView email={email} 
+        isOpen={isEmailViewOpen} close={closeEmailView}/>
     </>
   )
 }
 
-export default EmailRow
+export default EmailTableRow

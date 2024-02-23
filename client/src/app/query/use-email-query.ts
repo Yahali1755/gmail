@@ -16,8 +16,7 @@ const getEmailBoxQueryFilters = (emailBoxType: EmailBoxType, email: string) => {
 
 const useEmailBoxQuery = (emailBoxType: EmailBoxType, paginationFilters: PaginationQueryParameters) => { 
     const api = useEmailApi();
-    const { email } = useAuth();
-    const emailBoxQueryFilters = getEmailBoxQueryFilters(emailBoxType, email);
+    const emailBoxQueryFilters = getEmailBoxQueryFilters(emailBoxType, 'yahali100@gmail.com');
 
     return usePaginatedQuery({
         filters: emailBoxQueryFilters,

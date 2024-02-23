@@ -5,7 +5,7 @@ import { RequestHandler } from "express";
 import { AuthData, UserViewModel } from "@mail/common";
 
 import { UserDocument, UserModel } from "../models/User";
-import InvalidFieldError from "../errors/InvalidFieldError";
+import BadRequestError from "../errors/BadRequestError";
 import { userMapToViewModel } from "../api/user/UserMapper";
 import { hash } from "../utils/hash";
 
@@ -15,7 +15,7 @@ export const ensureEmailUniqueness: AuthRequestHandler = async (req, { locals: {
     const user = await UserModel.findOne({ email });
 
     if (user) {
-        next(new InvalidFieldError("email address in use", {field: "email"}))
+        next(new BadRequestError("email address in use", {field: "email"}))
     }
 }
 
@@ -30,7 +30,7 @@ export const hashPassword: AuthRequestHandler = async (req, res, next) => {
 }
 
 export const beforeInsertUser: AuthRequestHandler = async (req, res, next) => {
-    ensureEmailUniqueness(req, res, next)
+    ensureEmailUniqueness(req, res, next),
     hashPassword(req, res, next)
 }
 
@@ -44,14 +44,14 @@ export const findUserByEmail: AuthRequestHandler = async ({body: {email, passwor
 
 export const verifyUser: AuthRequestHandler = async ({body: {email, password}}, {locals: {entity: user}}, next) => {
     if (!user) {
-        next(new InvalidFieldError("Email address isn't found", {field: "email"}))
+        next(new BadRequestError("Email address isn't found", {field: "email"}))
     }
 
     if (user) {
         const arePasswordsEqual = await bcrypt.compare(password, user.password);
 
         if (!arePasswordsEqual) {
-            next(new InvalidFieldError("Wrong password", {field: "password"}))
+            next(new BadRequestError("Wrong password", {field: "password"}))
         }
     }
 

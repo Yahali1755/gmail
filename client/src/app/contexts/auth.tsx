@@ -8,6 +8,7 @@ import LoadingPage from "../common/page/LoadingPage"
 import Dialog from "../common/Dialog"
 import { UserFormData } from "../user/UserForm"
 import { AxiosResponse } from "axios"
+import { Route } from "../constants/Route"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -33,6 +34,8 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem("token")
+
+        location.href = Route.User
 
         setAuthData({} as AuthData);
         setHasTokenExpired(false);
