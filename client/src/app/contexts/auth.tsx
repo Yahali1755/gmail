@@ -5,8 +5,7 @@ import { AuthData } from "@mail/common"
 
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
 import LoadingPage from "../common/page/LoadingPage"
-import Dialog from "../common/dialog"
-import BasePage from "../common/page/BasePage"
+import Dialog from "../common/Dialog"
 import { UserFormData } from "../user/UserForm"
 import { AxiosResponse } from "axios"
 
@@ -30,7 +29,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const [authData, setAuthData] = useState<AuthData>({} as AuthData)
     const [isLoading, setIsLoading] = useState(true)
     const [hasTokenExpired, setHasTokenExpired] = useState(false)
-    const TOKEN_EXPIRATION_CHECK_INTERVAL = 30000
+    const TOKEN_EXPIRATION_CHECK_INTERVAL = 60000
 
     const logout = () => {
         localStorage.removeItem("token")
@@ -85,9 +84,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         <>
             {
                 isLoading ?
-                    <BasePage>
-                        <LoadingPage title="Loading User"/>
-                    </BasePage>
+                    <LoadingPage title="Loading User"/>
                 :
                 <AuthContext.Provider value={{...authData, login, register, logout}}>
                     <Dialog open={hasTokenExpired} onClose={logout}>

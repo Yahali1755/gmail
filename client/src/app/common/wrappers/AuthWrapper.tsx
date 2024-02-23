@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { Route } from '../../constants/Route';
 import { useAuth } from '../../contexts/auth';
 import LoadingPage from '../page/LoadingPage';
-import BasePage from '../page/BasePage';
 
 interface AuthWrapperProps {
     children: ReactNode
@@ -26,9 +25,7 @@ const AuthWrapper: FC<AuthWrapperProps> = ({ children }) => {
     return location.pathname === Route.User ? 
         (   
             token ?
-            <BasePage>
                 <LoadingPage title="Loading User"/>
-            </BasePage>
             : 
             <> { children } </>
         ) 

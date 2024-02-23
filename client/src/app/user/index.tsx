@@ -3,7 +3,7 @@ import { Grid, SxProps } from "@mui/material"
 
 import UserForm from "./UserForm";
 import PageContainer from "../common/page/PageContainer";
-import { RouteType } from "../shell";
+import { RouteType } from "../shell/Routes";
 import { Route } from "../constants/Route";
 
 const formContainerStyles: SxProps = ({

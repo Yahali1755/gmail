@@ -2,8 +2,8 @@ import { FC, ReactNode } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { DialogActions, DialogContent } from '@mui/material';
 
-import Dialog from "../dialog"
-import { DialogProps } from '../dialog';
+import Dialog from "../Dialog"
+import { DialogProps } from '../Dialog';
 import SubmitButton, { SubmitButtonProps } from './SubmitButton';
 import Form from './Form';
 import { useAlerts } from '../../contexts/alerts';

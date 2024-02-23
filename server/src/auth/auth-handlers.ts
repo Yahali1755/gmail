@@ -17,8 +17,6 @@ export const ensureEmailUniqueness: AuthRequestHandler = async (req, { locals: {
     if (user) {
         next(new InvalidFieldError("email address in use", {field: "email"}))
     }
-
-    next()
 }
 
 export const hashPassword: AuthRequestHandler = async (req, res, next) => {

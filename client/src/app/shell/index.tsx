@@ -1,25 +1,15 @@
-import React, { FC } from 'react'
+import React, { FC, ReactNode } from 'react'
 import { BrowserRouter } from "react-router-dom";
 
-import ExternalRoutes from "./ExternalRoutes"
-import { useAuth } from '../contexts/auth';
-import AuthenticatedRoutes from './AuthenticatedRoutes';
-
-export interface RouteType {
-    path: string,
-    component: FC
-}
+import Routes from "./Routes"
+import AuthWrapper from '../common/wrappers/AuthWrapper';
  
-const Shell: FC = () => {
-    const { token } = useAuth();
+const Shell: FC = () =>
+    <BrowserRouter>
+        <AuthWrapper>
+            <Routes/>
+        </AuthWrapper>
+    </BrowserRouter>
 
-    return (
-        <BrowserRouter>
-        {
-            token ? <AuthenticatedRoutes/> : <ExternalRoutes/>
-        }
-        </BrowserRouter>
-    )
-}
 
 export default Shell
