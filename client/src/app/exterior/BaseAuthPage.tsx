@@ -1,10 +1,7 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { Grid, SxProps } from "@mui/material"
 
-import UserForm from "./UserForm";
 import PageContainer from "../common/page/PageContainer";
-import { RouteType } from "../shell/Routes";
-import { Route } from "../constants/Route";
 
 const formContainerStyles: SxProps = ({
     height: '500px',
@@ -15,17 +12,18 @@ const formContainerStyles: SxProps = ({
     alignSelf: 'center'
 })
 
-const User: FC = () => 
+interface BaseAuthPageProps {
+    children: ReactNode
+}
+
+const BaseAuthPage: FC<BaseAuthPageProps> = ({ children }) => 
     <PageContainer>
         <Grid container sx={formContainerStyles}>
             <Grid xs={9} item>
-                <UserForm/>
+              { children }
             </Grid>
         </Grid>
     </PageContainer>
 
 
-export default {
-    path: Route.User,
-    component: User
-} as RouteType
+export default BaseAuthPage;

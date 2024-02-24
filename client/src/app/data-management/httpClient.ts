@@ -11,7 +11,7 @@ export const getHttpClient = (token: string, typeName: TypeName): HttpClient => 
     baseURL: `/api/${typeName}`,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+      'Authorization': token && `Bearer ${token}`,
     }
   });
 

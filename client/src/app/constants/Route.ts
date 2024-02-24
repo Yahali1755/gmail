@@ -1,4 +1,5 @@
 export enum Route {
     EmailBox = "/",
-    User = "/login"
+    Login = "/login",
+    Register = "/register"
 }

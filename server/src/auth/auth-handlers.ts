@@ -26,7 +26,7 @@ export const hashPassword: AuthRequestHandler = async (req, res, next) => {
 
     res.locals.entity.password = hashedPassword;
 
-    next()
+    next() 
 }
 
 export const beforeInsertUser: AuthRequestHandler = async (req, res, next) => {

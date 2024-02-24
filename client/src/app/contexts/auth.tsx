@@ -6,7 +6,7 @@ import { AuthData } from "@mail/common"
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
 import LoadingPage from "../common/page/LoadingPage"
 import Dialog from "../common/Dialog"
-import { UserFormData } from "../user/UserForm"
+import { UserFormData } from "../exterior/UserForm"
 import { AxiosResponse } from "axios"
 import { Route } from "../constants/Route"
 
@@ -35,7 +35,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const logout = () => {
         localStorage.removeItem("token")
 
-        location.href = Route.User
+        location.href = Route.Login
 
         setAuthData({} as AuthData);
         setHasTokenExpired(false);
@@ -75,11 +75,16 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         if(token && !isTokenExpired(token)) {
             me(token).then(({ data }) => {
                 setAuthData(data)
-            }).finally(() => {
+            })
+            .finally(() => {
                 setIsLoading(false)
             })
         } else {
-            setIsLoading(false)
+            if (location.pathname !== Route.Login) {
+                logout()
+            } else {
+                setIsLoading(false)
+            }
         }
     }, [])
 
@@ -93,7 +98,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                     <Dialog open={hasTokenExpired} onClose={logout}>
                         <DialogContent>
                             <Typography>
-                                Your authentication validity expired, refresh the page to continue
+                                You did not login for a long time, refresh the page to continue
                             </Typography>
                         </DialogContent>
                         <DialogActions>

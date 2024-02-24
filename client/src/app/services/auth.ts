@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { AuthData } from "@mail/common";
 
-import { UserFormData } from "../user/UserForm";
+import { UserFormData } from "../exterior/UserForm";
 
 export const setToken = (token: string) => localStorage.setItem("token", token);
 

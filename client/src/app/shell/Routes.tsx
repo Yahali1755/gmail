@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
 import { Route, Routes as RoutesComponent } from 'react-router-dom'
 
-import UserRoute from "../user"
+import LoginRoute from "../exterior/LoginPage"
+import RegisterRoute from "../exterior/RegisterPage"
 import EmailRoute from '../email'
 
 export interface RouteType {
@@ -9,7 +10,7 @@ export interface RouteType {
     component: FC
 }
 
-const routes: RouteType[] = [UserRoute, EmailRoute]
+const routes: RouteType[] = [LoginRoute, EmailRoute, RegisterRoute]
 
 const Routes: FC = () => 
     <RoutesComponent>
