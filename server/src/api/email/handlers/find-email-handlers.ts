@@ -1,14 +1,14 @@
-export const convertEmailQueryParams =  <TQueryParameters extends Record<string, any>>(parameters: TQueryParameters) => {
-    const { recipient, author} = parameters;
-    const condition = [];
+import { EmailDocument } from "../../../models/Email";
+import { FindPaginatedEntitiesRequestHandler } from "../../../common/queries";
 
-    if (recipient) {
-        condition.push({recipients: recipient})
-    }
+export const addInboxFilter: FindPaginatedEntitiesRequestHandler<EmailDocument> = (req, res, next) => {
+    res.locals.filters = {recipients: res.locals.email}
 
-    if (author) {
-        condition.push({ author })
-    }
+    next()
+}
 
-    return {$and: condition}
+export const addOutboxFilter: FindPaginatedEntitiesRequestHandler<EmailDocument> = (req, res, next) => {
+    res.locals.filters = {author: res.locals.email}
+
+    next()
 }

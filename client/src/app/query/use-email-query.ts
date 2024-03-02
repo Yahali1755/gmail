@@ -1,33 +1,30 @@
 import { PaginationQueryParameters, SortOrder, TypeName } from "@mail/common";
 
-import { EmailBoxType } from "../constants/EmailboxType";
 import { useEmailApi } from "../api/hooks/email-api";
-import { useAuth } from "../contexts/auth";
 import { usePaginatedQuery } from "./use-paginated-query";
+import { EmailBoxType } from "../constants/EmailboxType";
 
-const getEmailBoxQueryFilters = (emailBoxType: EmailBoxType, email: string) => {
+export const useEmailBoxQueryAction = (emailboxType: EmailBoxType, paginationFilters: PaginationQueryParameters) => { 
+    const api = useEmailApi();
+
     const emailQueryFiltersDictionary: Record<EmailBoxType, Record<string, any>> = {
-        [EmailBoxType.Inbox]: {recipient: email},
-        [EmailBoxType.Outbox]: {author: email}
+        [EmailBoxType.Inbox]: api.getInbox,
+        [EmailBoxType.Outbox]: api.getOutbox
     }
-    
-    return emailQueryFiltersDictionary[emailBoxType]
+
+    return email
 }
 
-const useEmailBoxQuery = (emailBoxType: EmailBoxType, paginationFilters: PaginationQueryParameters) => { 
+export const useOutboxQuery = (paginationFilters: PaginationQueryParameters) => { 
     const api = useEmailApi();
-    const emailBoxQueryFilters = getEmailBoxQueryFilters(emailBoxType, 'yahali100@gmail.com');
 
     return usePaginatedQuery({
-        filters: emailBoxQueryFilters,
         sort: {
             sortBy: "createdAt",
             sortOrder: SortOrder.Decending
         },
         paginationFilters,
         typeName: TypeName.Email,
-        query: api.getPaginated, 
+        query: api.getOutbox
     })
 }
-
-export default useEmailBoxQuery;

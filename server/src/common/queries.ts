@@ -1,11 +1,11 @@
 import { RequestHandler } from "express";
-import { Model, Document } from "mongoose";
+import { Model, Document, FilterQuery } from "mongoose";
 
-import { SortOption, SortOrder } from "@mail/common";
+import { AuthData, SortOption, SortOrder } from "@mail/common";
 import { NotFoundError } from "../errors/NotFoundError";
 
 type FindEntityByIdRequestHandler<TDocument extends Document> = RequestHandler<{id: string}, {}, {}, {}, {entity: TDocument}>
-type FindAllEntitiesRequestHandler<TDocument extends Document, TQueryParameters extends Record<string, any> = {}> = RequestHandler<{}, {}, {}, TQueryParameters, {entities: TDocument[]}>
+type FindAllEntitiesRequestHandler<TDocument extends Document, TQueryParameters extends Record<string, any> = {}> = RequestHandler<{}, {}, {}, TQueryParameters, {entities: TDocument[], filters?: FilterQuery<TDocument>} & AuthData>
 
 export const convertBaseQueryParameters = <TQueryParameters extends Record<string, any> = {}>
     ({page = 0, limit = 0, sortBy ="", sortOrder = SortOrder.Decending}: TQueryParameters) => 
@@ -27,11 +27,12 @@ export const findEntityById = <TDocument extends Document>(model: Model<TDocumen
 
 export const findEntities = <TDocument extends Document, TQueryParameters extends Record<string, any> = {}>(
     model: Model<TDocument>, 
-    convertEntityQueryParameters: (parameters: TQueryParameters) => Record<string, any>
+    convertEntityQueryParameters?: (parameters: TQueryParameters) => Record<string, any>
     ): 
     FindAllEntitiesRequestHandler<TDocument, TQueryParameters> => async (req, res, next) => {   
     const { sortBy, sortOrder } = convertBaseQueryParameters(req.query); 
-    const filters = convertEntityQueryParameters(req.query)
+    const queryFilters = convertEntityQueryParameters ? convertEntityQueryParameters(req.query) : {}
+    const filters = {...queryFilters, ...res.locals.filters}
     const sort = getSortArgument({ sortBy, sortOrder})
 
     const entities = await model.find(filters).sort(sort);
@@ -42,21 +43,23 @@ export const findEntities = <TDocument extends Document, TQueryParameters extend
 }
 
 export type PaginationLocalsObject<TDocument extends Document> = {
+    filters?: FilterQuery<TDocument>
     entities: TDocument[]
     meta: {
         totalCount: number
     }
-}
+} & AuthData
 
-type FindPaginatedEntitiesRequestHandler<TDocument extends Document, TQueryParameters extends Record<string, any>> = RequestHandler<{}, {}, {}, TQueryParameters, PaginationLocalsObject<TDocument>>
+export type FindPaginatedEntitiesRequestHandler<TDocument extends Document, TQueryParameters extends Record<string, any> = {}> = RequestHandler<{}, {}, {}, TQueryParameters, PaginationLocalsObject<TDocument>>
 
-export const findPaginatedEntities = <TDocument extends Document, TQueryParameters extends Record<string, any>, >(
+export const findPaginatedEntities = <TDocument extends Document, TQueryParameters extends Record<string, any> = {}>(
     model: Model<TDocument>,
-    convertEntityQueryParameters: (parameters: TQueryParameters) => Record<string, any>
+    convertEntityQueryParameters?: (parameters: TQueryParameters) => Record<string, any>,
     ): 
     FindPaginatedEntitiesRequestHandler<TDocument, TQueryParameters> => async (req, res, next) => {
     const { limit, page, sortBy, sortOrder } = convertBaseQueryParameters(req.query);
-    const filters = convertEntityQueryParameters(req.query)
+    const queryFilters = convertEntityQueryParameters ? convertEntityQueryParameters(req.query) : {}
+    const filters = {...queryFilters, ...res.locals.filters}
     const sort = getSortArgument({ sortBy, sortOrder })
 
     const totalCount = await model.countDocuments(filters);
