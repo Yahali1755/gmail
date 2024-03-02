@@ -10,6 +10,8 @@ export const loginRequest = async (user: UserFormData) => await axios.post<AuthD
 
 export const registerRequest = async (user: UserFormData) => await axios.post<AuthData>("/auth/register", user)
 
+export const ensureEmailUniquenessRequest = async (email: string) => await axios.post("/auth/validate-email/register", { email })
+
 export const me = async (token: string) => 
     await axios.get<AuthData>("/auth/me", {
         headers: {

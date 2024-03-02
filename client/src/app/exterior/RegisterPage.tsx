@@ -9,7 +9,9 @@ import BaseAuthForm from "./BaseAuthForm";
 import BaseAuthPage from "./BaseAuthPage";
 import { RouteType } from "../shell/Routes";
 import FormTextField from "../common/form/FormTextField";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { ensureEmailUniquenessRequest } from "../services/auth";
+import { useAlerts } from "../contexts/alerts";
 
 export interface UserFormData {
   password: string,
@@ -20,17 +22,35 @@ export interface UserFormData {
 const RegisterPage: FC = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
-  const formMethods = useForm();
-  const { formState: { errors } } = formMethods
+  const formMethods = useForm({ mode: "onBlur"});
+  const { formState: { errors }, watch, clearErrors, setError, getValues } = formMethods
+  const alerts = useAlerts();
 
-  const submit = (data: UserFormData) => register(data)
-    .then(() => navigate(Route.EmailBox))
+  const email = watch("email");
+
+  const doPasswordsMatch = (value: string) => value === getValues("password") || "Passwords do not match"
+
+  const setBeforeSubmit = (data: UserFormData) => {
+    delete data.confirmPassword
+  }
+
+  const submit = (data: UserFormData) => {
+    setBeforeSubmit(data);
+
+    register(data)
+      .then(() => navigate(Route.EmailBox))
+      .catch(({ response: {data: message} }) => alerts.error(message))
+  }
+
+  const ensureEmailUniqueness = (email: string) => ensureEmailUniquenessRequest(email)
+    .then(() => clearErrors("email"))
+    .catch(({response: { data: message }}) => setError("email", {message}))
 
   return (
     <BaseAuthPage>
-      <BaseAuthForm formMethods={formMethods} onSubmit={submit} formTitle='Register'>
+      <BaseAuthForm emailTextFieldProps={{onBlur: () => ensureEmailUniqueness(email)}} formMethods={formMethods} onSubmit={submit} title='Register'>
           <Grid width="100%" item>
-            <FormTextField required minLength={8} error={!!errors?.invalidConfirm} helperText={<>{errors?.invalidConfirm?.message}</>} 
+            <FormTextField customValidation={doPasswordsMatch} required minLength={8} error={!!errors?.invalidConfirm} helperText={<>{errors?.invalidConfirm?.message}</>} 
               fullWidth label="Confirm Password" name="confirmPassword"/>
           </Grid>
           <Grid width="100%" item>

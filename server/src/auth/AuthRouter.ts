@@ -6,6 +6,7 @@ import { UserDocument, UserModel } from "../models/User";
 import { insertEntity } from "../common/updates";
 import { mapBodyToEntity } from "../common/mapping";
 import { userMapToModel } from "../api/user/UserMapper";
+import { sendSuccess } from "../common/responses";
 
 const router = express.Router();
 
@@ -20,6 +21,11 @@ router.post('/login',
 router.get('/me',
     verifyToken,
     sendAuthData
+);
+
+router.post('/validate-email/register',
+    ensureEmailUniqueness,
+    sendSuccess
 );
 
 router.post('/register',

@@ -25,7 +25,7 @@ const FormDialog: FC<FormDialogProps> = ({ onSubmit, formMethods, children, subm
       .then(onClose)
       .then(() => formMethods.reset())
       .then(() => alerts.success(onSubmissionSuccessMessage))
-      .catch(({ message }) => alerts.error(message))
+      .catch(({ response: {data: message} }) => alerts.error(message))
   }
 
   return (

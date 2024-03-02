@@ -11,12 +11,14 @@ import { hash } from "../utils/hash";
 
 type AuthRequestHandler = RequestHandler<{}, {}, UserViewModel, {}, {entity: UserDocument}>;
 
-export const ensureEmailUniqueness: AuthRequestHandler = async (req, { locals: {entity: { email }}}, next) => {    
+export const ensureEmailUniqueness: AuthRequestHandler = async ({body: { email }} , res, next) => {    
     const user = await UserModel.findOne({ email });
 
     if (user) {
-        next(new BadRequestError("email address in use", {field: "email"}))
+        next(new BadRequestError("Email address in use"))
     }
+
+    next()
 }
 
 export const hashPassword: AuthRequestHandler = async (req, res, next) => {
@@ -30,7 +32,6 @@ export const hashPassword: AuthRequestHandler = async (req, res, next) => {
 }
 
 export const beforeInsertUser: AuthRequestHandler = async (req, res, next) => {
-    ensureEmailUniqueness(req, res, next),
     hashPassword(req, res, next)
 }
 
@@ -43,15 +44,17 @@ export const findUserByEmail: AuthRequestHandler = async ({body: {email, passwor
 }
 
 export const verifyUser: AuthRequestHandler = async ({body: {email, password}}, {locals: {entity: user}}, next) => {
+    const invalidLoginErrorMessage = "Sorry, we couldn't verify your login credentials. Please double-check your username and password and try again"
+
     if (!user) {
-        next(new BadRequestError("Email address isn't found", {field: "email"}))
+        next(new BadRequestError(invalidLoginErrorMessage))
     }
 
     if (user) {
         const arePasswordsEqual = await bcrypt.compare(password, user.password);
 
         if (!arePasswordsEqual) {
-            next(new BadRequestError("Wrong password", {field: "password"}))
+            next(new BadRequestError(invalidLoginErrorMessage))
         }
     }
 

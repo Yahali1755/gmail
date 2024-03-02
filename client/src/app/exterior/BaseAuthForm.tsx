@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { Grid, Typography } from "@mui/material"
+import { Grid, TextFieldProps, Typography } from "@mui/material"
 import { UseFormReturn, useForm } from "react-hook-form";
 
 import { EMAIL_REGEX } from "@mail/common";
@@ -15,12 +15,13 @@ export interface AuthFormData {
 
 interface AuthFormProps {
     children: ReactNode,
-    formTitle: string,
+    title: string,
     onSubmit: (data: Record<string, any>) => void
     formMethods: UseFormReturn
+    emailTextFieldProps?: TextFieldProps
 }
 
-const BaseAuthForm: FC<AuthFormProps> = ({ children, formTitle, onSubmit, formMethods }) => {
+const BaseAuthForm: FC<AuthFormProps> = ({ children, title, onSubmit, formMethods, emailTextFieldProps }) => {
   const { formState: { errors } } = formMethods;
 
   return (
@@ -29,12 +30,12 @@ const BaseAuthForm: FC<AuthFormProps> = ({ children, formTitle, onSubmit, formMe
            justifyContent='center' rowSpacing={3}>
           <Grid item> 
             <Typography fontSize="2em"> 
-               { formTitle } 
+               { title } 
             </Typography>
           </Grid> 
           <Grid width="100%" item> 
             <FormTextField required fullWidth autoFocus error={!!errors?.email} helperText={<>{errors?.email?.message}</>}
-              label="Email" name="email" validationRegEx={EMAIL_REGEX}/>
+              label="Email" name="email" validationRegEx={EMAIL_REGEX} {...emailTextFieldProps}/>
           </Grid>
           <Grid width="100%" item> 
             <FormTextField required minLength={8} fullWidth label="Password" name="password" error={!!errors?.password} 

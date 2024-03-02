@@ -9,6 +9,7 @@ import BaseAuthForm from "./BaseAuthForm";
 import BaseAuthPage from "./BaseAuthPage";
 import { RouteType } from "../shell/Routes";
 import { useForm } from "react-hook-form";
+import { useAlerts } from "../contexts/alerts";
 
 export interface UserFormData {
   password: string,
@@ -19,14 +20,16 @@ export interface UserFormData {
 const LoginPage: FC = () => {
   const { login} = useAuth();
   const navigate = useNavigate()
-  const formMethods = useForm();
+  const formMethods = useForm({ mode: "onBlur"});
+  const alerts = useAlerts();
 
   const submit = (data: UserFormData) => login(data)
     .then(() => navigate(Route.EmailBox))
+    .catch(({ message }) => alerts.error(message))
 
   return (
     <BaseAuthPage>
-      <BaseAuthForm formMethods={formMethods} onSubmit={submit} formTitle='Login'>      
+      <BaseAuthForm formMethods={formMethods} onSubmit={submit} title='Login'>      
         <Grid width="100%" item>
           <Grid container justifyContent='space-between'>
               <Grid item>
