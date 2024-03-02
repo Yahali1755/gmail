@@ -11,12 +11,8 @@ import { FC, ReactNode } from 'react';
 
 import { useOpen } from '../../common/hooks/open';
 import NewEmailDialog from '../forms/NewEmailDialog';
-import { EmailBoxType } from '../../constants/EmailboxType';
-
-interface SideBarProps {
-  setEmailBoxType: (emailBoxType: EmailBoxType) => void,
-  emailBoxType: EmailBoxType
-}
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Route } from '../../constants/Route';
 
 interface SideBarItem {
   text: string,
@@ -26,13 +22,15 @@ interface SideBarItem {
 }
 
 
-const SideBar: FC<SideBarProps> = ({ setEmailBoxType, emailBoxType }) => {
+const SideBar: FC = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const {open: openCreateEmail, close: closeCreateEmail, isOpen: isCreateEmailOpen} = useOpen();
 
   const sideBarItems = [
     { text: 'Send Email', onClick: openCreateEmail, iconComponent: <CreateIcon/>},
-    { text: 'Inbox', onClick: () => setEmailBoxType(EmailBoxType.Inbox), selected: emailBoxType === EmailBoxType.Inbox, iconComponent: <InboxIcon/>},
-    { text: 'Sent', onClick: () => setEmailBoxType(EmailBoxType.Outbox), selected: emailBoxType === EmailBoxType.Outbox, iconComponent: <SendIcon/> }
+    { text: 'Inbox', onClick: () => navigate(Route.Inbox), selected: pathname === Route.Inbox, iconComponent: <InboxIcon/>},
+    { text: 'Sent', onClick: () => navigate(Route.Outbox), selected: pathname === Route.Outbox, iconComponent: <SendIcon/> }
   ] as SideBarItem[]
 
   return (

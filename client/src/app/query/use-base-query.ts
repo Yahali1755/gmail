@@ -9,13 +9,14 @@ export type BaseQueryOptions<TReturnType, TQueryParameters extends Record<string
     filters?: TQueryParameters,
     query: ActionFunction<TQueryParameters, TReturnType>
     sort?: SortOption
+    extraQueryKey?: string
 } & Omit<UseQueryOptions<TReturnType>, "queryKey" | "queryFn" >
 
-export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, sort, query, ...props}: BaseQueryOptions<TReturnType, TQueryParameters>) => {
+export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string, any> = {}>({typeName, filters, sort, query, extraQueryKey, ...props}: BaseQueryOptions<TReturnType, TQueryParameters>) => {
     const queryParameters = {...sort, ...filters}
 
     return useQuery<TReturnType>({
-        queryKey: [typeName, sort, filters],
+        queryKey: [typeName, sort, filters, extraQueryKey],
         queryFn: () => query(queryParameters),
         staleTime: +process.env.STALE_TIME || 30000,
         refetchInterval: +process.env.REFETCH_INTERVAL || 30000,

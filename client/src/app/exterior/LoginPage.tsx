@@ -24,7 +24,7 @@ const LoginPage: FC = () => {
   const alerts = useAlerts();
 
   const submit = (data: UserFormData) => login(data)
-    .then(() => navigate(Route.EmailBox))
+    .then(() => navigate(Route.Inbox))
     .catch(({ message }) => alerts.error(message))
 
   return (

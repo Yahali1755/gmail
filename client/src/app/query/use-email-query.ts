@@ -2,17 +2,20 @@ import { PaginationQueryParameters, SortOrder, TypeName } from "@mail/common";
 
 import { useEmailApi } from "../api/hooks/email-api";
 import { usePaginatedQuery } from "./use-paginated-query";
-import { EmailBoxType } from "../constants/EmailboxType";
 
-export const useEmailBoxQueryAction = (emailboxType: EmailBoxType, paginationFilters: PaginationQueryParameters) => { 
+export const useInboxQuery = (paginationFilters: PaginationQueryParameters) => { 
     const api = useEmailApi();
 
-    const emailQueryFiltersDictionary: Record<EmailBoxType, Record<string, any>> = {
-        [EmailBoxType.Inbox]: api.getInbox,
-        [EmailBoxType.Outbox]: api.getOutbox
-    }
-
-    return email
+    return usePaginatedQuery({
+        sort: {
+            sortBy: "createdAt",
+            sortOrder: SortOrder.Decending
+        },
+        paginationFilters,
+        extraQueryKey: "inbox",
+        typeName: TypeName.Email,
+        query: api.getInbox
+    })
 }
 
 export const useOutboxQuery = (paginationFilters: PaginationQueryParameters) => { 
@@ -24,6 +27,7 @@ export const useOutboxQuery = (paginationFilters: PaginationQueryParameters) => 
             sortOrder: SortOrder.Decending
         },
         paginationFilters,
+        extraQueryKey: "outbox",
         typeName: TypeName.Email,
         query: api.getOutbox
     })

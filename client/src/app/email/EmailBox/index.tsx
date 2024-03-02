@@ -1,35 +1,39 @@
 import { Table, TableBody, TableContainer, Paper, Box, TablePagination, Grid } from '@mui/material';
 import { ChangeEvent, FC, useEffect } from 'react';
 
-import { EmailBoxType } from '../../constants/EmailboxType';
 import EmailTableRow from '../EmailTableRow';
-import useEmailBoxQuery from '../../query/use-email-query';
 import { useTableStyles } from './styles';
 import LoadingPage from '../../common/page/LoadingPage';
 import { usePaging } from '../../common/hooks/page';
+import { EmailViewModel } from '@mail/common';
 
 interface EmailBoxProps {
-  emailBoxType: EmailBoxType
+  page: number
+  changePage: (page: number) => void
+  rowsPerPage: number
+  changeRowsPerPage: (rowsPerPage: number) => void
+  resetPaging: () => void
+  isLoading: boolean
+  emails: EmailViewModel[]
+  totalCount: number
 }
 
-const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
+const EmailBox: FC<EmailBoxProps> = ({ page, changePage, rowsPerPage, changeRowsPerPage, resetPaging, isLoading, emails, totalCount }) => {
   const styles = useTableStyles();
-  const { page, changePage, rowsPerPage, changeRowsPerPage } = usePaging();
 
   const handlePageChange = (_, page: number) => {
     changePage(page)
   }
 
   const handleRowsPerPageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    changePage(0)
+    resetPaging()
     changeRowsPerPage(parseInt(event.target.value))
   }
 
-  const { isLoading, data: { entities: emails, meta: { totalCount = 0} = {}} = {}} = useEmailBoxQuery(emailBoxType, { page, limit: rowsPerPage});
 
   useEffect(() => {
-    changePage(0);
-  }, [emailBoxType])
+    resetPaging();
+  }, [])
 
   return (
     <Box sx={styles.container}>
@@ -58,7 +62,7 @@ const EmailBox: FC<EmailBoxProps> = ({ emailBoxType }) => {
             <Table>
               <TableBody>
               { 
-                emails.map(email => <EmailTableRow key={email.id} emailBoxType={emailBoxType} email={email} />) 
+                emails.map(email => <EmailTableRow key={email.id} email={email} />) 
               }     
               </TableBody>
             </Table>

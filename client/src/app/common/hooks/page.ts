@@ -15,5 +15,9 @@ export const usePaging = (pageSize?: number) => {
         setRowsPerPage(rowsPerPage)
     }
 
-    return { page, changePage, rowsPerPage, changeRowsPerPage}
+    const resetPaging = () => {
+        changePage(defaultPage)
+    }
+
+    return { page, changePage, rowsPerPage, changeRowsPerPage, resetPaging}
 }

@@ -3,14 +3,15 @@ import { Route, Routes as RoutesComponent } from 'react-router-dom'
 
 import LoginRoute from "../exterior/LoginPage"
 import RegisterRoute from "../exterior/RegisterPage"
-import EmailRoute from '../email'
+import InboxRoute from '../email/Inbox'
+import OutboxRoute from '../email/Outbox'
 
 export interface RouteType {
     path: string,
     component: FC
 }
 
-const routes: RouteType[] = [LoginRoute, EmailRoute, RegisterRoute]
+const routes: RouteType[] = [LoginRoute, RegisterRoute, InboxRoute, OutboxRoute]
 
 const Routes: FC = () => 
     <RoutesComponent>

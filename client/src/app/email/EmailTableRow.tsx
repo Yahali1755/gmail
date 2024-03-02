@@ -6,15 +6,16 @@ import { EmailViewModel } from '@mail/common';
 
 import { useOpen } from '../common/hooks/open';
 import EmailView from './EmailView';
-import { EmailBoxType } from '../constants/EmailboxType';
+import { useLocation } from 'react-router-dom';
+import { Route } from '../constants/Route';
 
 interface EmailTableRowProps {
   email: EmailViewModel,
-  emailBoxType: EmailBoxType
 }
 
-const EmailTableRow: FC<EmailTableRowProps> = ({ email, emailBoxType }) => {
+const EmailTableRow: FC<EmailTableRowProps> = ({ email }) => {
   const {author, content, createdAt, subject, recipients} = email
+  const { pathname } = useLocation();
   const { isOpen: isEmailViewOpen, open: openEmailView, close: closeEmailView} = useOpen();
   const formattedCreatedAt = moment(createdAt).format("MMM D")
   const displayedRecipients = recipients.join(', ')
@@ -24,7 +25,7 @@ const EmailTableRow: FC<EmailTableRowProps> = ({ email, emailBoxType }) => {
       <TableRow key={email.id} onClick={openEmailView} hover>
         <TableCell width='200px'> 
           <Typography whiteSpace="nowrap" fontWeight="bold" width='200px' overflow='hidden' textOverflow='ellipsis'>
-            { emailBoxType === EmailBoxType.Outbox ? `To: ${displayedRecipients}` : author}
+            { pathname === Route.Outbox ? `To: ${displayedRecipients}` : author}
           </Typography>
         </TableCell>
         <TableCell sx={{overflow: 'hidden', textOverflow: "ellipsis", maxWidth: 0}}> 

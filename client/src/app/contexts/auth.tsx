@@ -6,7 +6,7 @@ import { AuthData } from "@mail/common"
 import { loginRequest, me, registerRequest, setToken } from "../services/auth"
 import LoadingPage from "../common/page/LoadingPage"
 import Dialog from "../common/Dialog"
-import { UserFormData } from "../exterior/UserForm"
+import { AuthFormData } from "../exterior/BaseAuthForm"
 import { AxiosResponse } from "axios"
 import { Route } from "../constants/Route"
 
@@ -17,8 +17,8 @@ interface AuthProviderProps {
 interface AuthContextProps {
     token: string
     email: string
-    login: (user: UserFormData) => Promise<void>
-    register: (user: UserFormData) => Promise<void>
+    login: (user: AuthFormData) => Promise<void>
+    register: (user: AuthFormData) => Promise<void>
     logout: () => void
 }
 
@@ -65,9 +65,9 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         setToken(token)
     }
 
-    const login = (user: UserFormData) => loginRequest(user).then(handleAuthResponse)
+    const login = (user: AuthFormData) => loginRequest(user).then(handleAuthResponse)
 
-    const register = (user: UserFormData) => registerRequest(user).then(handleAuthResponse)
+    const register = (user: AuthFormData) => registerRequest(user).then(handleAuthResponse)
     
     useEffect(() => {
         const token = localStorage.getItem("token");

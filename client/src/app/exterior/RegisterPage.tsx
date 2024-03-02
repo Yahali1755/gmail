@@ -38,7 +38,7 @@ const RegisterPage: FC = () => {
     setBeforeSubmit(data);
 
     register(data)
-      .then(() => navigate(Route.EmailBox))
+      .then(() => navigate(Route.Inbox))
       .catch(({ response: {data: message} }) => alerts.error(message))
   }
 
