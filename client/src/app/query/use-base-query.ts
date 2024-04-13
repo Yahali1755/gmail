@@ -18,8 +18,8 @@ export const useBaseQuery = <TReturnType, TQueryParameters extends Record<string
     return useQuery<TReturnType>({
         queryKey: [typeName, sort, filters, extraQueryKey],
         queryFn: () => query(queryParameters),
-        staleTime: +process.env.STALE_TIME || 30000,
-        refetchInterval: +process.env.REFETCH_INTERVAL || 30000,
+        staleTime: 30000,
+        refetchInterval: 30000,
         ...props
     })
 }

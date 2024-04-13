@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Route, Routes as RoutesComponent } from 'react-router-dom'
+import { Navigate, Route, Routes as RoutesComponent } from 'react-router-dom'
 
 import LoginRoute from "../exterior/LoginPage"
 import RegisterRoute from "../exterior/RegisterPage"
@@ -16,9 +16,14 @@ const routes: RouteType[] = [LoginRoute, RegisterRoute, InboxRoute, OutboxRoute]
 const Routes: FC = () => 
     <RoutesComponent>
     {
-        routes.map(route => 
-            <Route Component={route.component} key={route.path} path={route.path} />
-        )    
+        <>
+         <Route path="/" element={<Navigate to="/login" replace />} />
+         {
+            routes.map(route => 
+                <Route Component={route.component} key={route.path} path={route.path} />
+            )   
+         }  
+        </>  
     }
     </RoutesComponent>
 
